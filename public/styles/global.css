@@ -1,0 +1,42 @@
+:root{
+  --bg:#0a0a0a;
+  --bg-soft:#0f0f10;
+  --text:#e6e6ea;
+  --muted:#9aa0a6;
+  --accent:#57d6ff;
+  --border:#1c1d22;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  line-height:1.6;
+}
+
+.container{max-width:1100px;margin:0 auto;padding:24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(10,10,10,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 24px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;letter-spacing:.04em}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block}
+.navlinks{display:flex;gap:18px}
+.navlinks a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px;transition:color .2s, background .2s}
+.navlinks a:hover{color:var(--text);background:var(--bg-soft)}
+.active{color:var(--text)!important}
+
+.menu-btn{display:none;background:none;border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:10px}
+@media (max-width:800px){
+  .navlinks{display:none}
+  .menu-btn{display:inline-block}
+  .mobile{display:none;flex-direction:column;gap:6px;padding:10px 24px;border-bottom:1px solid var(--border)}
+  .mobile a{color:var(--muted);text-decoration:none;padding:10px;border-radius:8px}
+  .mobile a:hover{background:var(--bg-soft);color:var(--text)}
+}
+
+.hero{padding:80px 24px 48px;border-bottom:1px solid var(--border);background:linear-gradient(180deg, rgba(15,17,20,.4), rgba(10,10,10,0))}
+.hero h1{margin:0;font-size:clamp(28px,5vw,50px);letter-spacing:.04em}
+.hero p{color:var(--muted);margin-top:10px;max-width:700px}
+.cta{margin-top:20px;display:inline-block;background:var(--text);color:#000;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600}
+.cta:hover{opacity:.9}
