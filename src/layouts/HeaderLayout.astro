@@ -1,0 +1,25 @@
+---
+import IndexLayout from './IndexLayout.astro';
+---
+
+<IndexLayout>
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <a href="/" class="header-logo">MySite</a>
+            </div>
+            <div class="header-right">
+                <nav class="header-menu">
+                    <a href="/artists" class="header-menu-item">ARTISTS</a>
+                    <a href="/releases" class="header-menu-item">RELEASES</a>
+                    <a href="/about" class="header-menu-item">ABOUT US</a>
+                    <a href="/contacts" class="header-menu-item">CONTACTS</a>
+                    <button class="header-menu-item disabled" disabled>SHOP (not available)</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+</IndexLayout>
