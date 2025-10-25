@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.protocolzero.online"
+        }
+      ],
+      "destination": "https://protocolzero.online/$1",
+      "permanent": true
+    }
+  ]
+}
