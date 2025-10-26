@@ -1,8 +1,24 @@
 ---
-import IndexLayout from './IndexLayout.astro';
+const { title = "Protocol Zero", active = "" } = Astro.props;
+
+const current = String(active || "").toLowerCase();
+
+const pages = [
+  { name: "About",   path: "/about",    key: "about" },
+  { name: "Artists", path: "/artists",  key: "artists" },
+  { name: "Contact", path: "/contact",  key: "contact" },
+  { name: "Releases",path: "/releases", key: "releases" },
+  { name: "Shop",    path: "/shop",     key: "shop" },
+];
+
+const visiblePages = pages.filter((p) => p.key !== current);
+
+const half = Math.ceil(visiblePages.length / 2);
+const leftPages  = visiblePages.slice(0, half);
+const rightPages = visiblePages.slice(half);
 ---
 
-<IndexLayout>
+<!-- <HeaderLayout>
     <header>
         <div class="header-container">
             <div class="header-left">
@@ -22,4 +38,40 @@ import IndexLayout from './IndexLayout.astro';
     <main>
       <slot />
     </main>
-</IndexLayout>
+</HeaderLayout> -->
+
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+
+    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/styles/header.css" />
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="header-left">
+        {leftPages.map((page) => (
+          <a href={page.path}>{page.name}</a>
+        ))}
+      </div>
+
+      <div class="header-center">
+        <a href="/"><img src="/logo.svg" alt="Protocol Zero logo" width="80" height="80" /></a>
+      </div>
+
+      <div class="header-right">
+        {rightPages.map((page) => (
+          <a href={page.path}>{page.name}</a>
+        ))}
+      </div>
+    </header>
+
+    <main class="container">
+      <slot />
+    </main>
+  </body>
+</html>
