@@ -1,16 +1,9 @@
+// @ts-check
 import { defineConfig } from 'astro/config';
-import compress from 'astro-compress';
+
+import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [
-    compress({
-      html: {
-        comments: false,
-      },
-      css: true,  // opzionale: comprime anche i CSS
-      js: true,   // opzionale: comprime anche i JS
-      img: false, // lascia stare le immagini (più sicuro se non vuoi alterarle)
-    }),
-  ],
+  integrations: [react()]
 });
