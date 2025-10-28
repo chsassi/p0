@@ -3,20 +3,12 @@ import HeaderLayout from "../layouts/HeaderLayout.astro";
 import FooterLayout from "../layouts/FooterLayout.astro";
 ---
 
-<div class="page-wrapper">
-  <HeaderLayout title="Protocol Zero — Shop" active="shop">
-    <main class="short-page">
-      <h1 class="coming-soon">COMING SOON</h1>
-    </main>
-  </HeaderLayout>
-  <FooterLayout />
-</div>
+<HeaderLayout title="Protocol Zero — Shop" active="shop">
+  <link rel="stylesheet" href="/styles/pages.css" />
 
-<style>
-  .coming-soon {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2rem;
-    color: var(--text);
-    letter-spacing: 1px;
-  }
-</style>
+  <main class="center-page">
+    <h1 class="coming-soon">COMING SOON</h1>
+  </main>
+</HeaderLayout>
+
+<FooterLayout />

@@ -4,37 +4,12 @@ import FooterLayout from "../layouts/FooterLayout.astro";
 ---
 
 <HeaderLayout title="Protocol Zero — Releases" active="releases">
-  <main class="short-page">
+  <link rel="stylesheet" href="/styles/pages.css" />
+
+  <main class="center-page">
     <h1 class="coming-soon">COMING SOON</h1>
-    <p class="release-date">January 2026</p>
+    <p class="tag">January 2026</p>
   </main>
 </HeaderLayout>
 
 <FooterLayout />
-
-<style>
-  .short-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 120px 20px; /* margine morbido per distanziare dal footer e header */
-    min-height: 60vh; /* evita che la pagina si estenda troppo */
-  }
-
-  .coming-soon {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2rem;
-    color: var(--text);
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-  }
-
-  .release-date {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.4rem;
-    color: var(--muted);
-    margin-top: 0;
-  }
-</style>

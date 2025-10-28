@@ -24,7 +24,7 @@ const imgSrc = withLeadingSlash(artist.image || "");
 <HeaderLayout title={`Protocol Zero — ${artist.name}`} active="artists">
   <link rel="stylesheet" href="/styles/artists.css" />
 
-  <a href="/artists" class="back-btn">⬅ Back to Artists</a>
+  <a href="/artists" class="back-btn">&lt; Back to Artists</a>
 
   <section class="artist-detail">
     <!-- Foto tonda -->
@@ -33,9 +33,11 @@ const imgSrc = withLeadingSlash(artist.image || "");
     <!-- Info -->
     <div class="artist-info">
       <h1>{artist.name}</h1>
-    <div class="artist-description">
-      {artist.description.split("\n\n").map(p => <p>{p}</p>)}
-    </div>
+
+      <div class="artist-description">
+        {artist.description.split("\n\n").map(p => <p>{p}</p>)}
+      </div>
+
       <!-- Icone social -->
       <div class="artist-icons">
         {artist.links.spotify && (
@@ -43,11 +45,11 @@ const imgSrc = withLeadingSlash(artist.image || "");
             <img src="/images/spotify.svg" alt="Spotify" />
           </a>
         )}
-            {artist.links.instagram && (
-              <a href={artist.links.instagram} target="_blank" rel="noopener noreferrer">
-                <img src="/images/instagram.svg" alt="Instagram" />
-              </a>
-            )}
+        {artist.links.instagram && (
+          <a href={artist.links.instagram} target="_blank" rel="noopener noreferrer">
+            <img src="/images/instagram.svg" alt="Instagram" />
+          </a>
+        )}
         {artist.links.soundcloud && (
           <a href={artist.links.soundcloud} target="_blank" rel="noopener noreferrer">
             <img src="/images/soundcloud.svg" alt="SoundCloud" />
@@ -73,3 +75,25 @@ const imgSrc = withLeadingSlash(artist.image || "");
     </div>
   </section>
 </HeaderLayout>
+
+<!-- Footer aggiunto -->
+<FooterLayout />
+
+<style>
+  /* Mantiene i testi principali bianchi e solo la descrizione grigina */
+  .artist-info h1 {
+    color: var(--text);
+  }
+
+  .artist-description p {
+    color: var(--muted);
+    line-height: 1.6;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  /* Footer coerente con le altre pagine */
+  footer {
+    margin-top: 80px;
+  }
+</style>

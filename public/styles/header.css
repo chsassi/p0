@@ -32,13 +32,13 @@ body, h1, h2, p, a {
   justify-content: flex-end; /* link destra */
 }
 
-/* link base */
+/* link base (bianco pulito) */
 .header-left a,
 .header-right a {
-  color: var(--muted);
+  color: #ffffff;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
 }
 
 /* hover e stato attivo */
