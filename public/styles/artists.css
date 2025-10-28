@@ -12,11 +12,13 @@
 
 .artists-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
   justify-content: center;
   align-items: start;
-  padding: 0 32px;
+  padding: 40px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .artist-card {

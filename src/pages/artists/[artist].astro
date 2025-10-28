@@ -1,5 +1,6 @@
 ---
 import HeaderLayout from "../../layouts/HeaderLayout.astro";
+import FooterLayout from "../../layouts/FooterLayout.astro";
 import artists from "../../data/artists.json";
 
 // Genero le rotte statiche
@@ -12,9 +13,12 @@ export async function getStaticPaths() {
 
 const { artist } = Astro.props;
 
-// helper: garantisce lo slash iniziale
-const withLeadingSlash = (p) => (p?.startsWith("/") ? p : `/${p}`);
-const imgSrc = withLeadingSlash(artist.image);
+function withLeadingSlash(s: string): string {
+  if (typeof s !== "string" || s.length === 0) return "";
+  return s.startsWith("/") ? s : "/" + s;
+}
+
+const imgSrc = withLeadingSlash(artist.image || "");
 ---
 
 <HeaderLayout title={`Protocol Zero — ${artist.name}`} active="artists">

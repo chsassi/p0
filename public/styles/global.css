@@ -83,4 +83,31 @@ body{
   transform:translateY(-1px);
   box-shadow:0 0 18px rgba(87,214,255,.35);
 }
+
 .center-note{ color:var(--muted); font-size:.95rem }
+
+/* ======= LAYOUT STRUCTURE ======= */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper > main {
+  flex: 1;
+}
+
+.short-page {
+  flex: 1; /* occupa solo lo spazio disponibile */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px; /* spazio dal bordo */
+  text-align: center;
+}
