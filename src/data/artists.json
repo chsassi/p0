@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "the-martens",
+    "name": "The Martens",
+    "image": "/images/the-martens.jpg",
+    "description": "DJ & producer duo from Slovakia.\n\nIn their sets you can expect mainly a hard, energetic neurofunk and a solid load of well thought-out double drops.\n\nThey supported and were sunames such as ",
+    "links": {
+      "instagram": "https://instagram.com/themartens",
+      "spotify": "https://open.spotify.com/artist/themartens",
+      "soundcloud": "https://soundcloud.com/themartens"
+    },
+    "trackEmbed": "https://soundcloud.com/themartens/resurgence"
+  },
+  {
+    "slug": "led",
+    "name": "LED.",
+    "image": "/images/led.jpg",
+    "description": "LED is an emerging music producer and DJ active in the neurofunk scene.\n\nBased in Toulouse, LED stands out for his ability to blend deep basslines with punchy rhythms and dark, textured soundscapes, creating immersive and captivating atmospheres.\n\nInspired by Eastern European electronic scenes, his style reflects constant evolution, with each release revealing a new facet of his distinctive sound.\n\nLED is committed to producing energetic and finely-tuned tracks while maintaining a strong musical identity.",
+    "links": {
+      "instagram": "https://www.instagram.com/led.dnb/",
+      "spotify": "https://open.spotify.com/artist/72Le5s6ozfGrjIK3XvUTjH?si=I1jC-GqjRqeKi4LIBDLakg",
+      "soundcloud": "https://soundcloud.com/led-dnb"
+    },
+    "trackEmbed": "https://soundcloud.com/led-dnb/led-serenade"
+  }
+]

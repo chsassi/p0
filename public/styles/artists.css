@@ -1,0 +1,143 @@
+/* ======= ARTISTS LIST PAGE ======= */
+.artists-page {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.artists-page h1 {
+  font-size: 2rem;
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+}
+
+.artists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  justify-content: center;
+  align-items: start;
+  padding: 0 32px;
+}
+
+.artist-card {
+  text-decoration: none;
+  color: var(--text);
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.artist-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(87, 214, 255, 0.4);
+}
+
+.artist-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.artist-card h2 {
+  margin: 16px;
+  text-align: center;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ======= SINGLE ARTIST PAGE ======= */
+.artist-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.artist-detail img {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 18px rgba(87, 214, 255, 0.25);
+  background: #000;
+}
+
+.artist-info {
+  max-width: 600px;
+}
+
+.artist-info h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.artist-description p {
+  margin: 0 0 16px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* ======= SOCIAL ICONS ======= */
+.artist-icons {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 22px;
+}
+
+.artist-icons img {
+  width: 40px;
+  height: 40px;
+  opacity: 0.9;
+  border: none !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Instagram */
+.artist-icons img[alt="Instagram"] {
+  transform: scale(1.15);
+}
+
+.artist-icons a:hover img {
+  transform: scale(1.25);
+  opacity: 1;
+}
+
+/* ======= PLAYER ======= */
+.artist-player {
+  margin-top: 28px;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* ======= BACK BUTTON ======= */
+.back-btn {
+  position: absolute;
+  left: 40px;
+  top: 120px;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+.back-btn:hover {
+  color: var(--accent);
+}
