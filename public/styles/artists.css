@@ -80,12 +80,14 @@
   margin-bottom: 8px;
   letter-spacing: 1px;
   text-transform: uppercase;
+  color: var(--text);
 }
 
 .artist-description p {
   margin: 0 0 16px;
   line-height: 1.6;
   white-space: pre-line;
+  color: var(--muted);
 }
 
 /* ======= SOCIAL ICONS ======= */
@@ -129,7 +131,7 @@
 
 /* ======= BACK BUTTON ======= */
 .back-btn {
-  position: absolute;          /* ✅ desktop: torna in alto a sinistra */
+  position: absolute;
   left: 40px;
   top: 120px;
   color: #ffffff;
@@ -138,9 +140,6 @@
   font-weight: 500;
   letter-spacing: 1.5px;
   transition: color 0.25s ease, transform 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  z-index: 20;
 }
 
 .back-btn:hover {
@@ -148,47 +147,67 @@
   transform: translateX(-3px);
 }
 
-/* ======= MOBILE ======= */
+/* ======= MOBILE VERSION (max-width: 768px) ======= */
 @media (max-width: 768px) {
+
+  /* --- Layout generale --- */
+  .artist-detail {
+    margin-top: 100px; /* spazio sotto header */
+    padding: 0 16px;
+    gap: 20px;
+  }
+
+  /* --- Immagine artista --- */
+  .artist-detail img {
+    width: 60vw;
+    height: 60vw;
+    max-width: 260px;
+    max-height: 260px;
+    border-width: 1.5px;
+    box-shadow: 0 0 10px rgba(87, 214, 255, 0.25);
+  }
+
+  /* --- Nome artista --- */
+  .artist-info h1 {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+  }
+
+  /* --- Descrizione artista --- */
+  .artist-description p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 14px;
+    padding: 0 10px;
+    color: var(--muted);
+  }
+
+  /* --- Icone social --- */
+  .artist-icons {
+    gap: 18px;
+    margin-top: 16px;
+  }
+
+  .artist-icons img {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* --- Player --- */
+  .artist-player {
+    max-width: 90%;
+    height: 220px;
+    margin-top: 20px;
+  }
+
+  /* --- Back button --- */
   .back-btn {
-    position: sticky;          /* ✅ mobile: evita sovrapposizione */
-    top: 64px;                 /* si posiziona sotto l’header */
+    position: sticky;
+    top: 70px;
     left: 16px;
     margin-left: 12px;
-    margin-top: 4px;
     font-size: 14px;
     letter-spacing: 1px;
     z-index: 20;
-  }
-}
-
-/* ======= RESPONSIVE ======= */
-@media (max-width: 768px) {
-  /* Griglia artisti: una colonna */
-  .artists-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 0 16px;
-  }
-
-  /* Bottone “Back to Artists” */
-  .back-btn {
-    top: 64px;
-    margin-left: 12px;
-    font-size: 14px;
-    letter-spacing: 1px;
-  }
-
-  /* Foto artista */
-  .artist-detail img {
-    width: 70vw;
-    height: 70vw;
-    max-width: 360px;
-    max-height: 360px;
-  }
-
-  .artist-detail {
-    margin-top: 12px;
-    padding: 0 16px;
   }
 }
