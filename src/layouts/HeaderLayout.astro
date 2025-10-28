@@ -4,11 +4,11 @@ const { title = "Protocol Zero", active = "" } = Astro.props;
 const current = String(active || "").toLowerCase();
 
 const pages = [
-  { name: "About",   path: "/about",    key: "about" },
-  { name: "Artists", path: "/artists",  key: "artists" },
-  { name: "Contacts", path: "/contacts",  key: "contacts" },
-  { name: "Releases",path: "/releases", key: "releases" },
-  { name: "Shop",    path: "/shop",     key: "shop" },
+  { name: "ABOUT",   path: "/about",    key: "about" },
+  { name: "ARTISTS", path: "/artists",  key: "artists" },
+  { name: "CONTACTS", path: "/contacts",  key: "contacts" },
+  { name: "RELEASES",path: "/releases", key: "releases" },
+  { name: "SHOP",    path: "/shop",     key: "shop" },
 ];
 
 const visiblePages = pages.filter((p) => p.key !== current);
