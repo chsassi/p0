@@ -1,4 +1,4 @@
-/* ======= ARTISTS LIST PAGE ======= */
+/* ======= LISTA ARTISTI ======= */
 .artists-page {
   margin-top: 40px;
   text-align: center;
@@ -51,13 +51,13 @@
   letter-spacing: 1px;
 }
 
-/* ======= SINGLE ARTIST PAGE ======= */
+/* ======= PAGINA SINGOLO ARTISTA ======= */
 .artist-detail {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  margin-top: 60px;
+  margin-top: 40px;
   text-align: center;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .artist-info {
-  max-width: 600px;
+  max-width: 700px;
 }
 
 .artist-info h1 {
@@ -80,60 +80,52 @@
   margin-bottom: 8px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--text);
 }
 
 .artist-description p {
   margin: 0 0 16px;
   line-height: 1.6;
   white-space: pre-line;
-  color: var(--muted);
+  color: var(--muted); /* grigino come nel resto del sito */
 }
 
-/* ======= SOCIAL ICONS ======= */
+/* Icone social (no cerchi; hover solo dove esiste) */
 .artist-icons {
   display: flex;
   justify-content: center;
   gap: 28px;
   margin-top: 22px;
 }
-
 .artist-icons img {
   width: 40px;
   height: 40px;
-  opacity: 0.9;
+  opacity: 0.95;
   border: none !important;
   border-radius: 0 !important;
   background: none !important;
   box-shadow: none !important;
   filter: none !important;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform: scale(1);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+@media (hover: hover) {
+  .artist-icons img:hover { transform: scale(1.12); opacity: 1; }
 }
 
-/* Instagram */
-.artist-icons img[alt="Instagram"] {
-  transform: scale(1.15);
-}
-
-.artist-icons a:hover img {
-  transform: scale(1.25);
-  opacity: 1;
-}
-
-/* ======= PLAYER ======= */
+/* Player */
 .artist-player {
-  margin-top: 28px;
+  margin-top: 24px;
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
 }
 
-/* ======= BACK BUTTON ======= */
+/* Back button: desktop in alto a sinistra, mobile sotto header */
 .back-btn {
-  display: block;
-  width: fit-content;
-  margin: 0 auto 20px auto;
+  position: absolute;
+  left: 40px;
+  top: 120px;
   color: #ffffff;
   text-decoration: none;
   font-family: 'Orbitron', sans-serif;
@@ -141,113 +133,84 @@
   letter-spacing: 1.5px;
   transition: color 0.25s ease, transform 0.2s ease;
 }
+.back-btn:hover { color: var(--accent); transform: translateX(-3px); }
 
-.back-btn:hover {
-  color: var(--accent);
-  transform: translateX(-3px);
-}
-
-/* ======= MOBILE VERSION (max-width: 768px) ======= */
+/* ======= MOBILE ======= */
 @media (max-width: 768px) {
-
-  /* --- Griglia artisti: una colonna --- */
   .artists-grid {
     grid-template-columns: 1fr;
+    padding: 24px 16px;
     gap: 24px;
-    padding: 0 20px;
   }
 
-  /* --- Layout singolo artista --- */
-  .artist-detail {
-    margin-top: 80px;
-    padding: 0 16px;
-    gap: 18px;
-  }
+  .artist-detail { gap: 18px; margin-top: 18px; }
+  .artist-detail img { width: 220px; height: 220px; }
 
-  .artist-detail img {
-    width: 65vw;
-    height: 65vw;
-    max-width: 260px;
-    max-height: 260px;
-    border-width: 1.5px;
-    box-shadow: 0 0 10px rgba(87, 214, 255, 0.25);
-  }
+  .artist-info { max-width: 92vw; }
+  .artist-info h1 { font-size: 1.6rem; }
 
-  .artist-info h1 {
-    font-size: 1.5rem;
-    margin-bottom: 6px;
-  }
+  .artist-description p { font-size: 0.95rem; }
 
-  .artist-description p {
-    font-size: 0.9rem;
-    line-height: 1.4;
-    margin-bottom: 14px;
-    padding: 0 10px;
-    color: var(--muted);
-  }
+  .artist-icons { gap: 18px; margin-top: 16px; }
+  .artist-icons img { width: 36px; height: 36px; }
 
-  /* --- Icone social --- */
-  .artist-icons {
-    gap: 18px;
-    margin-top: 16px;
-  }
+  .artist-player { margin-top: 16px; }
+  .artist-player iframe { height: 160px; }
 
-  .artist-icons img {
-    width: 34px;
-    height: 34px;
-  }
-
-  /* --- Player --- */
-  .artist-player {
-    max-width: 90%;
-    height: 220px;
-    margin-top: 20px;
-  }
-
-  /* --- Back button mobile --- */
+  /* Back sotto l’header (niente overlap) */
   .back-btn {
-    margin-top: 90px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    letter-spacing: 1px;
-    position: static; /* ✅ non fisso */
-    text-align: left;
+    position: static;
+    display: inline-block;
+    margin: 12px 0 0 16px;
   }
 }
 
-/* ======= SOCIAL ICONS ======= */
-.artist-icons {
+/* ======= NATIONALITY INLINE ======= */
+.artist-flags {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 28px;
-  margin-top: 22px;
+  gap: 4px;
+  margin: 8px 0 16px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 1.5px;
+  color: var(--text);
 }
 
-.artist-icons img {
-  width: 40px;
-  height: 40px;
-  opacity: 0.9;
+/* Contenitore bandiere */
+.flag-group {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+/* Bandiere piccole e proporzionate */
+.flag-inline {
+  width: 36px;
+  height: 24px;
   border: none !important;
+  box-shadow: none !important;
+  border-radius: 2px !important;
   background: none !important;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  object-fit: contain;
+  vertical-align: middle;
+  display: inline-block;
 }
 
-/* Correzione proporzioni Instagram */
-.artist-icons img[alt="Instagram"] {
-  transform: scale(1.1);
+/* Forza priorità su immagini bandiere rispetto a .artist-detail img */
+.artist-flags .flag-inline {
+  all: unset;
+  width: 36px;
+  height: 24px;
+  border-radius: 2px;
+  object-fit: contain;
+  display: inline-block;
 }
 
-/* Hover / Active universale */
-.artist-icons a:hover img,
-.artist-icons a:focus img,
-.artist-icons a:active img {
-  transform: scale(1.18);
-  opacity: 1;
-}
-
-/* Correzione per mobile: disattiva hover persistente */
-@media (hover: none) and (pointer: coarse) {
-  .artist-icons a img {
-    transform: none !important;
+@media (max-width: 768px) {
+  .artist-flags .flag-inline {
+    width: 28px;
+    height: 18px;
   }
 }

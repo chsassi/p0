@@ -1,17 +1,18 @@
 ---
 import HeaderLayout from "../layouts/HeaderLayout.astro";
-import artists from "../data/artists.json";
 import FooterLayout from "../layouts/FooterLayout.astro";
+import artists from "../data/artists.json";
 ---
 
 <HeaderLayout title="Protocol Zero — Artists" active="artists">
-  <link rel="stylesheet" href="/styles/artists.css"/>
+  <link rel="stylesheet" href="/styles/artists.css" />
 
   <section class="artists-page">
-    <h1>Artists</h1>
+    <h1>ARTISTS</h1>
+
     <div class="artists-grid">
       {artists.map((artist) => (
-        <a href={`artists/${artist.slug}`} class="artist-card">
+        <a href={`/artists/${artist.slug}`} class="artist-card">
           <img src={artist.image} alt={artist.name} loading="lazy" />
           <h2>{artist.name}</h2>
         </a>
@@ -19,4 +20,5 @@ import FooterLayout from "../layouts/FooterLayout.astro";
     </div>
   </section>
 </HeaderLayout>
+
 <FooterLayout />

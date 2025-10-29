@@ -3,7 +3,6 @@ import HeaderLayout from "../../layouts/HeaderLayout.astro";
 import FooterLayout from "../../layouts/FooterLayout.astro";
 import artists from "../../data/artists.json";
 
-// Genero le rotte statiche
 export async function getStaticPaths() {
   return artists.map((artist) => ({
     params: { artist: artist.slug },
@@ -27,38 +26,48 @@ const imgSrc = withLeadingSlash(artist.image || "");
   <a href="/artists" class="back-btn">&lt; Back to Artists</a>
 
   <section class="artist-detail">
-    <!-- Foto tonda -->
     <img src={imgSrc} alt={artist.name} loading="eager" decoding="async" />
 
-    <!-- Info -->
     <div class="artist-info">
       <h1>{artist.name}</h1>
 
+      <!-- Nationality -->
+      {Array.isArray(artist.flags) && artist.flags.length > 0 && (
+        <div class="artist-flags">
+          <span>Nationality:</span>
+          <div class="flag-group">
+            {artist.flags.map((flag) => (
+              <img src={flag} alt="flag" class="flag-inline" />
+            ))}
+          </div>
+        </div>
+      )}
+
       <div class="artist-description">
-        {artist.description.split("\n\n").map(p => <p>{p}</p>)}
+        {(artist.description || "").split("\n\n").map((p) => <p>{p}</p>)}
       </div>
 
-      <!-- Icone social -->
-      <div class="artist-icons">
-        {artist.links.spotify && (
-          <a href={artist.links.spotify} target="_blank" rel="noopener noreferrer">
-            <img src="/images/spotify.svg" alt="Spotify" />
-          </a>
-        )}
-        {artist.links.instagram && (
-          <a href={artist.links.instagram} target="_blank" rel="noopener noreferrer">
-            <img src="/images/instagram.svg" alt="Instagram" />
-          </a>
-        )}
-        {artist.links.soundcloud && (
-          <a href={artist.links.soundcloud} target="_blank" rel="noopener noreferrer">
-            <img src="/images/soundcloud.svg" alt="SoundCloud" />
-          </a>
-        )}
-      </div>
+      {artist.links && (
+        <div class="artist-icons">
+          {artist.links.spotify && artist.links.spotify !== "" && (
+            <a href={artist.links.spotify} target="_blank" rel="noopener noreferrer">
+              <img src="/images/spotify.svg" alt="Spotify" />
+            </a>
+          )}
+          {artist.links.instagram && artist.links.instagram !== "" && (
+            <a href={artist.links.instagram} target="_blank" rel="noopener noreferrer">
+              <img src="/images/instagram.png" alt="Instagram" />
+            </a>
+          )}
+          {artist.links.soundcloud && artist.links.soundcloud !== "" && (
+            <a href={artist.links.soundcloud} target="_blank" rel="noopener noreferrer">
+              <img src="/images/soundcloud.svg" alt="SoundCloud" />
+            </a>
+          )}
+        </div>
+      )}
 
-      <!-- Player SoundCloud -->
-      {artist.trackEmbed && (
+      {artist.trackEmbed && artist.trackEmbed !== "" && (
         <div class="artist-player">
           <iframe
             width="100%"
@@ -76,24 +85,4 @@ const imgSrc = withLeadingSlash(artist.image || "");
   </section>
 </HeaderLayout>
 
-<!-- Footer aggiunto -->
 <FooterLayout />
-
-<style>
-  /* Mantiene i testi principali bianchi e solo la descrizione grigina */
-  .artist-info h1 {
-    color: var(--text);
-  }
-
-  .artist-description p {
-    color: var(--muted);
-    line-height: 1.6;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-  }
-
-  /* Footer coerente con le altre pagine */
-  footer {
-    margin-top: 80px;
-  }
-</style>

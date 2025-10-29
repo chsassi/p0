@@ -3,7 +3,8 @@
     "slug": "the-martens",
     "name": "The Martens",
     "image": "/images/the-martens.png",
-    "description": "DJ & producer duo from Slovakia.\n\nIn their sets you can expect mainly a hard, energetic neurofunk and a solid load of well thought-out double drops.\n\nThey supported and were supported by names such as Misanthrop, Tobax, Merikan, Hybrid Minds and many more.",
+    "flags": ["/images/flags/sk.svg"],
+    "description": "Producing from the heart of Europe, The Martens are a Slovakian-based drum & bass duo who have carved their place in the neurofunk scene with precision and power. Their release Ambush (via Drumatch Records) is recognized as a standout neurofunk cut.\n\nIn 2019 they were awarded 2nd place in the Emerging Artist category at the CZ & SK DnB Awards.\n\nTheir sound is defined by aggressive basslines, technical drum programming, and a darkly cinematic atmosphere — all of which make The Martens a natural fit for labels like Protocol Zero and the deeper side of neurofunk.",
     "links": {
       "instagram": "https://instagram.com/the_martens",
       "spotify": "https://open.spotify.com/artist/6XyHfiefInkIBJWq72X7Wr?si=nj232mOtRSCN1p2Ac8PFdQ",
@@ -12,9 +13,23 @@
     "trackEmbed": "https://soundcloud.com/themartens/resurgence"
   },
   {
+    "slug": "chris",
+    "name": "Chris",
+    "image": "/images/chris.jpg",
+    "flags": ["/images/flags/it.svg", "/images/flags/sk.svg"],
+    "description": "TBD",
+    "links": {
+      "instagram": "",
+      "spotify": "",
+      "soundcloud": ""
+    },
+    "trackEmbed": ""
+  },
+  {
     "slug": "led",
     "name": "LED.",
     "image": "/images/led.jpg",
+    "flags": ["/images/flags/fr.svg"],
     "description": "LED is an emerging music producer and DJ active in the neurofunk scene.\n\nBased in Toulouse, LED stands out for his ability to blend deep basslines with punchy rhythms and dark, textured soundscapes, creating immersive and captivating atmospheres.\n\nInspired by the Eastern European electronic scene, his style reflects constant evolution, with each release revealing a new facet of his distinctive sound.\n\nLED is committed to producing energetic and finely-tuned tracks while maintaining a strong and recognizable musical identity.",
     "links": {
       "instagram": "https://www.instagram.com/led.dnb/",
