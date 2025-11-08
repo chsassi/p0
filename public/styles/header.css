@@ -25,14 +25,14 @@ body, h1, h2, p, a {
 }
 
 .header-left {
-  justify-content: flex-start; /* link sinistra */
+  justify-content: flex-start;
 }
 
 .header-right {
-  justify-content: flex-end; /* link destra */
+  justify-content: flex-end;
 }
 
-/* link base (bianco pulito) */
+/* link base */
 .header-left a,
 .header-right a {
   color: #ffffff;
@@ -50,22 +50,26 @@ body, h1, h2, p, a {
   text-shadow: 0 0 8px var(--accent);
 }
 
-/* logo centrale */
+/* ===== LOGO CENTRALE (senza hover / effetti) ===== */
 .header-center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.header-center img {
+.header-logo img {
   height: 64px;
   width: auto;
-  filter: drop-shadow(0 0 10px rgba(87, 214, 255, 0.2));
-  transition: transform 0.2s ease;
+  display: block;
+  border: none;
+  filter: none;
+  transition: none;
 }
 
-.header-center img:hover {
-  transform: scale(1.05);
+/* disattiva qualsiasi hover sul logo */
+.header-logo:hover img {
+  transform: none;
+  filter: none;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -82,7 +86,7 @@ body, h1, h2, p, a {
     gap: 18px;
   }
 
-  .header-center img {
+  .header-logo img {
     height: 52px;
   }
 }

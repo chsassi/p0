@@ -3,24 +3,21 @@ import IndexLayout from '../layouts/IndexLayout.astro';
 ---
 
 <IndexLayout>
-	<main>
-		<div class="container">
-			<div class="left-section">
-        <div class="logo-placeholder">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="100" cy="100" r="90" fill="#ffffff"/>
-          </svg>
-        </div>
-			</div>
-			<div class="right-section">
+  <main>
+    <div class="container">
+      <div class="left-section">
+        <img src="/images/logo.svg" alt="Protocol Zero Logo" class="logo" />
+      </div>
+
+      <div class="right-section">
         <nav class="menu">
-          <a href="/artists" class="menu-item">> ARTISTS</a>
-          <a href="/releases" class="menu-item">> RELEASES</a>
-          <a href="/about" class="menu-item">> ABOUT</a>
-          <a href="/contacts" class="menu-item">> CONTACTS</a>
-          <button class="menu-item disabled" disabled>> SHOP (Coming Soon)</button>
+          <a href="/artists" class="menu-item">&gt; ARTISTS</a>
+          <a href="/releases" class="menu-item">&gt; RELEASES</a>
+          <a href="/about" class="menu-item">&gt; ABOUT</a>
+          <a href="/contacts" class="menu-item">&gt; CONTACTS</a>
+          <button class="menu-item disabled" disabled>&gt; SHOP (Coming Soon)</button>
         </nav>
-			</div>
-		</div>
-	</main>
-</IndexLayout>  
+      </div>
+    </div>
+  </main>
+</IndexLayout>

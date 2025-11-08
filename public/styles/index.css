@@ -93,3 +93,15 @@ main {
     height: 200px;
   }
 }
+
+.logo {
+  width: 450px;
+  height: auto;
+  filter: drop-shadow(0 0 12px rgba(87, 214, 255, 0.4));
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 200px;
+  }
+}
