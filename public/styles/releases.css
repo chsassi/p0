@@ -1,0 +1,224 @@
+/* ===== RELEASES PAGE ===== */
+.releases-page {
+  text-align: center;
+  padding: 40px 24px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.releases-page h1 {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  margin-bottom: 48px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+/* ===== LISTA ===== */
+.release-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ===== RIGA ===== */
+.release-row {
+  display: grid;
+  grid-template-columns: 60px 100px 1fr 150px;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  text-decoration: none;
+  transition: background 0.25s ease;
+  text-align: left;
+}
+
+.release-row:hover {
+  background: rgba(87, 214, 255, 0.05);
+}
+
+/* Numero */
+.release-index {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Copertina */
+.release-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+/* Titolo + artista */
+.release-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding-left: 16px;
+}
+
+.release-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  color: #fff;
+  font-size: 1.1rem;
+  letter-spacing: 1.5px;
+}
+
+.release-artist {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* Data */
+.release-date {
+  color: var(--accent);
+  text-align: right;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 1.5px;
+}
+
+/* ===== DETTAGLIO RELEASE ===== */
+.release-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 24px 60px;
+  text-align: center;
+}
+
+.release-cover-large {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 24px rgba(87, 214, 255, 0.3);
+}
+
+.release-text {
+  max-width: 700px;
+}
+
+.release-text h1 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.release-text .release-artist {
+  font-size: 1.2rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: 1.5px;
+}
+
+.release-text .release-date {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 24px;
+  letter-spacing: 1.5px;
+}
+
+.release-text .release-description {
+  color: var(--muted);
+  line-height: 1.8;
+  letter-spacing: 1.5px;
+}
+
+/* Back button */
+.back-btn {
+  position: absolute;
+  left: 40px;
+  top: 120px;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  transition: color 0.25s ease, transform 0.2s ease;
+}
+
+.back-btn:hover {
+  color: var(--accent);
+  transform: translateX(-3px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .releases-page {
+    padding: 24px 16px 40px;
+  }
+
+  .releases-page h1 {
+    font-size: 1.6rem;
+    margin-bottom: 32px;
+  }
+
+  .release-row {
+    grid-template-columns: 40px 60px 1fr;
+    padding: 14px 12px;
+  }
+
+  .release-date {
+    display: none;
+  }
+
+  .release-thumb {
+    width: 60px;
+    height: 60px;
+  }
+
+  .release-title {
+    font-size: 0.95rem;
+  }
+
+  .release-artist {
+    font-size: 0.85rem;
+  }
+
+  .release-info {
+    padding-left: 12px;
+  }
+
+  .release-detail {
+    padding: 24px 16px 40px;
+    gap: 24px;
+  }
+
+  .release-cover-large {
+    width: 280px;
+    height: 280px;
+  }
+
+  .release-text h1 {
+    font-size: 1.6rem;
+  }
+
+  .release-text .release-artist {
+    font-size: 1rem;
+  }
+
+  .release-text .release-date {
+    font-size: 0.9rem;
+  }
+
+  .back-btn {
+    position: static;
+    display: inline-block;
+    margin: 12px 0 0 16px;
+  }
+}
