@@ -10,10 +10,9 @@
   margin-bottom: 32px;
 }
 
-/* 🔧 REVISIONE: 3 colonne fisse in desktop */
 .artists-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 colonne fisse */
+  grid-template-columns: repeat(3, 1fr);
   gap: 40px;
   justify-items: center;
   align-items: start;
@@ -24,7 +23,7 @@
 
 .artist-card {
   width: 100%;
-  max-width: 360px; /* blocco coerente per 3 per riga */
+  max-width: 360px;
   text-decoration: none;
   color: var(--text);
   background: var(--bg-soft);
@@ -40,7 +39,6 @@
   box-shadow: 0 0 12px rgba(87, 214, 255, 0.4);
 }
 
-/* 🔧 Altezza uniforme per tutte le immagini desktop */
 .artist-card img {
   width: 100%;
   height: 260px;
@@ -100,20 +98,24 @@
   gap: 28px;
   margin-top: 22px;
 }
+
 .artist-icons img {
   width: 40px;
   height: 40px;
   opacity: 0.95;
-  border: none !important;
-  border-radius: 0 !important;
-  background: none !important;
-  box-shadow: none !important;
-  filter: none !important;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
   transform: scale(1);
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
+
 @media (hover: hover) {
-  .artist-icons img:hover { transform: scale(1.12); opacity: 1; }
+  .artist-icons img:hover {
+    transform: scale(1.12);
+    opacity: 1;
+  }
 }
 
 /* Player */
@@ -137,7 +139,11 @@
   letter-spacing: 1.5px;
   transition: color 0.25s ease, transform 0.2s ease;
 }
-.back-btn:hover { color: var(--accent); transform: translateX(-3px); }
+
+.back-btn:hover {
+  color: var(--accent);
+  transform: translateX(-3px);
+}
 
 /* ======= RESPONSIVE ======= */
 @media (max-width: 1024px) {
@@ -188,28 +194,13 @@
   color: var(--text);
 }
 
-/* Contenitore bandiere */
 .flag-group {
   display: flex;
   align-items: center;
   gap: 1px;
 }
 
-/* Bandiere piccole e proporzionate */
 .flag-inline {
-  width: 36px;
-  height: 24px;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 2px !important;
-  background: none !important;
-  object-fit: contain;
-  vertical-align: middle;
-  display: inline-block;
-}
-
-.artist-flags .flag-inline {
-  all: unset;
   width: 36px;
   height: 24px;
   border-radius: 2px;
@@ -218,7 +209,7 @@
 }
 
 @media (max-width: 768px) {
-  .artist-flags .flag-inline {
+  .flag-inline {
     width: 28px;
     height: 18px;
   }
