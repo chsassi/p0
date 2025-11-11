@@ -22,6 +22,7 @@
   gap: 0;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
+  overflow-x: hidden; /* prevenzione base per eventuale scroll */
 }
 
 /* ===== RIGA ===== */
@@ -162,8 +163,12 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden; /* blocca lo scroll orizzontale globale */
+  }
+
   .releases-page {
-    padding: 24px 16px 40px;
+    padding: 24px 12px 40px;
   }
 
   .releases-page h1 {
@@ -171,9 +176,18 @@
     margin-bottom: 32px;
   }
 
+  /* Fix viewport per la lista */
+  .release-list {
+    width: 100%;
+    margin: 0;
+    padding: 0 8px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
   .release-row {
     grid-template-columns: 40px 60px 1fr;
-    padding: 14px 12px;
+    padding: 14px 10px;
   }
 
   .release-date {
@@ -194,7 +208,7 @@
   }
 
   .release-info {
-    padding-left: 12px;
+    padding-left: 10px;
   }
 
   .release-detail {

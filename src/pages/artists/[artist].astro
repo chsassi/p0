@@ -23,7 +23,10 @@ const imgSrc = withLeadingSlash(artist.image || "");
 <HeaderLayout title={`Protocol Zero — ${artist.name}`} active="artists">
   <link rel="stylesheet" href="/styles/artists.css" />
 
-  <a href="/artists" class="back-btn">&lt; Back to Artists</a>
+  <!-- 🔧 Back button spostato FUORI dal contenitore centrato -->
+  <div class="back-container">
+    <a href="/artists" class="back-btn">&lt; Back to Artists</a>
+  </div>
 
   <section class="artist-detail">
     <img src={imgSrc} alt={artist.name} loading="eager" decoding="async" />
@@ -31,7 +34,6 @@ const imgSrc = withLeadingSlash(artist.image || "");
     <div class="artist-info">
       <h1>{artist.name}</h1>
 
-      <!-- Nationality -->
       {Array.isArray(artist.flags) && artist.flags.length > 0 && (
         <div class="artist-flags">
           <span>Nationality:</span>
