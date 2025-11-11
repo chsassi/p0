@@ -12,7 +12,7 @@ import artists from "../data/artists.json";
     <div class="artists-grid">
       {artists.map((artist) => (
         <a href={`/artists/${artist.slug}`} class="artist-card">
-          <img src={artist.image} alt={artist.name} loading="lazy" />
+          <img src={artist.image} alt={artist.name} loading="lazy" decoding="async" width="360" height="260" />
           <h2>{artist.name}</h2>
         </a>
       ))}

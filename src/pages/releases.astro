@@ -36,15 +36,72 @@ import releases from "../data/releases.json";
 <!-- ---
 import HeaderLayout from "../layouts/HeaderLayout.astro";
 import FooterLayout from "../layouts/FooterLayout.astro";
+import releases from "../data/releases.json";
 ---
 
 <HeaderLayout title="Protocol Zero — Releases" active="releases">
-  <link rel="stylesheet" href="/styles/pages.css" />
+  <link rel="stylesheet" href="/styles/releases.css" />
+  <a href="/" class="back-btn">&lt; Back to Home</a>
+  <section class="releases-page">
+    <h1>RELEASES</h1>
+    <div class="release-list">
+      {releases.map((rel, i) => (
+        <a class="release-row" href={`/releases/${rel.slug}`}>
+          <div class="release-index">{i + 1}</div>
+          <img
+            class="release-thumb"
+            src={rel.image}
+            alt={`${rel.title} cover`}
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="release-info">
+            <div class="release-title">{rel.title}</div>
+            <div class="release-artist">{rel.artist}</div>
+          </div>
+          <div class="release-date">{rel.date}</div>
+        </a>
+      ))}
+    </div>
+  </section>
+</HeaderLayout>
 
-  <main class="center-page">
-    <h1 class="coming-soon">COMING SOON</h1>
-    <p class="tag">January 2026</p>
-  </main>
+<FooterLayout />
+
+<!-- ---
+import HeaderLayout from "../layouts/HeaderLayout.astro";
+import FooterLayout from "../layouts/FooterLayout.astro";
+import releases from "../data/releases.json";
+---
+
+<HeaderLayout title="Protocol Zero — Releases" active="releases">
+  <link rel="stylesheet" href="/styles/releases.css" />
+
+  <section class="releases-page">
+    <h1>RELEASES</h1>
+
+    <div class="release-list">
+      {releases.map((rel, i) => (
+        <a class="release-row" href={`/releases/${rel.slug}`}>
+          <div class="release-index">{i + 1}</div>
+          <img
+            class="release-thumb"
+            src={rel.image}
+            alt={`${rel.title} cover`}
+            loading="lazy"
+            decoding="async"
+            width="80"
+            height="80"
+          />
+          <div class="release-info">
+            <div class="release-title">{rel.title}</div>
+            <div class="release-artist">{rel.artist}</div>
+          </div>
+          <div class="release-date">{rel.date}</div>
+        </a>
+      ))}
+    </div>
+  </section>
 </HeaderLayout>
 
 <FooterLayout /> -->

@@ -15,9 +15,7 @@ const { release } = Astro.props;
 
 <HeaderLayout title={`Protocol Zero — ${release.title}`} active="releases">
   <link rel="stylesheet" href="/styles/releases.css" />
-
   <a href="/releases" class="back-btn">&lt; Back to Releases</a>
-
   <section class="release-detail">
     <img src={release.image} alt={release.title} class="release-cover-large" />
     <div class="release-text">
