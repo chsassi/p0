@@ -6,10 +6,9 @@ import artists from "../data/artists.json";
 
 <HeaderLayout title="Protocol Zero — Artists" active="artists">
   <link rel="stylesheet" href="/styles/artists.css" />
-
+  <a href="/" class="back-btn">&lt; Back to Home</a>
   <section class="artists-page">
     <h1>ARTISTS</h1>
-
     <div class="artists-grid">
       {artists.map((artist) => (
         <a href={`/artists/${artist.slug}`} class="artist-card">

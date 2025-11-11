@@ -148,3 +148,25 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 2px !important;   /* forza la spaziatura su tutto */
   font-weight: 600;
 }
+
+/* ===== LAYOUT: Header + Main + Footer ===== */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body > header {
+  flex-shrink: 0; /* header fisso in alto */
+}
+
+body > main {
+  flex: 1; /* si espande per riempire lo spazio */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* contenuto in alto */
+}
+
+body > footer {
+  flex-shrink: 0; /* footer sempre in fondo */
+}
