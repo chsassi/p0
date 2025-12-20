@@ -5,6 +5,9 @@ main {
   align-items: center;
   justify-content: center;
   background-color: #000000;
+  background-image: url("/images/bg-futuristic.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .container {
