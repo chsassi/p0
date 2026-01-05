@@ -1,4 +1,3 @@
-/* ======= LISTA ARTISTI ======= */
 .artists-page {
   margin-top: 40px;
   text-align: center;
@@ -10,7 +9,6 @@
   margin-bottom: 32px;
 }
 
-/* 🔧 3 colonne fisse in desktop */
 .artists-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -40,7 +38,6 @@
   box-shadow: 0 0 12px rgba(87, 214, 255, 0.4);
 }
 
-/* 🔧 Altezza uniforme immagini */
 .artist-card img {
   width: 100%;
   height: 260px;
@@ -55,7 +52,6 @@
   letter-spacing: 1px;
 }
 
-/* ======= PAGINA SINGOLO ARTISTA ======= */
 .artist-detail {
   display: flex;
   flex-direction: column;
@@ -93,7 +89,6 @@
   color: var(--muted);
 }
 
-/* ===== ICONS ===== */
 .artist-icons {
   display: flex;
   justify-content: center;
@@ -121,7 +116,6 @@
   }
 }
 
-/* ===== PLAYER ===== */
 .artist-player {
   margin-top: 24px;
   border-radius: 10px;
@@ -130,7 +124,6 @@
   max-width: 700px;
 }
 
-/* ===== BACK BUTTON ===== */
 .back-btn {
   position: absolute;
   left: 40px;
@@ -147,7 +140,6 @@
   transform: translateX(-3px);
 }
 
-/* ======= RESPONSIVE ======= */
 @media (max-width: 1024px) {
   .artists-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -155,7 +147,6 @@
   }
 }
 
-/* ===== MOBILE FIX ===== */
 @media (max-width: 768px) {
   .artists-grid {
     grid-template-columns: 1fr;
@@ -220,7 +211,6 @@
   margin-top: 12px;
 }
 
-/* ======= NATIONALITY INLINE ======= */
 .artist-flags {
   display: flex;
   align-items: center;

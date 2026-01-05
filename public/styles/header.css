@@ -13,7 +13,6 @@ body, h1, h2, p, a {
   backdrop-filter: blur(8px);
 }
 
-/* gruppi link */
 .header-left,
 .header-right {
   display: flex;
@@ -29,7 +28,6 @@ body, h1, h2, p, a {
   justify-content: flex-end;
 }
 
-/* link base */
 .header-left a,
 .header-right a {
   color: #ffffff;
@@ -38,7 +36,6 @@ body, h1, h2, p, a {
   transition: color 0.25s ease, text-shadow 0.25s ease;
 }
 
-/* hover e stato attivo */
 .header-left a:hover,
 .header-right a:hover,
 .header-left a.active,
@@ -47,7 +44,6 @@ body, h1, h2, p, a {
   text-shadow: 0 0 8px var(--accent);
 }
 
-/* ===== LOGO CENTRALE (senza hover / effetti) ===== */
 .header-center {
   display: flex;
   justify-content: center;
@@ -63,13 +59,11 @@ body, h1, h2, p, a {
   transition: none;
 }
 
-/* disattiva qualsiasi hover sul logo */
 .header-logo:hover img {
   transform: none;
   filter: none;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 760px) {
   .header {
     grid-template-columns: 1fr;

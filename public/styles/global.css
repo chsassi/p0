@@ -11,7 +11,6 @@
 
 *{ box-sizing:border-box }
 
-/* base */
 html, body{
   margin:0;
   padding:0;
@@ -24,7 +23,7 @@ body{
   font-family: 'Orbitron', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
   line-height: 1.6;
   letter-spacing: 2px;
-  overflow-x: hidden; /* blocca lo scroll laterale */
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -40,7 +39,6 @@ body::before{
   pointer-events: none;
 }
 
-/* layout header/main/footer */
 body{
   display: flex;
   flex-direction: column;
@@ -50,173 +48,3 @@ body{
 body > header{ flex-shrink: 0; }
 body > main{ flex: 1; }
 body > footer{ flex-shrink: 0; }
-
-/* :root{
-  --bg:#0a0a0a;
-  --bg-soft:#0f0f10;
-  --text:#e6e6ea;
-  --muted:#9aa0a6;
-  --accent:#57d6ff;
-  --border:#1c1d22;
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body {
-  background-image: url("/images/bg-futuristic.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
-  background-attachment: scroll; /* default */
-  /* background-color: var(--bg);
-  min-height: 100%;
-
-  color: var(--text);
-  font-family: 'Orbitron', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-  line-height: 1.6;
-  letter-spacing: 2px;
-}
-
-.container{max-width:1100px;margin:0 auto;padding:24px}
-
-.nav{position:sticky;top:0;z-index:50;background:rgba(10,10,10,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 24px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;letter-spacing:.04em}
-.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block}
-.navlinks{display:flex;gap:18px}
-.navlinks a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px;transition:color .2s, background .2s}
-.navlinks a:hover{color:var(--text);background:var(--bg-soft)}
-.active{color:var(--text)!important}
-
-.menu-btn{display:none;background:none;border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:10px}
-@media (max-width:800px){
-  .navlinks{display:none}
-  .menu-btn{display:inline-block}
-  .mobile{display:none;flex-direction:column;gap:6px;padding:10px 24px;border-bottom:1px solid var(--border)}
-  .mobile a{color:var(--muted);text-decoration:none;padding:10px;border-radius:8px}
-  .mobile a:hover{background:var(--bg-soft);color:var(--text)}
-}
-
-.hero{padding:80px 24px 48px;border-bottom:1px solid var(--border);background:linear-gradient(180deg, rgba(15,17,20,.4), rgba(10,10,10,0))}
-.hero h1{margin:0;font-size:clamp(28px,5vw,50px);letter-spacing:.04em}
-.hero p{color:var(--muted);margin-top:10px;max-width:700px}
-.cta{margin-top:20px;display:inline-block;background:var(--text);color:#000;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600}
-.cta:hover{opacity:.9}
-
-/* 
-.center-wrap{
-  min-height:100svh;
-  display:grid;
-  place-items:center;
-  padding:24px;
-}
-.center{
-  display:grid;
-  justify-items:center;
-  text-align:center;
-  gap:28px;
-}
-.center-title{
-  font-size:clamp(28px,6vw,48px);
-  letter-spacing:.14em;
-  color:var(--accent);
-  font-weight:800;
-}
-.center-links{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:clamp(14px,3vw,28px);
-}
-.center-links a{
-  padding:12px 18px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:var(--bg-soft);
-  color:var(--text);
-  text-decoration:none;
-  font-weight:600;
-  letter-spacing:.04em;
-  transition:transform .12s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
-}
-.center-links a:hover{
-  background:var(--accent);
-  color:#001416;
-  transform:translateY(-1px);
-  box-shadow:0 0 18px rgba(87,214,255,.35);
-}
-
-.center-note{ color:var(--muted); font-size:.95rem }
-
-/* ======= LAYOUT STRUCTURE ======= 
-html, body {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* --- PAGE LAYOUT: header + main + footer a tutta altezza ---
-.page-wrapper{
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* --- Pagine “brevi” tipo Shop/Releases --- 
-.short-page{
-  flex: 1;
-  display: grid;
-  place-content: center;
-  gap: 8px;
-  text-align: center;
-  padding: 64px 24px;
-}
-
-.short-page .coming-soon{
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(28px, 5vw, 42px);
-  color: var(--text);
-  letter-spacing: .06em;
-}
-
-.short-page .tag{
-  color: var(--muted);
-  font-size: 1.1rem;
-  letter-spacing: .04em;
-}
-
-/* ======= GLOBAL FONT SETTINGS ======= 
-body, html {
-  letter-spacing: 2.5px;
-}
-
-/* ======= FINAL FONT FIX (Orbitron readability) ======= 
-h1, h2, h3, h4, h5, h6,
-.brand,
-.nav a,
-.footer,
-.coming-soon,
-.release-date,
-.text-page h1,
-.back-btn,
-.artists-page h1,
-.artist-info h1,
-.menu-item {
-  letter-spacing: 2px !important;
-  font-weight: 600;
-}
-
-/* ===== LAYOUT: Header + Main + Footer ===== 
-html, body {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-body > header { flex-shrink: 0; }
-body > main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-body > footer { flex-shrink: 0; } */

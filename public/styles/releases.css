@@ -15,17 +15,15 @@
   margin-right: auto;
 }
 
-/* ===== LISTA ===== */
 .release-list {
   display: flex;
   flex-direction: column;
   gap: 0;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  overflow-x: hidden; /* prevenzione base per eventuale scroll */
+  overflow-x: hidden;
 }
 
-/* ===== RIGA ===== */
 .release-row {
   display: grid;
   grid-template-columns: 60px 100px 1fr 150px;
@@ -42,7 +40,6 @@
   background: rgba(87, 214, 255, 0.05);
 }
 
-/* Numero */
 .release-index {
   text-align: center;
   color: var(--muted);
@@ -50,7 +47,6 @@
   font-family: 'Orbitron', sans-serif;
 }
 
-/* Copertina */
 .release-thumb {
   width: 80px;
   height: 80px;
@@ -59,7 +55,6 @@
   border: 1px solid var(--border);
 }
 
-/* Titolo + artista */
 .release-info {
   display: flex;
   flex-direction: column;
@@ -92,7 +87,6 @@
   letter-spacing: 1.5px;
 }
 
-/* ===== DETTAGLIO RELEASE ===== */
 .release-detail {
   display: flex;
   flex-direction: column;
@@ -161,10 +155,9 @@
   transform: translateX(-3px);
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   html, body {
-    overflow-x: hidden; /* blocca lo scroll orizzontale globale */
+    overflow-x: hidden;
   }
 
   .releases-page {
@@ -176,7 +169,6 @@
     margin-bottom: 32px;
   }
 
-  /* Fix viewport per la lista */
   .release-list {
     width: 100%;
     margin: 0;
