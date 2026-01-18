@@ -108,3 +108,11 @@ main {
     width: 200px;
   }
 }
+
+.left-section .logo {
+      transition: filter 0.3s ease, transform 0.3s ease;
+  }
+
+  .left-section .logo:hover {
+      filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
+  }
