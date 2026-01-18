@@ -10,11 +10,6 @@ const pages = [
   { name: "RELEASES", path: "/releases", key: "releases" },
   { name: "SHOP", path: "/shop", key: "shop" },
 ];
-
-const visiblePages = pages.filter((p) => p.key !== current);
-const half = Math.ceil(visiblePages.length / 2);
-const leftPages = visiblePages.slice(0, half);
-const rightPages = visiblePages.slice(half);
 ---
 
 <html lang="en">
@@ -32,33 +27,91 @@ const rightPages = visiblePages.slice(half);
   <body>
     <header class="header">
       <div class="header-left">
-        {leftPages.map((page) => (
-          <a href={page.path}>{page.name}</a>
-        ))}
       </div>
 
       <div class="header-center">
-        <a href="/" class="header-logo">
-          <img
-            src="/images/logo.svg"
-            alt="Protocol Zero logo"
-            width="80"
-            height="80"
-            loading="eager"
-            decoding="async"
-          />
-        </a>
+        <div class="menu-dropdown">
+          <button class="menu-button" aria-label="Menu" aria-expanded="false">
+            <a href="/" class="header-logo">
+              <img
+                src="/images/logo.svg"
+                alt="Protocol Zero logo"
+                width="80"
+                height="80"
+                loading="eager"
+                decoding="async"
+              />
+            </a>
+            {current && (
+              <div class="header-current-page">{pages.find(p => p.key === current)?.name || ''}</div>
+            )}
+          </button>
+          <nav class="dropdown-content">
+            {pages.map((page) => (
+              <a href={page.path} class={page.key === current ? 'active' : ''}>{page.name}</a>
+            ))}
+          </nav>
+        </div>
       </div>
 
       <div class="header-right">
-        {rightPages.map((page) => (
-          <a href={page.path}>{page.name}</a>
-        ))}
       </div>
     </header>
 
     <main>
       <slot />
     </main>
+
+    <script>
+      // Show header on scroll
+      const header = document.querySelector('.header');
+
+      function handleScroll() {
+        const currentScrollY = window.scrollY;
+
+        // Show header when scrolling down past 100px
+        if (currentScrollY > 100) {
+          header?.classList.add('visible');
+        } else {
+          header?.classList.remove('visible');
+        }
+      }
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+
+      // Initial check
+      handleScroll();
+
+      // Dropdown menu functionality
+      const menuButton = document.querySelector('.menu-button');
+      const dropdown = document.querySelector('.menu-dropdown');
+
+      if (menuButton && dropdown) {
+        // Toggle on click
+        menuButton.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = dropdown.classList.toggle('open');
+          menuButton.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        // Open on hover
+        dropdown.addEventListener('mouseenter', () => {
+          dropdown.classList.add('open');
+          menuButton.setAttribute('aria-expanded', 'true');
+        });
+
+        // Close on mouse leave
+        dropdown.addEventListener('mouseleave', () => {
+          dropdown.classList.remove('open');
+          menuButton.setAttribute('aria-expanded', 'false');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+          dropdown.classList.remove('open');
+          menuButton.setAttribute('aria-expanded', 'false');
+        });
+      }
+    </script>
   </body>
 </html>
