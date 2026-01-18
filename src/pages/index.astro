@@ -1,23 +1,101 @@
 ---
-import IndexLayout from '../layouts/IndexLayout.astro';
+import HeaderLayout from "../layouts/HeaderLayout.astro";
+import FooterLayout from "../layouts/FooterLayout.astro";
+import artists from "../data/artists.json";
+import releases from "../data/releases.json";
 ---
 
-<IndexLayout>
-  <main>
-    <div class="container">
-      <div class="left-section">
-        <img src="/images/logo.svg" alt="Protocol Zero Logo" class="logo" />
-      </div>
+<HeaderLayout title="Protocol Zero" active="">
+  <link rel="stylesheet" href="/styles/pages.css" />
+  <link rel="stylesheet" href="/styles/artists.css" />
+  <link rel="stylesheet" href="/styles/releases.css" />
+  <link rel="stylesheet" href="/styles/index-scroll.css" />
 
-      <div class="right-section">
-        <nav class="menu">
-          <a href="/about" class="menu-item">&gt; ABOUT US</a>
-          <a href="/artists" class="menu-item">&gt; ARTISTS</a>
-          <a href="/contacts" class="menu-item">&gt; CONTACTS</a>
-          <a href="/releases" class="menu-item">&gt; RELEASES</a>
-          <button class="menu-item disabled" disabled>&gt; SHOP (Coming Soon)</button>
-        </nav>
+  <div class="main-scroll-container">
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+      <div class="hero-content">
+        <div class="hero-left">
+          <img src="/images/logo.svg" alt="Protocol Zero Logo" class="hero-logo" />
+        </div>
+        <div class="hero-right">
+          <nav class="hero-menu">
+            <a href="#about" class="hero-menu-item">&gt; ABOUT US</a>
+            <a href="#artists" class="hero-menu-item">&gt; ARTISTS</a>
+            <a href="#contacts" class="hero-menu-item">&gt; CONTACTS</a>
+            <a href="#releases" class="hero-menu-item">&gt; RELEASES</a>
+            <a href="#shop" class="hero-menu-item">&gt; SHOP</a>
+          </nav>
+        </div>
       </div>
-    </div>
-  </main>
-</IndexLayout>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="scroll-section about-section">
+      <h1>ABOUT</h1>
+      <div class="section-content">
+        <p>Protocol Zero (P0) is an independent European drum & bass label founded between Slovakia and Italy by The Martens and Chr-s.</p>
+        <p>Born from a shared vision of sound as both art and technology, the label focuses on the darker and more technical edges of drum & bass — from deep neurofunk to atmospheric techstep.</p>
+        <p>P0 aims to connect European underground scenes through a unified aesthetic: precise sound design, immersive basslines, and a strong visual and conceptual identity.</p>
+        <p>Born from a deep passion for dark and energetic drum & bass, the label stands for quality, precision and evolution in sound.</p>
+      </div>
+    </section>
+
+    <!-- Artists Section -->
+    <section id="artists" class="scroll-section artists-section">
+      <h1>ARTISTS</h1>
+      <div class="artists-grid">
+        {artists.map((artist) => (
+          <a href={`/artists/${artist.slug}`} class="artist-card">
+            <img src={artist.image} alt={artist.name} loading="lazy" decoding="async" width="360" height="260" />
+            <h2>{artist.name}</h2>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Releases Section -->
+    <section id="releases" class="scroll-section releases-section">
+      <h1>RELEASES</h1>
+      <div class="release-list">
+        {releases.map((rel, i) => (
+          <a class="release-row" href={`/releases/${rel.slug}`}>
+            <div class="release-index">{i + 1}</div>
+            <img
+              class="release-thumb"
+              src={rel.image}
+              alt={`${rel.title} cover`}
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="release-info">
+              <div class="release-title">{rel.title}</div>
+              <div class="release-artist">{rel.artist}</div>
+            </div>
+            <div class="release-date">{rel.date}</div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Contacts Section -->
+    <section id="contacts" class="scroll-section contacts-section">
+      <h1>CONTACTS</h1>
+      <div class="section-content">
+        <p>For demo submissions or collaborations, feel free to reach out!</p>
+        <p>Send us a private Soundcloud link at the following email:</p>
+        <p><a href="mailto:demo@protocolzero.online">demo@protocolzero.online</a></p>
+      </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" class="scroll-section shop-section">
+      <h1>COMING SOON</h1>
+      <div class="section-content">
+        <p class="tag">Shop</p>
+      </div>
+    </section>
+  </div>
+</HeaderLayout>
+
+<FooterLayout />

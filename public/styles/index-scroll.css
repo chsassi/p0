@@ -1,0 +1,184 @@
+.main-scroll-container {
+  width: 100%;
+  padding-top: 0;
+}
+
+.scroll-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.scroll-section h1 {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  margin-bottom: 48px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.section-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.section-content p {
+  margin: 0 auto 16px;
+  color: var(--muted);
+  line-height: 1.8;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.section-content a[href^="mailto:"] {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.section-content a[href^="mailto:"]:hover {
+  color: var(--text);
+}
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  background-image: url("/images/bg-futuristic.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding: 2rem;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rem;
+  max-width: 1200px;
+}
+
+.hero-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-right {
+  display: flex;
+  align-items: center;
+}
+
+.hero-logo {
+  width: 450px;
+  height: auto;
+  filter: drop-shadow(0 0 12px rgba(87, 214, 255, 0.4));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.hero-logo:hover {
+  filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
+}
+
+.hero-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.hero-menu-item {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: 'Orbitron', sans-serif;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  text-align: left;
+}
+
+.hero-menu-item:hover {
+  color: #00ffff;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.6);
+  transform: translateX(10px);
+}
+
+.about-section {
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(15, 15, 16, 0.95) 100%);
+}
+
+.artists-section {
+  background: rgba(10, 10, 10, 0.95);
+  padding: 80px 24px;
+}
+
+.artists-section .artists-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.releases-section {
+  background: linear-gradient(180deg, rgba(15, 15, 16, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+  padding: 80px 24px;
+}
+
+.releases-section .release-list {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.contacts-section {
+  background: rgba(10, 10, 10, 0.95);
+}
+
+.shop-section {
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(0, 0, 0, 1) 100%);
+  min-height: 80vh;
+}
+
+.shop-section .tag {
+  font-size: 1.4rem;
+  color: var(--muted);
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .hero-logo {
+    width: 200px;
+  }
+
+  .hero-menu-item {
+    font-size: 1.2rem;
+  }
+
+  .scroll-section {
+    padding: 60px 16px;
+    min-height: auto;
+  }
+
+  .scroll-section h1 {
+    font-size: 1.6rem;
+    margin-bottom: 32px;
+  }
+
+  .artists-section .artists-grid {
+    padding: 0 16px;
+  }
+}

@@ -6,18 +6,21 @@ import artists from "../data/artists.json";
 
 <HeaderLayout title="Protocol Zero — Artists" active="artists">
   <link rel="stylesheet" href="/styles/artists.css" />
-  <a href="/" class="back-btn">&lt; Back to Home</a>
-  <section class="artists-page">
-    <h1>ARTISTS</h1>
-    <div class="artists-grid">
-      {artists.map((artist) => (
-        <a href={`/artists/${artist.slug}`} class="artist-card">
-          <img src={artist.image} alt={artist.name} loading="lazy" decoding="async" width="360" height="260" />
-          <h2>{artist.name}</h2>
-        </a>
-      ))}
-    </div>
-  </section>
+  <link rel="stylesheet" href="/styles/pages.css" />
+  <div class="page-container">
+    <a href="/" class="back-btn">&lt; Back to Home</a>
+    <section class="artists-page">
+      <h1>ARTISTS</h1>
+      <div class="artists-grid">
+        {artists.map((artist) => (
+          <a href={`/artists/${artist.slug}`} class="artist-card">
+            <img src={artist.image} alt={artist.name} loading="lazy" decoding="async" width="360" height="260" />
+            <h2>{artist.name}</h2>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
 </HeaderLayout>
 
 <FooterLayout />
