@@ -75,6 +75,7 @@
   max-width: 700px;
 }
 
+
 .artist-info h1 {
   font-size: 2rem;
   margin-bottom: 8px;
@@ -255,4 +256,12 @@
     width: 28px;
     height: 18px;
   }
+}
+
+.artist-brief {
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 6px 0 14px;
+  line-height: 1.5;
+  text-transform: none;
 }

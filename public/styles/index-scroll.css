@@ -10,8 +10,8 @@
   right: 40px;
   width: 60px;
   height: 60px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  border: transparent;
   color: #ffffff;
   cursor: default;
   display: flex;
@@ -28,10 +28,10 @@
 }
 
 .scroll-indicator.scrolled:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 0 20px rgba(87, 214, 255, 0.5);
-  transform: translateY(-2px);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
 }
 
 .scroll-indicator .arrow-down {
@@ -282,7 +282,7 @@
 .hero-nav-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(0%);
   width: 60px;
   height: 60px;
   background: rgba(255, 255, 255, 0.1);
@@ -315,15 +315,194 @@
   background: var(--bg);
 }
 
-.artists-section {
+/* Artists Slideshow */
+.artists-slideshow {
+  padding: 80px 0;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
   background: var(--bg);
-  padding: 80px 24px;
 }
 
-.artists-section .artists-grid {
+.artists-slideshow-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.artist-slide {
+  position: absolute;
+  top: 10;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+.artist-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+.artist-slide-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  height: 100%;
+  padding: 0 80px;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 60px;
+}
+
+.artist-slide-image-container {
+  width: 500px;
+  height: 500px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.artist-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.artist-slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.artist-slide-info {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.artist-slide-title {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 0.8;
+  color: #ffffff;
+  margin: 0 0 32px 0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+}
+
+.artist-slide-description {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin: 0 0 40px 0;
+  line-height: 1.8;
+  letter-spacing: 1px;
+}
+
+.artist-slide-link {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.artist-slide-link:hover {
+  background: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 0 20px rgba(87, 214, 255, 0.5);
+}
+
+.artist-slide-navigation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.artist-slide-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(0%);
+  width: 100px;
+  height: 100px;
+  background: rgb(255, 255, 255);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+
+.artist-slide-nav-btn.prev {
+  left: 40px;
+}
+
+.artist-slide-nav-btn.next {
+  right: 40px;
+}
+
+.artist-slide-nav-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(87, 214, 255, 0.5);
+}
+
+.artists-slideshow-indicators {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.artists-slideshow-indicators .artist-indicator {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.artists-slideshow-indicators .artist-indicator.active {
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(87, 214, 255, 0.5);
+}
+
+.artists-slideshow-indicators .artist-indicator:hover {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .releases-section {
@@ -480,7 +659,7 @@
 .slide-nav-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(0%);
   width: 60px;
   height: 60px;
   background: rgba(255, 255, 255, 0.1);
@@ -624,11 +803,49 @@
     margin-bottom: 32px;
   }
 
-  .artists-section .artists-grid {
-    padding: 0 16px;
+  /* Artists slideshow responsive */
+  .artists-slideshow {
+    padding: 40px 0;
   }
 
-  /* Slideshow responsive */
+  .artist-slide-layout {
+    flex-direction: column;
+    padding: 0 24px;
+    gap: 40px;
+  }
+
+  .artist-slide-image-container {
+    width: 100%;
+    max-width: 400px;
+    height: 400px;
+  }
+
+  .artist-slide-content {
+    width: 100%;
+    gap: 24px;
+  }
+
+  .artist-slide-title {
+    font-size: 2rem;
+  }
+
+  .artist-slide-description {
+    font-size: 1rem;
+  }
+
+  .artist-slide-nav-btn {
+    display: none;
+  }
+
+  .artists-slideshow-indicators {
+    bottom: 24px;
+  }
+
+  .artists-slideshow-indicators .artist-indicator {
+    width: 40px;
+  }
+
+  /* Releases slideshow responsive */
   .releases-slideshow {
     padding: 40px 0;
   }
@@ -659,16 +876,7 @@
   }
 
   .slide-nav-btn {
-    width: 50px;
-    height: 50px;
-  }
-
-  .slide-nav-btn.prev {
-    left: 16px;
-  }
-
-  .slide-nav-btn.next {
-    right: 16px;
+    display: none;
   }
 
   .slide-date {
@@ -681,5 +889,101 @@
 
   .slideshow-indicators .indicator {
     width: 40px;
+  }
+}
+
+/* Replace button visuals to use only the SVG (no square background/border) */
+.hero-nav-btn,
+.artist-slide-nav-btn,
+.slide-nav-btn {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  width: auto;
+  height: auto;
+  padding: 8px;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  z-index: 10;
+}
+
+/* Slight hover emphasis without adding a background */
+.hero-nav-btn:hover,
+.artist-slide-nav-btn:hover,
+.slide-nav-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+/* Ensure the SVG icons size and no background */
+.nav-icon {
+  width: 40px;
+  height: 40px;
+  display: block;
+  background: transparent;
+  /* Force SVG visuals to appear white when loaded via <img>.
+     Inverts typical dark icons to white; keeps transparency. */
+  filter: invert(1) grayscale(1) brightness(1);
+}
+/* Mobile adjustments (override earlier sizes) */
+@media (max-width: 768px) {
+  .hero-nav-btn,
+  .artist-slide-nav-btn,
+  .slide-nav-btn {
+    padding: 6px;
+  }
+
+  .nav-icon {
+    width: 22px;
+    height: 22px;
+    filter: invert(1) grayscale(1) brightness(1);
+  }
+}
+
+/* Page loader (black fullscreen with glowing logo) */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.6s ease;
+  pointer-events: auto;
+}
+
+.page-loader.loaded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-loader .loader-logo {
+  width: 220px;
+  height: auto;
+  display: block;
+  background: transparent;
+  filter: drop-shadow(0 0 8px rgba(87,214,255,0.9)) drop-shadow(0 0 22px rgba(87,214,255,0.35));
+  animation: p0-glow 2.6s ease-in-out infinite;
+}
+
+/* Glow animation */
+@keyframes p0-glow {
+  0%   { filter: drop-shadow(0 0 6px rgba(87,214,255,0.9)) drop-shadow(0 0 12px rgba(87,214,255,0.25)); }
+  50%  { filter: drop-shadow(0 0 28px rgba(87,214,255,0.95)) drop-shadow(0 0 40px rgba(87,214,255,0.4)); }
+  100% { filter: drop-shadow(0 0 6px rgba(87,214,255,0.9)) drop-shadow(0 0 12px rgba(87,214,255,0.25)); }
+}
+
+/* Mobile sizing: keep white/visible and smaller */
+@media (max-width: 768px) {
+  .page-loader .loader-logo {
+    width: 140px;
   }
 }

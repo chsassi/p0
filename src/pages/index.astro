@@ -12,15 +12,16 @@ import news from "../data/news.json";
   <link rel="stylesheet" href="/styles/releases.css" />
   <link rel="stylesheet" href="/styles/index-scroll.css" />
 
+  <!-- Page loader: black background + P0 logo with glow -->
+  <div id="page-loader" class="page-loader" aria-hidden="true">
+    <img src="/images/logo.svg" alt="Protocol Zero" class="loader-logo" />
+  </div>
+
   <div class="main-scroll-container">
     <!-- Scroll Indicator Arrow -->
     <button class="scroll-indicator" aria-label="Scroll down">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow-down">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow-up">
-        <path d="M12 19V5M5 12l7-7 7 7"/>
-      </svg>
+      <img src="/images/icons/arrow_down.svg" alt="Scroll down" class="arrow-down nav-icon" />
+      <img src="/images/icons/arrow_up.svg" alt="Scroll to top" class="arrow-up nav-icon" />
     </button>
 
     <!-- Hero Section - News Slideshow -->
@@ -59,14 +60,10 @@ import news from "../data/news.json";
         ))}
       </div>
       <button class="hero-nav-btn prev" aria-label="Previous news">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M15 18l-6-6 6-6"/>
-        </svg>
+        <img src="../public/images/icons/arrow_left.svg" alt="Previous news" class="nav-icon" />
       </button>
       <button class="hero-nav-btn next" aria-label="Next news">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 18l6-6-6-6"/>
-        </svg>
+        <img src="/images/icons/arrow_right.svg" alt="Next news" class="nav-icon" />
       </button>
     </section>
 
@@ -171,17 +168,95 @@ import news from "../data/news.json";
     </section>
 
     <!-- Artists Section -->
-    <section id="artists" class="scroll-section artists-section">
-      <h1>ARTISTS</h1>
-      <div class="artists-grid">
-        {artists.map((artist) => (
-          <a href={`/artists/${artist.slug}`} class="artist-card">
-            <img src={artist.image} alt={artist.name} loading="lazy" decoding="async" width="360" height="260" />
-            <h2>{artist.name}</h2>
-          </a>
+    <section id="artists" class="scroll-section artists-section artists-slideshow">
+      <div class="artists-slideshow-container">
+        {artists.map((artist, i) => (
+          <div class="artist-slide" data-slide={i}>
+            <div class="artist-slide-layout">
+              <div class="artist-slide-content">
+                <div class="artist-slide-info">
+                  <h2 class="artist-slide-title">{artist.name}</h2>
+                  <a href={`/artists/${artist.slug}`} class="artist-slide-link">MORE INFO</a>
+                </div>
+              </div>
+              <div class="artist-slide-image-container">
+                <img src={artist.image} alt={artist.name} class="artist-slide-image" />
+              </div>
+            </div>
+            <div class="artist-slide-navigation">
+              <button class="artist-slide-nav-btn prev" aria-label="Previous artist">
+                <img src="/images/icons/arrow_left.svg" alt="Previous artist" class="nav-icon" />
+              </button>
+              <button class="artist-slide-nav-btn next" aria-label="Next artist">
+                <img src="/images/icons/arrow_right.svg" alt="Next artist" class="nav-icon" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="artists-slideshow-indicators">
+        {artists.map((_, i) => (
+          <button class="artist-indicator" data-slide={i} aria-label={`Go to artist ${i + 1}`}></button>
         ))}
       </div>
     </section>
+
+    <script>
+      // Artists slideshow functionality
+      let currentArtistSlide = 0;
+      const artistSlides = document.querySelectorAll('.artist-slide');
+      const artistIndicators = document.querySelectorAll('.artists-slideshow-indicators .artist-indicator');
+
+      function showArtistSlide(index) {
+        artistSlides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+        artistIndicators.forEach((indicator, i) => {
+          indicator.classList.toggle('active', i === index);
+        });
+        currentArtistSlide = index;
+      }
+
+      function nextArtistSlide() {
+        const next = (currentArtistSlide + 1) % artistSlides.length;
+        showArtistSlide(next);
+      }
+
+      function prevArtistSlide() {
+        const prev = (currentArtistSlide - 1 + artistSlides.length) % artistSlides.length;
+        showArtistSlide(prev);
+      }
+
+      // Navigation buttons
+      document.querySelectorAll('.artist-slide-nav-btn.next').forEach(btn => {
+        btn.addEventListener('click', nextArtistSlide);
+      });
+
+      document.querySelectorAll('.artist-slide-nav-btn.prev').forEach(btn => {
+        btn.addEventListener('click', prevArtistSlide);
+      });
+
+      // Indicators
+      artistIndicators.forEach((indicator, i) => {
+        indicator.addEventListener('click', () => showArtistSlide(i));
+      });
+
+      // Auto-play
+      let artistAutoplay = setInterval(nextArtistSlide, 5000);
+
+      // Pause on hover
+      const artistSlideshowSection = document.querySelector('.artists-slideshow');
+      if (artistSlideshowSection) {
+        artistSlideshowSection.addEventListener('mouseenter', () => clearInterval(artistAutoplay));
+        artistSlideshowSection.addEventListener('mouseleave', () => {
+          clearInterval(artistAutoplay);
+          artistAutoplay = setInterval(nextArtistSlide, 5000);
+        });
+      }
+
+      // Initialize
+      showArtistSlide(0);
+    </script>
 
     <!-- Releases Section -->
     <section id="releases" class="scroll-section releases-section releases-slideshow">
@@ -203,14 +278,10 @@ import news from "../data/news.json";
             </div>
             <div class="slide-navigation">
               <button class="slide-nav-btn prev" aria-label="Previous slide">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M15 18l-6-6 6-6"/>
-                </svg>
+                <img src="/images/icons/arrow_left.svg" alt="Previous slide" class="nav-icon" />
               </button>
               <button class="slide-nav-btn next" aria-label="Next slide">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 18l6-6-6-6"/>
-                </svg>
+                <img src="/images/icons/arrow_right.svg" alt="Next slide" class="nav-icon" />
               </button>
             </div>
           </div>
@@ -290,5 +361,42 @@ import news from "../data/news.json";
       </div>
     </section>
 </HeaderLayout>
-
 <FooterLayout />
+
+<!-- Hide loader after full load / pageshow; only on first-time navigate (no fixed fallback timer) -->
+<script>
+  (function() {
+    const loader = document.getElementById('page-loader');
+    if (!loader) return;
+
+    // If page is restored from bfcache, hide loader immediately
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        loader.classList.add('loaded');
+        setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
+      }
+    });
+
+    // Determine navigation type (navigate = first time)
+    const navEntries = (performance.getEntriesByType && performance.getEntriesByType('navigation')) || [];
+    const navType = navEntries[0] ? navEntries[0].type : (performance.navigation && performance.navigation.type === 0 ? 'navigate' : 'navigate');
+
+    if (navType === 'navigate') {
+      // First-time navigation: keep loader until the page 'load' completes
+      function hideLoader() {
+        loader.classList.add('loaded');
+        setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
+        window.removeEventListener('load', hideLoader);
+      }
+      if (document.readyState === 'complete') {
+        hideLoader();
+      } else {
+        window.addEventListener('load', hideLoader);
+      }
+    } else {
+      // Back/forward or reload from cache: hide loader immediately
+      loader.classList.add('loaded');
+      setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
+    }
+  })();
+</script>
