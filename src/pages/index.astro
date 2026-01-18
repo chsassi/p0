@@ -13,6 +13,16 @@ import news from "../data/news.json";
   <link rel="stylesheet" href="/styles/index-scroll.css" />
 
   <div class="main-scroll-container">
+    <!-- Scroll Indicator Arrow -->
+    <button class="scroll-indicator" aria-label="Scroll down">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow-down">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="arrow-up">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    </button>
+
     <!-- Hero Section - News Slideshow -->
     <section id="home" class="hero-section hero-slideshow">
       <div class="hero-slideshow-container">
@@ -40,18 +50,16 @@ import news from "../data/news.json";
           <button class="hero-indicator" data-slide={i} aria-label={`Go to news ${i + 1}`}></button>
         ))}
       </div>
-      <div class="hero-slide-navigation">
-        <button class="hero-nav-btn prev" aria-label="Previous news">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-        </button>
-        <button class="hero-nav-btn next" aria-label="Next news">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </button>
-      </div>
+      <button class="hero-nav-btn prev" aria-label="Previous news">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <button class="hero-nav-btn next" aria-label="Next news">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
     </section>
 
     <script>
@@ -109,6 +117,38 @@ import news from "../data/news.json";
 
       // Initialize
       showHeroSlide(0);
+
+      // Scroll indicator functionality
+      const scrollIndicator = document.querySelector('.scroll-indicator');
+
+      function updateScrollIndicator() {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+
+        // Change arrow direction based on scroll position
+        if (scrollPosition > windowHeight / 2) {
+          scrollIndicator?.classList.add('scrolled');
+          scrollIndicator?.setAttribute('aria-label', 'Scroll to top');
+        } else {
+          scrollIndicator?.classList.remove('scrolled');
+          scrollIndicator?.setAttribute('aria-label', 'Scroll down');
+        }
+      }
+
+      // Handle scroll indicator click - only scroll to top when arrow is up
+      scrollIndicator?.addEventListener('click', () => {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+
+        if (scrollPosition > windowHeight / 2) {
+          // Scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        // Do nothing when down arrow is showing
+      });
+
+      window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+      updateScrollIndicator();
     </script>
 
     <!-- About Section -->
@@ -146,12 +186,11 @@ import news from "../data/news.json";
               </div>
               <div class="slide-content">
                 <div class="slide-info">
-                  <span class="new-event-label">NEW EVENT</span>
                   <h2 class="slide-title">{rel.title}</h2>
                   <h3 class="slide-artist">{rel.artist}</h3>
                   <a href={`/releases/${rel.slug}`} class="slide-link">MORE INFO</a>
+                  <div class="slide-date">{rel.date}</div>
                 </div>
-                <div class="slide-date">{rel.date}</div>
               </div>
             </div>
             <div class="slide-navigation">

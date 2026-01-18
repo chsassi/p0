@@ -3,9 +3,9 @@
     "id": 1,
     "type": "release",
     "title": "NEW RELEASE",
-    "heading": "Latest Drop",
-    "description": "Check out our newest drum & bass release",
-    "image": "/images/tsv.jpg",
+    "heading": "RE:SET",
+    "description": "Fresh from the Protocol Zero kitchen",
+    "image": "/images/news_ep.png",
     "link": "/releases",
     "linkText": "EXPLORE RELEASES"
   },
@@ -13,20 +13,10 @@
     "id": 2,
     "type": "artist",
     "title": "NEW ARTIST",
-    "heading": "Welcome to P0",
+    "heading": "The Sun Vanished",
     "description": "Introducing our latest addition to the Protocol Zero family",
-    "image": "/images/news/artist-placeholder.jpg",
+    "image": "/images/tsv.jpg",
     "link": "/#artists",
     "linkText": "VIEW ARTISTS"
-  },
-  {
-    "id": 3,
-    "type": "merch",
-    "title": "NEW MERCH",
-    "heading": "Fresh Gear",
-    "description": "Limited edition Protocol Zero merchandise available now",
-    "image": "/images/news/merch-placeholder.jpg",
-    "link": "/shop",
-    "linkText": "SHOP NOW"
   }
 ]

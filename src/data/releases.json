@@ -2,17 +2,17 @@
   {
     "slug": "reset",
     "title": "RE:SET",
-    "artist": "The Martens | Chr-s | LED. | The Sun Vanished",
+    "artist": "Various Artists",
     "date": "January 2026",
     "image": "/images/reset.png",
     "description": "Coming Soon"
 },
   {
-    "slug": "reset",
-    "title": "SINGLE",
-    "artist": "The Martens",
-    "date": "February 2026",
-    "image": "/images/tsv.jpg",
+    "slug": "next",
+    "title": "?",
+    "artist": "¿¿¿",
+    "date": "¿¿/¿¿/¿¿¿¿",
+    "image": "/images/p0_black.png",
     "description": "Coming Soon"
 }
 ]
