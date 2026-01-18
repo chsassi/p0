@@ -35,7 +35,6 @@ body::before{
   content:"";
   position: fixed;
   inset: 0;
-  background-image: url("/images/bg-futuristic.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
