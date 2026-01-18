@@ -3,6 +3,7 @@ import HeaderLayout from "../layouts/HeaderLayout.astro";
 import FooterLayout from "../layouts/FooterLayout.astro";
 import artists from "../data/artists.json";
 import releases from "../data/releases.json";
+import news from "../data/news.json";
 ---
 
 <HeaderLayout title="Protocol Zero" active="">
@@ -12,23 +13,103 @@ import releases from "../data/releases.json";
   <link rel="stylesheet" href="/styles/index-scroll.css" />
 
   <div class="main-scroll-container">
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-      <div class="hero-content">
-        <div class="hero-left">
-          <img src="/images/logo.svg" alt="Protocol Zero Logo" class="hero-logo" />
-        </div>
-        <div class="hero-right">
-          <nav class="hero-menu">
-            <a href="#about" class="hero-menu-item">&gt; ABOUT US</a>
-            <a href="#artists" class="hero-menu-item">&gt; ARTISTS</a>
-            <a href="#contacts" class="hero-menu-item">&gt; CONTACTS</a>
-            <a href="#releases" class="hero-menu-item">&gt; RELEASES</a>
-            <a href="#shop" class="hero-menu-item">&gt; SHOP</a>
-          </nav>
-        </div>
+    <!-- Hero Section - News Slideshow -->
+    <section id="home" class="hero-section hero-slideshow">
+      <div class="hero-slideshow-container">
+        {news.map((item, i) => (
+          <div class="hero-slide" data-slide={i}>
+            <div class="hero-slide-background" style={`background-image: url(${item.image})`}></div>
+            <div class="hero-slide-content">
+              <div class="hero-logo-container">
+                <img src="/images/logo.svg" alt="Protocol Zero Logo" class="hero-logo" />
+              </div>
+              <div class="hero-news-content">
+                <span class="news-type-label">{item.title}</span>
+                <h1 class="news-heading">{item.heading}</h1>
+                <p class="news-description">{item.description}</p>
+                <a href={item.link} class="news-link">{item.linkText}</a>
+              </div>
+              <nav class="hero-menu">
+              </nav>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="hero-slideshow-indicators">
+        {news.map((_, i) => (
+          <button class="hero-indicator" data-slide={i} aria-label={`Go to news ${i + 1}`}></button>
+        ))}
+      </div>
+      <div class="hero-slide-navigation">
+        <button class="hero-nav-btn prev" aria-label="Previous news">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        <button class="hero-nav-btn next" aria-label="Next news">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
       </div>
     </section>
+
+    <script>
+      // Hero slideshow functionality
+      let currentHeroSlide = 0;
+      const heroSlides = document.querySelectorAll('.hero-slide');
+      const heroIndicators = document.querySelectorAll('.hero-slideshow-indicators .hero-indicator');
+
+      function showHeroSlide(index) {
+        heroSlides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+        heroIndicators.forEach((indicator, i) => {
+          indicator.classList.toggle('active', i === index);
+        });
+        currentHeroSlide = index;
+      }
+
+      function nextHeroSlide() {
+        const next = (currentHeroSlide + 1) % heroSlides.length;
+        showHeroSlide(next);
+      }
+
+      function prevHeroSlide() {
+        const prev = (currentHeroSlide - 1 + heroSlides.length) % heroSlides.length;
+        showHeroSlide(prev);
+      }
+
+      // Navigation buttons
+      document.querySelectorAll('.hero-nav-btn.next').forEach(btn => {
+        btn.addEventListener('click', nextHeroSlide);
+      });
+
+      document.querySelectorAll('.hero-nav-btn.prev').forEach(btn => {
+        btn.addEventListener('click', prevHeroSlide);
+      });
+
+      // Indicators
+      heroIndicators.forEach((indicator, i) => {
+        indicator.addEventListener('click', () => showHeroSlide(i));
+      });
+
+      // Auto-play
+      let heroAutoplay = setInterval(nextHeroSlide, 6000);
+
+      // Pause on hover
+      const heroSection = document.querySelector('.hero-slideshow');
+      if (heroSection) {
+        heroSection.addEventListener('mouseenter', () => clearInterval(heroAutoplay));
+        heroSection.addEventListener('mouseleave', () => {
+          clearInterval(heroAutoplay);
+          heroAutoplay = setInterval(nextHeroSlide, 6000);
+        });
+      }
+
+      // Initialize
+      showHeroSlide(0);
+    </script>
 
     <!-- About Section -->
     <section id="about" class="scroll-section about-section">
@@ -55,28 +136,102 @@ import releases from "../data/releases.json";
     </section>
 
     <!-- Releases Section -->
-    <section id="releases" class="scroll-section releases-section">
-      <h1>RELEASES</h1>
-      <div class="release-list">
+    <section id="releases" class="scroll-section releases-section releases-slideshow">
+      <div class="slideshow-container">
         {releases.map((rel, i) => (
-          <a class="release-row" href={`/releases/${rel.slug}`}>
-            <div class="release-index">{i + 1}</div>
-            <img
-              class="release-thumb"
-              src={rel.image}
-              alt={`${rel.title} cover`}
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="release-info">
-              <div class="release-title">{rel.title}</div>
-              <div class="release-artist">{rel.artist}</div>
+          <div class="release-slide" data-slide={i}>
+            <div class="slide-layout">
+              <div class="slide-image-container">
+                <img src={rel.image} alt={rel.title} class="slide-image" />
+              </div>
+              <div class="slide-content">
+                <div class="slide-info">
+                  <span class="new-event-label">NEW EVENT</span>
+                  <h2 class="slide-title">{rel.title}</h2>
+                  <h3 class="slide-artist">{rel.artist}</h3>
+                  <a href={`/releases/${rel.slug}`} class="slide-link">MORE INFO</a>
+                </div>
+                <div class="slide-date">{rel.date}</div>
+              </div>
             </div>
-            <div class="release-date">{rel.date}</div>
-          </a>
+            <div class="slide-navigation">
+              <button class="slide-nav-btn prev" aria-label="Previous slide">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M15 18l-6-6 6-6"/>
+                </svg>
+              </button>
+              <button class="slide-nav-btn next" aria-label="Next slide">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 18l6-6-6-6"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="slideshow-indicators">
+        {releases.map((_, i) => (
+          <button class="indicator" data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>
         ))}
       </div>
     </section>
+
+    <script>
+      // Slideshow functionality
+      let currentSlide = 0;
+      const slides = document.querySelectorAll('.release-slide');
+      const indicators = document.querySelectorAll('.slideshow-indicators .indicator');
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+        indicators.forEach((indicator, i) => {
+          indicator.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+      }
+
+      function nextSlide() {
+        const next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+      }
+
+      function prevSlide() {
+        const prev = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prev);
+      }
+
+      // Navigation buttons
+      document.querySelectorAll('.slide-nav-btn.next').forEach(btn => {
+        btn.addEventListener('click', nextSlide);
+      });
+
+      document.querySelectorAll('.slide-nav-btn.prev').forEach(btn => {
+        btn.addEventListener('click', prevSlide);
+      });
+
+      // Indicators
+      indicators.forEach((indicator, i) => {
+        indicator.addEventListener('click', () => showSlide(i));
+      });
+
+      // Auto-play (optional)
+      let autoplay = setInterval(nextSlide, 5000);
+
+      // Pause on hover
+      const slideshowSection = document.querySelector('.releases-slideshow');
+      if (slideshowSection) {
+        slideshowSection.addEventListener('mouseenter', () => clearInterval(autoplay));
+        slideshowSection.addEventListener('mouseleave', () => {
+          clearInterval(autoplay);
+          autoplay = setInterval(nextSlide, 5000);
+        });
+      }
+
+      // Initialize
+      showSlide(0);
+    </script>
 
     <!-- Contacts Section -->
     <section id="contacts" class="scroll-section contacts-section">
