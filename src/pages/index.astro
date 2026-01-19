@@ -69,10 +69,6 @@ import news from "../data/news.json";
       </button>
     </section>
 
-    <!-- ===== Divider: Home -> About ===== -->
-    <div class="section-divider" aria-hidden="true">
-      <div class="divider-wire"></div>
-    </div>
 
     <script>
       // Type definition for slideshow config
@@ -251,7 +247,9 @@ import news from "../data/news.json";
 
     <!-- About Section -->
     <section id="about" class="scroll-section about-section">
-      <h1>ABOUT</h1>
+      <div class="section-header">
+        <h1>ABOUT</h1>
+      </div>
       <div class="section-content">
         <p>Protocol Zero (P0) is an independent European drum & bass label founded between Slovakia and Italy by The Martens and Chr-s.</p>
         <p>Born from a shared vision of sound as both art and technology, the label focuses on the darker and more technical edges of drum & bass — from deep neurofunk to atmospheric techstep.</p>
@@ -260,18 +258,14 @@ import news from "../data/news.json";
       </div>
     </section>
 
-    <!-- ===== Divider: About -> Artists ===== -->
-    <div class="section-divider" aria-hidden="true">
-      <div class="divider-wire"></div>
-    </div>
 
     <!-- Artists Section -->
     <section id="artists" class="scroll-section artists-section artists-slideshow">
       <div class="artist-bg-blur" style={`background-image: url(${artists[0].image})`}></div>
-      <div class="section-vignette"></div>
-      <div class="section-separator">
-        <span class="section-separator-text">ARTISTS</span>
+      <div class="section-vignette">
+        <h1>ARTISTS</h1>
       </div>
+
       <div class="artists-slideshow-container">
         {artists.map((artist, i) => (
           <div class="artist-slide" data-slide={i} data-image={artist.image}>
@@ -304,18 +298,12 @@ import news from "../data/news.json";
       </div>
     </section>
 
-    <!-- ===== Divider: Artists -> Releases ===== -->
-    <div class="section-divider" aria-hidden="true">
-      <div class="divider-wire"></div>
-    </div>
 
     <!-- Releases Section -->
     <section id="releases" class="scroll-section releases-section releases-slideshow">
       <div class="release-bg-blur" style={`background-image: url(${releases[0].image})`}></div>
       <div class="section-vignette"></div>
-      <div class="section-separator">
-        <span class="section-separator-text">RELEASES</span>
-      </div>
+
       <div class="slideshow-container">
         {releases.map((rel, i) => (
           <div class="release-slide" data-slide={i} data-image={rel.image}>
@@ -349,10 +337,6 @@ import news from "../data/news.json";
       </div>
     </section>
 
-    <!-- ===== Divider: Releases -> Contacts ===== -->
-    <div class="section-divider" aria-hidden="true">
-      <div class="divider-wire"></div>
-    </div>
 
     <!-- Contacts Section -->
     <section id="contacts" class="scroll-section contacts-section">
