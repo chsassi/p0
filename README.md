@@ -46,7 +46,7 @@ Place static files in `public/` (e.g., `public/images/`, `public/videos/`). Refe
 ## Architecture and technical structure
 
 Stack:
-- Framework: Astro (static site generator)
+- Framework: Astro
 - Languages: TypeScript, HTML, CSS
 - Assets: `public/` directory
 
