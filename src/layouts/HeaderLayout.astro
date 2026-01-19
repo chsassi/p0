@@ -14,6 +14,7 @@ const pages = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <link rel="icon" href="/images/icons/favicon.png" />
     <link rel="preload" as="image" href="/images/logo.svg" />
     <link rel="stylesheet" href="/styles/global.css" />
     <link rel="stylesheet" href="/styles/header.css" />
@@ -43,19 +44,6 @@ const pages = [
       <div class="header-current-page">{current ? (pages.find(p => p.key === current)?.name || '') : 'HOME'}</div>
     </header>
     <main><slot /></main>
-    <script>
-      const header = document.querySelector('.header');
-      const menuBtn = document.querySelector('.menu-button');
-      const dropdown = document.querySelector('.menu-dropdown');
-
-      window.addEventListener('scroll', () => header?.classList.toggle('visible', window.scrollY > 100), { passive: true });
-
-      if (menuBtn && dropdown) {
-        menuBtn.addEventListener('click', e => { e.stopPropagation(); const open = dropdown.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', String(open)); });
-        dropdown.addEventListener('mouseenter', () => { dropdown.classList.add('open'); menuBtn.setAttribute('aria-expanded', 'true'); });
-        dropdown.addEventListener('mouseleave', () => { dropdown.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); });
-        document.addEventListener('click', () => { dropdown.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); });
-      }
-    </script>
+    <script src="/scripts/header-menu.min.js" is:inline></script>
   </body>
 </html>
