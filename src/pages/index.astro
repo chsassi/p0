@@ -48,24 +48,31 @@ import news from "../data/news.json";
                 <p class="news-description">{item.description}</p>
                 <a href={item.link} class="news-link">{item.linkText}</a>
               </div>
-              <nav class="hero-menu">
-              </nav>
+              <nav class="hero-menu"></nav>
             </div>
           </div>
         ))}
       </div>
+
       <div class="hero-slideshow-indicators">
         {news.map((_, i) => (
           <button class="hero-indicator" data-slide={i} aria-label={`Go to news ${i + 1}`}></button>
         ))}
       </div>
+
       <button class="hero-nav-btn prev" aria-label="Previous news">
-        <img src="../images/icons/arrow_left.svg" alt="Previous news" class="nav-icon" />
+        <!-- FIX path: usa sempre absolute dalla /public -->
+        <img src="/images/icons/arrow_left.svg" alt="Previous news" class="nav-icon" />
       </button>
       <button class="hero-nav-btn next" aria-label="Next news">
         <img src="/images/icons/arrow_right.svg" alt="Next news" class="nav-icon" />
       </button>
     </section>
+
+    <!-- ===== Divider: Home -> About ===== -->
+    <div class="section-divider" aria-hidden="true">
+      <div class="divider-wire"></div>
+    </div>
 
     <script>
       // Type definition for slideshow config
@@ -219,7 +226,7 @@ import news from "../data/news.json";
 
       function updateActiveSection() {
         let activeSection = sections[0];
-        
+
         sections.forEach((section) => {
           const element = document.getElementById(section.id);
           if (element) {
@@ -253,8 +260,18 @@ import news from "../data/news.json";
       </div>
     </section>
 
+    <!-- ===== Divider: About -> Artists ===== -->
+    <div class="section-divider" aria-hidden="true">
+      <div class="divider-wire"></div>
+    </div>
+
     <!-- Artists Section -->
     <section id="artists" class="scroll-section artists-section artists-slideshow">
+      <div class="artist-bg-blur" style={`background-image: url(${artists[0].image})`}></div>
+      <div class="section-vignette"></div>
+      <div class="section-separator">
+        <span class="section-separator-text">ARTISTS</span>
+      </div>
       <div class="artists-slideshow-container">
         {artists.map((artist, i) => (
           <div class="artist-slide" data-slide={i} data-image={artist.image}>
@@ -287,8 +304,18 @@ import news from "../data/news.json";
       </div>
     </section>
 
+    <!-- ===== Divider: Artists -> Releases ===== -->
+    <div class="section-divider" aria-hidden="true">
+      <div class="divider-wire"></div>
+    </div>
+
     <!-- Releases Section -->
     <section id="releases" class="scroll-section releases-section releases-slideshow">
+      <div class="release-bg-blur" style={`background-image: url(${releases[0].image})`}></div>
+      <div class="section-vignette"></div>
+      <div class="section-separator">
+        <span class="section-separator-text">RELEASES</span>
+      </div>
       <div class="slideshow-container">
         {releases.map((rel, i) => (
           <div class="release-slide" data-slide={i} data-image={rel.image}>
@@ -322,6 +349,11 @@ import news from "../data/news.json";
       </div>
     </section>
 
+    <!-- ===== Divider: Releases -> Contacts ===== -->
+    <div class="section-divider" aria-hidden="true">
+      <div class="divider-wire"></div>
+    </div>
+
     <!-- Contacts Section -->
     <section id="contacts" class="scroll-section contacts-section">
       <h1>CONTACTS</h1>
@@ -332,6 +364,7 @@ import news from "../data/news.json";
       </div>
     </section>
 </HeaderLayout>
+
 <FooterLayout />
 
 <!-- Hide loader after full load / pageshow; only on first-time navigate (no fixed fallback timer) -->
@@ -343,20 +376,19 @@ import news from "../data/news.json";
     // If page is restored from bfcache, hide loader immediately
     window.addEventListener('pageshow', (e) => {
       if (e.persisted) {
-        loader!.classList.add('loaded');
-        setTimeout(() => { try { loader!.style.display = 'none'; } catch (e) {} }, 600);
+        loader.classList.add('loaded');
+        setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
       }
     });
 
     // Determine navigation type (navigate = first time)
     const navEntries = (performance.getEntriesByType && performance.getEntriesByType('navigation')) || [];
-    const navType = navEntries[0] ? (navEntries[0] as PerformanceNavigationTiming).type : (performance.navigation && performance.navigation.type === 0 ? 'navigate' : 'navigate');
+    const navType = navEntries[0] ? navEntries[0].type : (performance.navigation && performance.navigation.type === 0 ? 'navigate' : 'navigate');
 
     if (navType === 'navigate') {
-      // First-time navigation: keep loader until the page 'load' completes
       function hideLoader() {
-        loader!.classList.add('loaded');
-        setTimeout(() => { try { loader!.style.display = 'none'; } catch (e) {} }, 600);
+        loader.classList.add('loaded');
+        setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
         window.removeEventListener('load', hideLoader);
       }
       if (document.readyState === 'complete') {
@@ -365,9 +397,8 @@ import news from "../data/news.json";
         window.addEventListener('load', hideLoader);
       }
     } else {
-      // Back/forward or reload from cache: hide loader immediately
-      loader!.classList.add('loaded');
-      setTimeout(() => { try { loader!.style.display = 'none'; } catch (e) {} }, 600);
+      loader.classList.add('loaded');
+      setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
     }
   })();
 </script>
