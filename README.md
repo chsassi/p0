@@ -1,6 +1,6 @@
 # Protocol Zero
 
-[img=readme.png]
+<img width="3804" height="2176" alt="image" src="https://github.com/user-attachments/assets/0092478b-afde-4367-9e71-21e891d18df1" />
 
 ## Project Overview
 
@@ -144,19 +144,3 @@ npm run dev
 npm run build
 npm run preview
 ```
-
-## Project structure (brief)
-
-- `src/pages/` — site pages (index.astro, artists.astro, releases.astro, etc.)
-- `src/layouts/` — shared layouts (Header, Footer, IndexLayout)
-- `src/data/` — JSON content sources
-- `public/` — static assets (images, CSS, video)
-
-See the `docs/` folder for detailed documentation.
-
-## Contributing
-
-See `docs/contributing.md` for guidelines on forking, branching, and PRs.
-
----
-_Automatically generated: main project documentation._
