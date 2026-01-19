@@ -5,7 +5,7 @@
     "title": "NEW ARTIST",
     "heading": "The Sun Vanished",
     "description": "Introducing our latest addition to the Protocol Zero family",
-    "image": "/images/tsv.jpg",
+    "image": "/images/artists/tsv.jpg",
     "link": "/#artists",
     "linkText": "VIEW ARTISTS"
   },
@@ -25,7 +25,7 @@
     "title": "NEW ARTIST",
     "heading": "LED.",
     "description": "Introducing our latest addition to the Protocol Zero family",
-    "image": "/images/led.jpg",
+    "image": "/images/artists/led.jpg",
     "link": "/#artists",
     "linkText": "VIEW ARTISTS"
   }

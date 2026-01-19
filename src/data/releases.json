@@ -4,15 +4,15 @@
     "title": "RE:SET",
     "artist": "Various Artists",
     "date": "January 2026",
-    "image": "/images/reset.png",
+    "image": "/images/releases/reset.png",
     "description": "Coming Soon"
 },
   {
     "slug": "next",
     "title": "?",
     "artist": "¿¿¿",
-    "date": "¿¿/¿¿/¿¿¿¿",
-    "image": "/images/p0_black.png",
+    "date": "??/??/????",
+    "image": "/images/releases/p0_black.png",
     "description": "Coming Soon"
 }
 ]
