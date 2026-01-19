@@ -42,10 +42,8 @@ const pages = [
                 decoding="async"
               />
             </a>
-            {current && (
-              <div class="header-current-page">{pages.find(p => p.key === current)?.name || ''}</div>
-            )}
           </button>
+          <div class="header-current-page">{current ? (pages.find(p => p.key === current)?.name || '') : 'HOME'}</div>
           <nav class="dropdown-content">
             {pages.map((page) => (
               <a href={page.path} class={page.key === current ? 'active' : ''}>{page.name}</a>

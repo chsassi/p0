@@ -207,6 +207,39 @@ import news from "../data/news.json";
 
       window.addEventListener('scroll', updateScrollIndicator, { passive: true });
       updateScrollIndicator();
+
+      // Track active section for header
+      const sections = [
+        { id: 'home', name: 'Home' },
+        { id: 'about', name: 'About' },
+        { id: 'artists', name: 'Artists' },
+        { id: 'releases', name: 'Releases' },
+        { id: 'contacts', name: 'Contacts' },
+      ];
+
+      function updateActiveSection() {
+        let activeSection = sections[0];
+        
+        sections.forEach((section) => {
+          const element = document.getElementById(section.id);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            // If section is in viewport (top half)
+            if (rect.top < window.innerHeight / 2 && rect.bottom > 0) {
+              activeSection = section;
+            }
+          }
+        });
+
+        // Update header with active section
+        const headerPageText = document.querySelector('.header-current-page');
+        if (headerPageText) {
+          headerPageText.textContent = activeSection.name;
+        }
+      }
+
+      window.addEventListener('scroll', updateActiveSection, { passive: true });
+      updateActiveSection();
     </script>
 
     <!-- About Section -->
