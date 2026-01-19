@@ -1,92 +1,48 @@
 ---
-import HeaderLayout from "../../layouts/HeaderLayout.astro";
-import FooterLayout from "../../layouts/FooterLayout.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
 import artists from "../../data/artists.json";
 
 export async function getStaticPaths() {
-  return artists.map((artist) => ({
-    params: { artist: artist.slug },
-    props: { artist },
-  }));
+  return artists.map(artist => ({ params: { artist: artist.slug }, props: { artist } }));
 }
 
 const { artist } = Astro.props;
-
-function withLeadingSlash(s: string): string {
-  if (typeof s !== "string" || s.length === 0) return "";
-  return s.startsWith("/") ? s : "/" + s;
-}
-
-const imgSrc = withLeadingSlash(artist.image || "");
+const imgSrc = artist.image?.startsWith('/') ? artist.image : '/' + (artist.image || '');
+type LinkKey = 'instagram' | 'spotify' | 'soundcloud';
+const socialLinks: { key: LinkKey; icon: string; alt: string }[] = [
+  { key: 'instagram', icon: '/images/icons/instagram.svg', alt: 'Instagram' },
+  { key: 'spotify', icon: '/images/icons/spotify.svg', alt: 'Spotify' },
+  { key: 'soundcloud', icon: '/images/icons/soundcloud.svg', alt: 'SoundCloud' },
+];
 ---
-
-<HeaderLayout title={`Protocol Zero — ${artist.name}`} active="artists">
-  <link rel="stylesheet" href="/styles/artists.css" />
-  <link rel="stylesheet" href="/styles/pages.css" />
-
-  <div class="page-container">
-    <div class="back-container">
-      <a href="/artists" class="back-btn">&lt; Back to Artists</a>
-    </div>
-
-    <section class="artist-detail">
-      <img src={imgSrc} alt={artist.name} loading="eager" decoding="async" />
-
-      <div class="artist-info">
-        <h1>{artist.name}</h1>
-
-        {Array.isArray(artist.flags) && artist.flags.length > 0 && (
-          <div class="artist-flags">
-            <span>Nationality:</span>
-            <div class="flag-group">
-              {artist.flags.map((flag) => (
-                <img src={flag} alt="flag" class="flag-inline" />
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div class="artist-description">
-          {(artist.description || "").split("\n\n").map((p) => <p>{p}</p>)}
+<PageLayout title={artist.name} active="artists" backLink="/artists" backText="Back to Artists" stylesheets={["/styles/artists.css"]}>
+  <section class="artist-detail">
+    <img src={imgSrc} alt={artist.name} loading="eager" decoding="async" />
+    <div class="artist-info">
+      <h1>{artist.name}</h1>
+      {Array.isArray(artist.flags) && artist.flags.length > 0 && (
+        <div class="artist-flags">
+          <span>Nationality:</span>
+          <div class="flag-group">{artist.flags.map(flag => <img src={flag} alt="flag" class="flag-inline" />)}</div>
         </div>
-
-        {artist.links && (
-          <div class="artist-icons">
-            {artist.links.instagram && artist.links.instagram !== "" && (
-              <a href={artist.links.instagram} target="_blank" rel="noopener noreferrer">
-                <img src="/images/instagram.svg" alt="Instagram" />
-              </a>
-            )}
-            {artist.links.spotify && artist.links.spotify !== "" && (
-              <a href={artist.links.spotify} target="_blank" rel="noopener noreferrer">
-                <img src="/images/spotify.svg" alt="Spotify" />
-              </a>
-            )}
-            {artist.links.soundcloud && artist.links.soundcloud !== "" && (
-              <a href={artist.links.soundcloud} target="_blank" rel="noopener noreferrer">
-                <img src="/images/soundcloud.svg" alt="SoundCloud" />
-              </a>
-            )}
-          </div>
-        )}
-
-        {artist.trackEmbed && artist.trackEmbed !== "" && (
-          <div class="artist-player">
-            <iframe
-              width="100%"
-              height="180"
-              scrolling="no"
-              frameborder="no"
-              allow="autoplay"
-              src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(
-                artist.trackEmbed
-              )}&visual=false&show_teaser=false&hide_related=true&color=%2357d6ff`}>
-            </iframe>
-          </div>
-        )}
+      )}
+      <div class="artist-description">
+        {(artist.description || "").split("\n\n").map(p => <p>{p}</p>)}
       </div>
-    </section>
-  </div>
-</HeaderLayout>
-
-<FooterLayout />
+      {artist.links && (
+        <div class="artist-icons">
+          {socialLinks.map(({ key, icon, alt }) => artist.links[key] && (
+            <a href={artist.links[key]} target="_blank" rel="noopener noreferrer"><img src={icon} alt={alt} /></a>
+          ))}
+        </div>
+      )}
+      {artist.trackEmbed && (
+        <div class="artist-player">
+          <iframe width="100%" height="180" style="border:0;overflow:hidden" allow="autoplay"
+            src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(artist.trackEmbed)}&visual=false&show_teaser=false&hide_related=true&color=%2357d6ff`}>
+          </iframe>
+        </div>
+      )}
+    </div>
+  </section>
+</PageLayout>

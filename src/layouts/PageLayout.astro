@@ -1,0 +1,21 @@
+---
+import HeaderLayout from "./HeaderLayout.astro";
+import FooterLayout from "./FooterLayout.astro";
+interface Props {
+  title: string;
+  active: string;
+  backLink?: string;
+  backText?: string;
+  stylesheets?: string[];
+}
+const { title, active, backLink = "/", backText = "Back to Home", stylesheets = [] } = Astro.props;
+---
+<HeaderLayout title={`Protocol Zero — ${title}`} active={active}>
+  <link rel="stylesheet" href="/styles/pages.css" />
+  {stylesheets.map(href => <link rel="stylesheet" href={href} />)}
+  <div class="page-container">
+    <a href={backLink} class="back-btn">&lt; {backText}</a>
+    <slot />
+  </div>
+</HeaderLayout>
+<FooterLayout />

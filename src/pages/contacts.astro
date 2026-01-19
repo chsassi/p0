@@ -1,18 +1,11 @@
 ---
-import HeaderLayout from "../layouts/HeaderLayout.astro";
-import FooterLayout from "../layouts/FooterLayout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
 ---
-
-<HeaderLayout title="Protocol Zero — Contacts" active="contacts">
-  <link rel="stylesheet" href="/styles/pages.css" />
-  <div class="page-container">
-    <a href="/" class="back-btn">&lt; Back to Home</a>
-    <section class="text-page">
-      <h1>CONTACTS</h1>
-      <p>For demo submissions or collaborations, feel free to reach out!</p>
-      <p>Send us a private Soundcloud link at the following email:</p>
-      <p><a href="mailto:demo@protocolzero.online">demo@protocolzero.online</a></p>
-    </section>
-  </div>
-</HeaderLayout>
-<FooterLayout />
+<PageLayout title="Contacts" active="contacts">
+  <section class="text-page">
+    <h1>CONTACTS</h1>
+    <p>For demo submissions or collaborations, feel free to reach out!</p>
+    <p>Send us a private Soundcloud link at the following email:</p>
+    <p><a href="mailto:demo@protocolzero.online">demo@protocolzero.online</a></p>
+  </section>
+</PageLayout>

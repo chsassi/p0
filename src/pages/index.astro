@@ -5,43 +5,35 @@ import artists from "../data/artists.json";
 import releases from "../data/releases.json";
 import news from "../data/news.json";
 ---
-
 <HeaderLayout title="Protocol Zero" active="">
   <link rel="stylesheet" href="/styles/pages.css" />
   <link rel="stylesheet" href="/styles/artists.css" />
   <link rel="stylesheet" href="/styles/releases.css" />
   <link rel="stylesheet" href="/styles/index-scroll.css" />
 
-  
   <div id="page-loader" class="page-loader" aria-hidden="true">
     <img src="/images/logo.svg" alt="Protocol Zero" class="loader-logo" />
   </div>
 
   <div class="main-scroll-container">
-    
     <button class="scroll-indicator" aria-label="Scroll down">
       <img src="/images/icons/arrow_down.svg" alt="Scroll down" class="arrow-down nav-icon" />
       <img src="/images/icons/arrow_up.svg" alt="Scroll to top" class="arrow-up nav-icon" />
     </button>
 
-    
     <section id="home" class="hero-section hero-slideshow">
       <div class="hero-slideshow-container">
         {news.map((item, i) => (
           <div class="hero-slide" data-slide={i}>
             {item.video ? (
               <div class="hero-slide-background">
-                <video autoplay muted loop playsinline class="hero-video">
-                  <source src={item.video} type="video/mp4" />
-                </video>
+                <video autoplay muted loop playsinline class="hero-video"><source src={item.video} type="video/mp4" /></video>
               </div>
             ) : (
               <div class="hero-slide-background" style={`background-image: url(${item.image})`}></div>
             )}
             <div class="hero-slide-content">
-              <div class="hero-logo-container">
-                <img src="/images/logo.svg" alt="Protocol Zero Logo" class="hero-logo" />
-              </div>
+              <div class="hero-logo-container"><img src="/images/logo.svg" alt="Protocol Zero Logo" class="hero-logo" /></div>
               <div class="hero-news-content">
                 <span class="news-type-label">{item.title}</span>
                 <h1 class="news-heading">{item.heading}</h1>
@@ -53,200 +45,15 @@ import news from "../data/news.json";
           </div>
         ))}
       </div>
-
       <div class="hero-slideshow-indicators">
-        {news.map((_, i) => (
-          <button class="hero-indicator" data-slide={i} aria-label={`Go to news ${i + 1}`}></button>
-        ))}
+        {news.map((_, i) => <button class="hero-indicator" data-slide={i} aria-label={`Go to news ${i + 1}`}></button>)}
       </div>
-
-      <button class="hero-nav-btn prev" aria-label="Previous news">
-        <img src="/images/icons/arrow_left.svg" alt="Previous news" class="nav-icon" />
-      </button>
-      <button class="hero-nav-btn next" aria-label="Next news">
-        <img src="/images/icons/arrow_right.svg" alt="Next news" class="nav-icon" />
-      </button>
+      <button class="hero-nav-btn prev" aria-label="Previous news"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
+      <button class="hero-nav-btn next" aria-label="Next news"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
     </section>
 
-
-    <script>
-      interface SlideshowConfig {
-        containerSelector: string;
-        slideSelector: string;
-        indicatorSelector: string;
-        nextBtnSelector: string;
-        prevBtnSelector: string;
-        autoplayInterval?: number;
-        bgBlurSelector?: string | null;
-      }
-
-      function createSlideshow(config: SlideshowConfig) {
-        const {
-          containerSelector,
-          slideSelector,
-          indicatorSelector,
-          nextBtnSelector,
-          prevBtnSelector,
-          autoplayInterval = 5000,
-          bgBlurSelector = null,
-        } = config;
-
-        let currentIndex = 0;
-        const container = document.querySelector(containerSelector);
-        const slides = Array.from(container?.querySelectorAll(slideSelector) || []);
-        const indicators = Array.from(container?.querySelectorAll(indicatorSelector) || []);
-        const nextBtn = container?.querySelector(nextBtnSelector);
-        const prevBtn = container?.querySelector(prevBtnSelector);
-        const bgBlur = bgBlurSelector ? document.querySelector(bgBlurSelector) : null;
-
-        if (!slides.length) return;
-
-        function updateSlide(index: number) {
-          slides.forEach((slide: Element, i: number) => {
-            slide.classList.toggle('active', i === index);
-          });
-          indicators.forEach((indicator: Element, i: number) => {
-            indicator.classList.toggle('active', i === index);
-          });
-
-          
-          if (bgBlur) {
-            const bgImage = slides[index].getAttribute('data-image');
-            if (bgImage) {
-              (bgBlur as HTMLElement).style.backgroundImage = `url(${bgImage})`;
-            }
-          }
-
-          currentIndex = index;
-        }
-
-        function next() {
-          const nextIndex = (currentIndex + 1) % slides.length;
-          updateSlide(nextIndex);
-        }
-
-        function prev() {
-          const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-          updateSlide(prevIndex);
-        }
-
-        
-        nextBtn?.addEventListener('click', next);
-        prevBtn?.addEventListener('click', prev);
-        indicators.forEach((indicator: Element, i: number) => {
-          indicator.addEventListener('click', () => updateSlide(i));
-        });
-
-        
-        let autoplayTimer = setInterval(next, autoplayInterval);
-
-        if (container) {
-          container.addEventListener('mouseenter', () => clearInterval(autoplayTimer));
-          container.addEventListener('mouseleave', () => {
-            clearInterval(autoplayTimer);
-            autoplayTimer = setInterval(next, autoplayInterval);
-          });
-        }
-
-        
-        updateSlide(0);
-      }
-
-      
-      createSlideshow({
-        containerSelector: '.hero-slideshow',
-        slideSelector: '.hero-slide',
-        indicatorSelector: '.hero-slideshow-indicators .hero-indicator',
-        nextBtnSelector: '.hero-nav-btn.next',
-        prevBtnSelector: '.hero-nav-btn.prev',
-        autoplayInterval: 6000,
-      });
-
-      
-      createSlideshow({
-        containerSelector: '.artists-slideshow',
-        slideSelector: '.artist-slide',
-        indicatorSelector: '.artists-slideshow-indicators .artist-indicator',
-        nextBtnSelector: '.artist-slide-nav-btn.next',
-        prevBtnSelector: '.artist-slide-nav-btn.prev',
-        autoplayInterval: 5000,
-        bgBlurSelector: '.artist-bg-blur',
-      });
-
-      
-      createSlideshow({
-        containerSelector: '.releases-slideshow',
-        slideSelector: '.release-slide',
-        indicatorSelector: '.slideshow-indicators .indicator',
-        nextBtnSelector: '.slide-nav-btn.next',
-        prevBtnSelector: '.slide-nav-btn.prev',
-        autoplayInterval: 5000,
-        bgBlurSelector: '.release-bg-blur',
-      });
-
-      
-      const scrollIndicator = document.querySelector('.scroll-indicator');
-
-      function updateScrollIndicator() {
-        const scrollPosition = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const isScrolled = scrollPosition > windowHeight / 2;
-
-        scrollIndicator?.classList.toggle('scrolled', isScrolled);
-        scrollIndicator?.setAttribute('aria-label', isScrolled ? 'Scroll to top' : 'Scroll down');
-      }
-
-      scrollIndicator?.addEventListener('click', () => {
-        const scrollPosition = window.scrollY;
-        const windowHeight = window.innerHeight;
-
-        if (scrollPosition > windowHeight / 2) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      });
-
-      window.addEventListener('scroll', updateScrollIndicator, { passive: true });
-      updateScrollIndicator();
-
-      
-      const sections = [
-        { id: 'home', name: 'Home' },
-        { id: 'about', name: 'About' },
-        { id: 'artists', name: 'Artists' },
-        { id: 'releases', name: 'Releases' },
-        { id: 'contacts', name: 'Contacts' },
-      ];
-
-      function updateActiveSection() {
-        let activeSection = sections[0];
-
-        sections.forEach((section) => {
-          const element = document.getElementById(section.id);
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            
-            if (rect.top < window.innerHeight / 2 && rect.bottom > 0) {
-              activeSection = section;
-            }
-          }
-        });
-
-        
-        const headerPageText = document.querySelector('.header-current-page');
-        if (headerPageText) {
-          headerPageText.textContent = activeSection.name;
-        }
-      }
-
-      window.addEventListener('scroll', updateActiveSection, { passive: true });
-      updateActiveSection();
-    </script>
-
-    
     <section id="about" class="scroll-section about-section">
-      <div class="section-header">
-        <h1>ABOUT</h1>
-      </div>
+      <div class="section-header"><h1>ABOUT</h1></div>
       <div class="section-content">
         <p>Protocol Zero (P0) is an independent European drum & bass label founded between Slovakia and Italy by The Martens and Chr-s.</p>
         <p>Born from a shared vision of sound as both art and technology, the label focuses on the darker and more technical edges of drum & bass — from deep neurofunk to atmospheric techstep.</p>
@@ -255,14 +62,9 @@ import news from "../data/news.json";
       </div>
     </section>
 
-
-    
     <section id="artists" class="scroll-section artists-section artists-slideshow">
       <div class="artist-bg-blur" style={`background-image: url(${artists[0].image})`}></div>
-      <div class="section-vignette">
-        <h1>ARTISTS</h1>
-      </div>
-
+      <div class="section-vignette"><h1>ARTISTS</h1></div>
       <div class="artists-slideshow-container">
         {artists.map((artist, i) => (
           <div class="artist-slide" data-slide={i} data-image={artist.image}>
@@ -273,41 +75,28 @@ import news from "../data/news.json";
                   <a href={`/artists/${artist.slug}`} class="artist-slide-link">MORE INFO</a>
                 </div>
               </div>
-              <div class="artist-slide-image-container">
-                <img src={artist.image} alt={artist.name} class="artist-slide-image" />
-              </div>
+              <div class="artist-slide-image-container"><img src={artist.image} alt={artist.name} class="artist-slide-image" /></div>
             </div>
           </div>
         ))}
       </div>
       <div class="swiper-nav-wrapper">
-        <button class="artist-slide-nav-btn prev" aria-label="Previous artist">
-          <img src="/images/icons/arrow_left.svg" alt="Previous artist" class="nav-icon" />
-        </button>
+        <button class="artist-slide-nav-btn prev" aria-label="Previous artist"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
         <div class="artists-slideshow-indicators">
-          {artists.map((_, i) => (
-            <button class="artist-indicator" data-slide={i} aria-label={`Go to artist ${i + 1}`}></button>
-          ))}
+          {artists.map((_, i) => <button class="artist-indicator" data-slide={i} aria-label={`Go to artist ${i + 1}`}></button>)}
         </div>
-        <button class="artist-slide-nav-btn next" aria-label="Next artist">
-          <img src="/images/icons/arrow_right.svg" alt="Next artist" class="nav-icon" />
-        </button>
+        <button class="artist-slide-nav-btn next" aria-label="Next artist"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
       </div>
     </section>
 
-
-    
     <section id="releases" class="scroll-section releases-section releases-slideshow">
       <div class="release-bg-blur" style={`background-image: url(${releases[0].image})`}></div>
       <div class="section-vignette"></div>
-
       <div class="slideshow-container">
         {releases.map((rel, i) => (
           <div class="release-slide" data-slide={i} data-image={rel.image}>
             <div class="slide-layout">
-              <div class="slide-image-container">
-                <img src={rel.image} alt={rel.title} class="slide-image" />
-              </div>
+              <div class="slide-image-container"><img src={rel.image} alt={rel.title} class="slide-image" /></div>
               <div class="slide-content">
                 <div class="slide-info">
                   <h2 class="slide-title">{rel.title}</h2>
@@ -320,22 +109,14 @@ import news from "../data/news.json";
         ))}
       </div>
       <div class="swiper-nav-wrapper">
-        <button class="slide-nav-btn prev" aria-label="Previous slide">
-          <img src="/images/icons/arrow_left.svg" alt="Previous slide" class="nav-icon" />
-        </button>
+        <button class="slide-nav-btn prev" aria-label="Previous slide"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
         <div class="slideshow-indicators">
-          {releases.map((_, i) => (
-            <button class="indicator" data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>
-          ))}
+          {releases.map((_, i) => <button class="indicator" data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>)}
         </div>
-        <button class="slide-nav-btn next" aria-label="Next slide">
-          <img src="/images/icons/arrow_right.svg" alt="Next slide" class="nav-icon" />
-        </button>
+        <button class="slide-nav-btn next" aria-label="Next slide"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
       </div>
     </section>
 
-
-    
     <section id="contacts" class="scroll-section contacts-section">
       <h1>CONTACTS</h1>
       <div class="section-content">
@@ -344,42 +125,69 @@ import news from "../data/news.json";
         <p><a href="mailto:demo@protocolzero.online">demo@protocolzero.online</a></p>
       </div>
     </section>
+  </div>
+
+  <script>
+    function createSlideshow(container: string, slide: string, indicator: string, next: string, prev: string, interval = 5000, bgBlur?: string) {
+      let idx = 0;
+      const el = document.querySelector(container);
+      const slides = Array.from(el?.querySelectorAll(slide) || []);
+      const indicators = Array.from(el?.querySelectorAll(indicator) || []);
+      const nextBtn = el?.querySelector(next), prevBtn = el?.querySelector(prev);
+      const blur = bgBlur ? document.querySelector(bgBlur) : null;
+      if (!slides.length) return;
+
+      const update = (i: number) => {
+        slides.forEach((s, j) => s.classList.toggle('active', j === i));
+        indicators.forEach((ind, j) => ind.classList.toggle('active', j === i));
+        if (blur) { const bg = slides[i].getAttribute('data-image'); if (bg) (blur as HTMLElement).style.backgroundImage = `url(${bg})`; }
+        idx = i;
+      };
+      const go = (dir: number) => update((idx + dir + slides.length) % slides.length);
+
+      nextBtn?.addEventListener('click', () => go(1));
+      prevBtn?.addEventListener('click', () => go(-1));
+      indicators.forEach((ind, i) => ind.addEventListener('click', () => update(i)));
+
+      let timer = setInterval(() => go(1), interval);
+      el?.addEventListener('mouseenter', () => clearInterval(timer));
+      el?.addEventListener('mouseleave', () => { clearInterval(timer); timer = setInterval(() => go(1), interval); });
+      update(0);
+    }
+
+    createSlideshow('.hero-slideshow', '.hero-slide', '.hero-slideshow-indicators .hero-indicator', '.hero-nav-btn.next', '.hero-nav-btn.prev', 6000);
+    createSlideshow('.artists-slideshow', '.artist-slide', '.artists-slideshow-indicators .artist-indicator', '.artist-slide-nav-btn.next', '.artist-slide-nav-btn.prev', 5000, '.artist-bg-blur');
+    createSlideshow('.releases-slideshow', '.release-slide', '.slideshow-indicators .indicator', '.slide-nav-btn.next', '.slide-nav-btn.prev', 5000, '.release-bg-blur');
+
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const sections = [{id:'home',name:'Home'},{id:'about',name:'About'},{id:'artists',name:'Artists'},{id:'releases',name:'Releases'},{id:'contacts',name:'Contacts'}];
+
+    function onScroll() {
+      const scrollY = window.scrollY, winH = window.innerHeight, isScrolled = scrollY > winH / 2;
+      scrollIndicator?.classList.toggle('scrolled', isScrolled);
+      scrollIndicator?.setAttribute('aria-label', isScrolled ? 'Scroll to top' : 'Scroll down');
+
+      let active = sections[0];
+      sections.forEach(s => { const el = document.getElementById(s.id); if (el) { const r = el.getBoundingClientRect(); if (r.top < winH/2 && r.bottom > 0) active = s; }});
+      const headerText = document.querySelector('.header-current-page');
+      if (headerText) headerText.textContent = active.name;
+    }
+
+    scrollIndicator?.addEventListener('click', () => { if (window.scrollY > window.innerHeight/2) window.scrollTo({top:0,behavior:'smooth'}); });
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  </script>
 </HeaderLayout>
-
 <FooterLayout />
-
 
 <script>
   (function() {
     const loader = document.getElementById('page-loader');
     if (!loader) return;
-
-    
-    window.addEventListener('pageshow', (e) => {
-      if (e.persisted) {
-        loader.classList.add('loaded');
-        setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
-      }
-    });
-
-    
-    const navEntries = (performance.getEntriesByType && performance.getEntriesByType('navigation')) || [];
-    const navType = navEntries[0] ? navEntries[0].type : (performance.navigation && performance.navigation.type === 0 ? 'navigate' : 'navigate');
-
-    if (navType === 'navigate') {
-      function hideLoader() {
-        loader.classList.add('loaded');
-        setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
-        window.removeEventListener('load', hideLoader);
-      }
-      if (document.readyState === 'complete') {
-        hideLoader();
-      } else {
-        window.addEventListener('load', hideLoader);
-      }
-    } else {
-      loader.classList.add('loaded');
-      setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
-    }
+    const hide = () => { loader.classList.add('loaded'); setTimeout(() => { loader.style.display = 'none'; }, 600); };
+    window.addEventListener('pageshow', e => { if (e.persisted) hide(); });
+    const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+    if (!nav || nav.type === 'navigate') { document.readyState === 'complete' ? hide() : window.addEventListener('load', hide); }
+    else hide();
   })();
 </script>

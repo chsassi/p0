@@ -1,8 +1,6 @@
 ---
 const { title = "Protocol Zero", active = "" } = Astro.props;
-
 const current = String(active || "").toLowerCase();
-
 const pages = [
   { name: "ABOUT", path: "/#about", key: "about" },
   { name: "ARTISTS", path: "/#artists", key: "artists" },
@@ -11,126 +9,52 @@ const pages = [
   { name: "SHOP", path: "/shop", key: "shop" },
 ];
 ---
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-
     <link rel="preload" as="image" href="/images/logo.svg" />
-
     <link rel="stylesheet" href="/styles/global.css" />
     <link rel="stylesheet" href="/styles/header.css" />
   </head>
-
   <body>
     <header class="header">
       <div class="header-left">
         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
-          <img
-            src="/images/icons/instagram.svg"
-            alt="Instagram"
-            width="32"
-            height="32"
-            loading="eager"
-            decoding="async"
-          />
+          <img src="/images/icons/instagram.svg" alt="Instagram" width="32" height="32" loading="eager" decoding="async" />
         </a>
       </div>
-
       <div class="header-center">
         <div class="menu-dropdown">
           <button class="menu-button" aria-label="Menu" aria-expanded="false">
-            <a href="/" class="header-logo">
-              <img
-                src="/images/logo.svg"
-                alt="Protocol Zero logo"
-                width="80"
-                height="80"
-                loading="eager"
-                decoding="async"
-              />
-            </a>
+            <a href="/" class="header-logo"><img src="/images/logo.svg" alt="Protocol Zero logo" width="80" height="80" loading="eager" decoding="async" /></a>
           </button>
           <nav class="dropdown-content">
-            {pages.map((page) => (
-              <a href={page.path} class={page.key === current ? 'active' : ''}>{page.name}</a>
-            ))}
+            {pages.map(p => <a href={p.path} class={p.key === current ? 'active' : ''}>{p.name}</a>)}
           </nav>
         </div>
       </div>
-
       <div class="header-right">
         <a href="https://soundcloud.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="SoundCloud">
-          <img
-            src="/images/icons/soundcloud.svg"
-            alt="SoundCloud"
-            width="32"
-            height="32"
-            loading="eager"
-            decoding="async"
-          />
+          <img src="/images/icons/soundcloud.svg" alt="SoundCloud" width="32" height="32" loading="eager" decoding="async" />
         </a>
       </div>
-
       <div class="header-current-page">{current ? (pages.find(p => p.key === current)?.name || '') : 'HOME'}</div>
-
     </header>
-
-    <main>
-      <slot />
-    </main>
-
+    <main><slot /></main>
     <script>
-      // Show header on scroll
       const header = document.querySelector('.header');
-
-      function handleScroll() {
-        const currentScrollY = window.scrollY;
-
-        // Show header when scrolling down past 100px
-        if (currentScrollY > 100) {
-          header?.classList.add('visible');
-        } else {
-          header?.classList.remove('visible');
-        }
-      }
-
-      window.addEventListener('scroll', handleScroll, { passive: true });
-
-      // Initial check
-      handleScroll();
-
-      // Dropdown menu functionality
-      const menuButton = document.querySelector('.menu-button');
+      const menuBtn = document.querySelector('.menu-button');
       const dropdown = document.querySelector('.menu-dropdown');
 
-      if (menuButton && dropdown) {
-        // Toggle on click
-        menuButton.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const isOpen = dropdown.classList.toggle('open');
-          menuButton.setAttribute('aria-expanded', String(isOpen));
-        });
+      window.addEventListener('scroll', () => header?.classList.toggle('visible', window.scrollY > 100), { passive: true });
 
-        // Open on hover
-        dropdown.addEventListener('mouseenter', () => {
-          dropdown.classList.add('open');
-          menuButton.setAttribute('aria-expanded', 'true');
-        });
-
-        // Close on mouse leave
-        dropdown.addEventListener('mouseleave', () => {
-          dropdown.classList.remove('open');
-          menuButton.setAttribute('aria-expanded', 'false');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', () => {
-          dropdown.classList.remove('open');
-          menuButton.setAttribute('aria-expanded', 'false');
-        });
+      if (menuBtn && dropdown) {
+        menuBtn.addEventListener('click', e => { e.stopPropagation(); const open = dropdown.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', String(open)); });
+        dropdown.addEventListener('mouseenter', () => { dropdown.classList.add('open'); menuBtn.setAttribute('aria-expanded', 'true'); });
+        dropdown.addEventListener('mouseleave', () => { dropdown.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); });
+        document.addEventListener('click', () => { dropdown.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); });
       }
     </script>
   </body>

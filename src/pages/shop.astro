@@ -1,16 +1,8 @@
 ---
-import HeaderLayout from "../layouts/HeaderLayout.astro";
-import FooterLayout from "../layouts/FooterLayout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
 ---
-
-<HeaderLayout title="Protocol Zero — Shop" active="shop">
-  <link rel="stylesheet" href="/styles/pages.css" />
-  <div class="page-container">
-    <a href="/" class="back-btn">&lt; Back to Home</a>
-    <div class="center-page">
-      <h1 class="coming-soon">COMING SOON</h1>
-    </div>
+<PageLayout title="Shop" active="shop">
+  <div class="center-page">
+    <h1 class="coming-soon">COMING SOON</h1>
   </div>
-</HeaderLayout>
-
-<FooterLayout />
+</PageLayout>
