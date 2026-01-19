@@ -473,18 +473,7 @@
 }
 
 .artist-slide-navigation {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 40px;
-  pointer-events: none;
-  z-index: 10;
-  transform: translateY(-50%);
+  display: none;
 }
 
 .artist-slide-nav-btn {
@@ -508,14 +497,28 @@
   box-shadow: 0 0 20px rgba(87, 214, 255, 0.5);
 }
 
-.artists-slideshow-indicators {
+/* Artists slideshow bottom navigation wrapper */
+.artists-slideshow .swiper-nav-wrapper {
   position: absolute;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 20px;
   z-index: 10;
+}
+
+.artists-slideshow .swiper-nav-wrapper .artist-slide-nav-btn {
+  position: static;
+  transform: none;
+}
+
+.artists-slideshow-indicators {
+  position: static;
+  transform: none;
+  display: flex;
+  gap: 12px;
 }
 
 .artists-slideshow-indicators .artist-indicator {
@@ -716,18 +719,7 @@
 }
 
 .slide-navigation {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 40px;
-  pointer-events: none;
-  z-index: 10;
-  transform: translateY(-50%);
+  display: none;
 }
 
 .slide-nav-btn {
@@ -767,14 +759,28 @@
   margin-bottom: 60px;
 }
 
-.slideshow-indicators {
+/* Releases slideshow bottom navigation wrapper */
+.releases-slideshow .swiper-nav-wrapper {
   position: absolute;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 20px;
   z-index: 10;
+}
+
+.releases-slideshow .swiper-nav-wrapper .slide-nav-btn {
+  position: static;
+  transform: none;
+}
+
+.slideshow-indicators {
+  position: static;
+  transform: none;
+  display: flex;
+  gap: 12px;
 }
 
 .slideshow-indicators .indicator {
@@ -917,12 +923,9 @@
     margin-bottom: 32px;
   }
 
-  .artist-slide-nav-btn {
-    display: none;
-  }
-
-  .artists-slideshow-indicators {
+  .artists-slideshow .swiper-nav-wrapper {
     bottom: 24px;
+    gap: 12px;
   }
 
   .artists-slideshow-indicators .artist-indicator {
@@ -983,16 +986,13 @@
     margin-bottom: 0;
   }
 
-  .slide-nav-btn {
-    display: none;
+  .releases-slideshow .swiper-nav-wrapper {
+    bottom: 24px;
+    gap: 12px;
   }
 
   .slide-date {
     font-size: 0.875rem;
-  }
-
-  .slideshow-indicators {
-    bottom: 24px;
   }
 
   .slideshow-indicators .indicator {

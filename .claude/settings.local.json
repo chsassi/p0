@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(findstr /i arrow)"
+      "Bash(findstr /i arrow)",
+      "Bash(npm run build:*)"
     ]
   }
 }
