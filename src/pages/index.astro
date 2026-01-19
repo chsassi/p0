@@ -269,16 +269,16 @@ import news from "../data/news.json";
                 <img src={artist.image} alt={artist.name} class="artist-slide-image" />
               </div>
             </div>
-            <div class="artist-slide-navigation">
-              <button class="artist-slide-nav-btn prev" aria-label="Previous artist">
-                <img src="/images/icons/arrow_left.svg" alt="Previous artist" class="nav-icon" />
-              </button>
-              <button class="artist-slide-nav-btn next" aria-label="Next artist">
-                <img src="/images/icons/arrow_right.svg" alt="Next artist" class="nav-icon" />
-              </button>
-            </div>
           </div>
         ))}
+      </div>
+      <div class="artist-slide-navigation">
+        <button class="artist-slide-nav-btn prev" aria-label="Previous artist">
+          <img src="/images/icons/arrow_left.svg" alt="Previous artist" class="nav-icon" />
+        </button>
+        <button class="artist-slide-nav-btn next" aria-label="Next artist">
+          <img src="/images/icons/arrow_right.svg" alt="Next artist" class="nav-icon" />
+        </button>
       </div>
       <div class="artists-slideshow-indicators">
         {artists.map((_, i) => (
@@ -305,16 +305,16 @@ import news from "../data/news.json";
                 </div>
               </div>
             </div>
-            <div class="slide-navigation">
-              <button class="slide-nav-btn prev" aria-label="Previous slide">
-                <img src="/images/icons/arrow_left.svg" alt="Previous slide" class="nav-icon" />
-              </button>
-              <button class="slide-nav-btn next" aria-label="Next slide">
-                <img src="/images/icons/arrow_right.svg" alt="Next slide" class="nav-icon" />
-              </button>
-            </div>
           </div>
         ))}
+      </div>
+      <div class="slide-navigation">
+        <button class="slide-nav-btn prev" aria-label="Previous slide">
+          <img src="/images/icons/arrow_left.svg" alt="Previous slide" class="nav-icon" />
+        </button>
+        <button class="slide-nav-btn next" aria-label="Next slide">
+          <img src="/images/icons/arrow_right.svg" alt="Next slide" class="nav-icon" />
+        </button>
       </div>
       <div class="slideshow-indicators">
         {releases.map((_, i) => (

@@ -69,6 +69,7 @@
   border: 2px solid var(--accent);
   box-shadow: 0 0 18px rgba(87, 214, 255, 0.25);
   background: #000;
+  filter: brightness(0.8) contrast(1.1);
 }
 
 .artist-info {

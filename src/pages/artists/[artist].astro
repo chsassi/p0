@@ -52,14 +52,14 @@ const imgSrc = withLeadingSlash(artist.image || "");
 
         {artist.links && (
           <div class="artist-icons">
+            {artist.links.instagram && artist.links.instagram !== "" && (
+              <a href={artist.links.instagram} target="_blank" rel="noopener noreferrer">
+                <img src="/images/instagram.svg" alt="Instagram" />
+              </a>
+            )}
             {artist.links.spotify && artist.links.spotify !== "" && (
               <a href={artist.links.spotify} target="_blank" rel="noopener noreferrer">
                 <img src="/images/spotify.svg" alt="Spotify" />
-              </a>
-            )}
-            {artist.links.instagram && artist.links.instagram !== "" && (
-              <a href={artist.links.instagram} target="_blank" rel="noopener noreferrer">
-                <img src="/images/instagram.png" alt="Instagram" />
               </a>
             )}
             {artist.links.soundcloud && artist.links.soundcloud !== "" && (
@@ -80,7 +80,7 @@ const imgSrc = withLeadingSlash(artist.image || "");
               allow="autoplay"
               src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(
                 artist.trackEmbed
-              )}&visual=false&show_teaser=false&hide_related=true&color=%230a0a0a`}>
+              )}&visual=false&show_teaser=false&hide_related=true&color=%2357d6ff`}>
             </iframe>
           </div>
         )}

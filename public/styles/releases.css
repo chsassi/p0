@@ -19,8 +19,8 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
 }
 
