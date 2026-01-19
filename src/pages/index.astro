@@ -72,7 +72,7 @@ import news from "../data/news.json";
               <div class="artist-slide-content">
                 <div class="artist-slide-info">
                   <h2 class="artist-slide-title">{artist.name}</h2>
-                  <a href={`/artists/${artist.slug}`} class="artist-slide-link">MORE INFO</a>
+                  <a href={`/artists/${artist.slug}`} class="artist-slide-link">VIEW ARTIST</a>
                 </div>
               </div>
               <div class="artist-slide-image-container"><img src={artist.image} alt={artist.name} class="artist-slide-image" /></div>
@@ -88,10 +88,19 @@ import news from "../data/news.json";
         <button class="artist-slide-nav-btn next" aria-label="Next artist"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
       </div>
     </section>
+    
+    <section id="contacts" class="scroll-section contacts-section">
+      <h1>CONTACTS</h1>
+      <div class="section-content">
+        <p>For demo submissions or collaborations, feel free to reach out!</p>
+        <p>Send us a private Soundcloud link at the following email:</p>
+        <p><a href="mailto:demo@protocolzero.online">demo@protocolzero.online</a></p>
+      </div>
+    </section>
 
     <section id="releases" class="scroll-section releases-section releases-slideshow">
       <div class="release-bg-blur" style={`background-image: url(${releases[0].image})`}></div>
-      <div class="section-vignette"></div>
+      <div class="section-vignette"><h1>RELEASES</h1></div>
       <div class="slideshow-container">
         {releases.map((rel, i) => (
           <div class="release-slide" data-slide={i} data-image={rel.image}>
@@ -101,7 +110,7 @@ import news from "../data/news.json";
                 <div class="slide-info">
                   <h2 class="slide-title">{rel.title}</h2>
                   <h3 class="slide-artist">{rel.artist}</h3>
-                  <a href={`/releases/${rel.slug}`} class="slide-link">MORE INFO</a>
+                  <a href={`/releases/${rel.slug}`} class="slide-link">VIEW RELEASE</a>
                 </div>
               </div>
             </div>
@@ -114,15 +123,6 @@ import news from "../data/news.json";
           {releases.map((_, i) => <button class="indicator" data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>)}
         </div>
         <button class="slide-nav-btn next" aria-label="Next slide"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
-      </div>
-    </section>
-
-    <section id="contacts" class="scroll-section contacts-section">
-      <h1>CONTACTS</h1>
-      <div class="section-content">
-        <p>For demo submissions or collaborations, feel free to reach out!</p>
-        <p>Send us a private Soundcloud link at the following email:</p>
-        <p><a href="mailto:demo@protocolzero.online">demo@protocolzero.online</a></p>
       </div>
     </section>
   </div>
