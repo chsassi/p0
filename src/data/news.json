@@ -1,6 +1,16 @@
 [
-  {
+    {
     "id": 1,
+    "type": "artist",
+    "title": "NEW ARTIST",
+    "heading": "The Sun Vanished",
+    "description": "Introducing our latest addition to the Protocol Zero family",
+    "image": "/images/tsv.jpg",
+    "link": "/#artists",
+    "linkText": "VIEW ARTISTS"
+  },
+  {
+    "id": 2,
     "type": "release",
     "title": "NEW RELEASE",
     "heading": "RE:SET",
@@ -10,12 +20,12 @@
     "linkText": "EXPLORE RELEASES"
   },
   {
-    "id": 2,
+    "id": 3,
     "type": "artist",
     "title": "NEW ARTIST",
-    "heading": "The Sun Vanished",
+    "heading": "LED.",
     "description": "Introducing our latest addition to the Protocol Zero family",
-    "image": "/images/tsv.jpg",
+    "image": "/images/led.jpg",
     "link": "/#artists",
     "linkText": "VIEW ARTISTS"
   }

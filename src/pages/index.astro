@@ -68,60 +68,121 @@ import news from "../data/news.json";
     </section>
 
     <script>
-      // Hero slideshow functionality
-      let currentHeroSlide = 0;
-      const heroSlides = document.querySelectorAll('.hero-slide');
-      const heroIndicators = document.querySelectorAll('.hero-slideshow-indicators .hero-indicator');
+      // Type definition for slideshow config
+      interface SlideshowConfig {
+        containerSelector: string;
+        slideSelector: string;
+        indicatorSelector: string;
+        nextBtnSelector: string;
+        prevBtnSelector: string;
+        autoplayInterval?: number;
+        bgBlurSelector?: string | null;
+      }
 
-      function showHeroSlide(index) {
-        heroSlides.forEach((slide, i) => {
-          slide.classList.toggle('active', i === index);
+      // Reusable slideshow controller
+      function createSlideshow(config: SlideshowConfig) {
+        const {
+          containerSelector,
+          slideSelector,
+          indicatorSelector,
+          nextBtnSelector,
+          prevBtnSelector,
+          autoplayInterval = 5000,
+          bgBlurSelector = null,
+        } = config;
+
+        let currentIndex = 0;
+        const container = document.querySelector(containerSelector);
+        const slides = Array.from(container?.querySelectorAll(slideSelector) || []);
+        const indicators = Array.from(container?.querySelectorAll(indicatorSelector) || []);
+        const nextBtn = container?.querySelector(nextBtnSelector);
+        const prevBtn = container?.querySelector(prevBtnSelector);
+        const bgBlur = bgBlurSelector ? document.querySelector(bgBlurSelector) : null;
+
+        if (!slides.length) return;
+
+        function updateSlide(index: number) {
+          slides.forEach((slide: Element, i: number) => {
+            slide.classList.toggle('active', i === index);
+          });
+          indicators.forEach((indicator: Element, i: number) => {
+            indicator.classList.toggle('active', i === index);
+          });
+
+          // Update background blur if applicable
+          if (bgBlur) {
+            const bgImage = slides[index].getAttribute('data-image');
+            if (bgImage) {
+              (bgBlur as HTMLElement).style.backgroundImage = `url(${bgImage})`;
+            }
+          }
+
+          currentIndex = index;
+        }
+
+        function next() {
+          const nextIndex = (currentIndex + 1) % slides.length;
+          updateSlide(nextIndex);
+        }
+
+        function prev() {
+          const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+          updateSlide(prevIndex);
+        }
+
+        // Event listeners
+        nextBtn?.addEventListener('click', next);
+        prevBtn?.addEventListener('click', prev);
+        indicators.forEach((indicator: Element, i: number) => {
+          indicator.addEventListener('click', () => updateSlide(i));
         });
-        heroIndicators.forEach((indicator, i) => {
-          indicator.classList.toggle('active', i === index);
-        });
-        currentHeroSlide = index;
+
+        // Auto-play with pause on hover
+        let autoplayTimer = setInterval(next, autoplayInterval);
+
+        if (container) {
+          container.addEventListener('mouseenter', () => clearInterval(autoplayTimer));
+          container.addEventListener('mouseleave', () => {
+            clearInterval(autoplayTimer);
+            autoplayTimer = setInterval(next, autoplayInterval);
+          });
+        }
+
+        // Initialize
+        updateSlide(0);
       }
 
-      function nextHeroSlide() {
-        const next = (currentHeroSlide + 1) % heroSlides.length;
-        showHeroSlide(next);
-      }
-
-      function prevHeroSlide() {
-        const prev = (currentHeroSlide - 1 + heroSlides.length) % heroSlides.length;
-        showHeroSlide(prev);
-      }
-
-      // Navigation buttons
-      document.querySelectorAll('.hero-nav-btn.next').forEach(btn => {
-        btn.addEventListener('click', nextHeroSlide);
+      // Initialize Hero slideshow
+      createSlideshow({
+        containerSelector: '.hero-slideshow',
+        slideSelector: '.hero-slide',
+        indicatorSelector: '.hero-slideshow-indicators .hero-indicator',
+        nextBtnSelector: '.hero-nav-btn.next',
+        prevBtnSelector: '.hero-nav-btn.prev',
+        autoplayInterval: 6000,
       });
 
-      document.querySelectorAll('.hero-nav-btn.prev').forEach(btn => {
-        btn.addEventListener('click', prevHeroSlide);
+      // Initialize Artists slideshow
+      createSlideshow({
+        containerSelector: '.artists-slideshow',
+        slideSelector: '.artist-slide',
+        indicatorSelector: '.artists-slideshow-indicators .artist-indicator',
+        nextBtnSelector: '.artist-slide-nav-btn.next',
+        prevBtnSelector: '.artist-slide-nav-btn.prev',
+        autoplayInterval: 5000,
+        bgBlurSelector: '.artist-bg-blur',
       });
 
-      // Indicators
-      heroIndicators.forEach((indicator, i) => {
-        indicator.addEventListener('click', () => showHeroSlide(i));
+      // Initialize Releases slideshow
+      createSlideshow({
+        containerSelector: '.releases-slideshow',
+        slideSelector: '.release-slide',
+        indicatorSelector: '.slideshow-indicators .indicator',
+        nextBtnSelector: '.slide-nav-btn.next',
+        prevBtnSelector: '.slide-nav-btn.prev',
+        autoplayInterval: 5000,
+        bgBlurSelector: '.release-bg-blur',
       });
-
-      // Auto-play
-      let heroAutoplay = setInterval(nextHeroSlide, 6000);
-
-      // Pause on hover
-      const heroSection = document.querySelector('.hero-slideshow');
-      if (heroSection) {
-        heroSection.addEventListener('mouseenter', () => clearInterval(heroAutoplay));
-        heroSection.addEventListener('mouseleave', () => {
-          clearInterval(heroAutoplay);
-          heroAutoplay = setInterval(nextHeroSlide, 6000);
-        });
-      }
-
-      // Initialize
-      showHeroSlide(0);
 
       // Scroll indicator functionality
       const scrollIndicator = document.querySelector('.scroll-indicator');
@@ -129,27 +190,19 @@ import news from "../data/news.json";
       function updateScrollIndicator() {
         const scrollPosition = window.scrollY;
         const windowHeight = window.innerHeight;
+        const isScrolled = scrollPosition > windowHeight / 2;
 
-        // Change arrow direction based on scroll position
-        if (scrollPosition > windowHeight / 2) {
-          scrollIndicator?.classList.add('scrolled');
-          scrollIndicator?.setAttribute('aria-label', 'Scroll to top');
-        } else {
-          scrollIndicator?.classList.remove('scrolled');
-          scrollIndicator?.setAttribute('aria-label', 'Scroll down');
-        }
+        scrollIndicator?.classList.toggle('scrolled', isScrolled);
+        scrollIndicator?.setAttribute('aria-label', isScrolled ? 'Scroll to top' : 'Scroll down');
       }
 
-      // Handle scroll indicator click - only scroll to top when arrow is up
       scrollIndicator?.addEventListener('click', () => {
         const scrollPosition = window.scrollY;
         const windowHeight = window.innerHeight;
 
         if (scrollPosition > windowHeight / 2) {
-          // Scroll to top
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        // Do nothing when down arrow is showing
       });
 
       window.addEventListener('scroll', updateScrollIndicator, { passive: true });
@@ -171,7 +224,7 @@ import news from "../data/news.json";
     <section id="artists" class="scroll-section artists-section artists-slideshow">
       <div class="artists-slideshow-container">
         {artists.map((artist, i) => (
-          <div class="artist-slide" data-slide={i}>
+          <div class="artist-slide" data-slide={i} data-image={artist.image}>
             <div class="artist-slide-layout">
               <div class="artist-slide-content">
                 <div class="artist-slide-info">
@@ -201,68 +254,11 @@ import news from "../data/news.json";
       </div>
     </section>
 
-    <script>
-      // Artists slideshow functionality
-      let currentArtistSlide = 0;
-      const artistSlides = document.querySelectorAll('.artist-slide');
-      const artistIndicators = document.querySelectorAll('.artists-slideshow-indicators .artist-indicator');
-
-      function showArtistSlide(index) {
-        artistSlides.forEach((slide, i) => {
-          slide.classList.toggle('active', i === index);
-        });
-        artistIndicators.forEach((indicator, i) => {
-          indicator.classList.toggle('active', i === index);
-        });
-        currentArtistSlide = index;
-      }
-
-      function nextArtistSlide() {
-        const next = (currentArtistSlide + 1) % artistSlides.length;
-        showArtistSlide(next);
-      }
-
-      function prevArtistSlide() {
-        const prev = (currentArtistSlide - 1 + artistSlides.length) % artistSlides.length;
-        showArtistSlide(prev);
-      }
-
-      // Navigation buttons
-      document.querySelectorAll('.artist-slide-nav-btn.next').forEach(btn => {
-        btn.addEventListener('click', nextArtistSlide);
-      });
-
-      document.querySelectorAll('.artist-slide-nav-btn.prev').forEach(btn => {
-        btn.addEventListener('click', prevArtistSlide);
-      });
-
-      // Indicators
-      artistIndicators.forEach((indicator, i) => {
-        indicator.addEventListener('click', () => showArtistSlide(i));
-      });
-
-      // Auto-play
-      let artistAutoplay = setInterval(nextArtistSlide, 5000);
-
-      // Pause on hover
-      const artistSlideshowSection = document.querySelector('.artists-slideshow');
-      if (artistSlideshowSection) {
-        artistSlideshowSection.addEventListener('mouseenter', () => clearInterval(artistAutoplay));
-        artistSlideshowSection.addEventListener('mouseleave', () => {
-          clearInterval(artistAutoplay);
-          artistAutoplay = setInterval(nextArtistSlide, 5000);
-        });
-      }
-
-      // Initialize
-      showArtistSlide(0);
-    </script>
-
     <!-- Releases Section -->
     <section id="releases" class="scroll-section releases-section releases-slideshow">
       <div class="slideshow-container">
         {releases.map((rel, i) => (
-          <div class="release-slide" data-slide={i}>
+          <div class="release-slide" data-slide={i} data-image={rel.image}>
             <div class="slide-layout">
               <div class="slide-image-container">
                 <img src={rel.image} alt={rel.title} class="slide-image" />
@@ -294,63 +290,6 @@ import news from "../data/news.json";
       </div>
     </section>
 
-    <script>
-      // Slideshow functionality
-      let currentSlide = 0;
-      const slides = document.querySelectorAll('.release-slide');
-      const indicators = document.querySelectorAll('.slideshow-indicators .indicator');
-
-      function showSlide(index) {
-        slides.forEach((slide, i) => {
-          slide.classList.toggle('active', i === index);
-        });
-        indicators.forEach((indicator, i) => {
-          indicator.classList.toggle('active', i === index);
-        });
-        currentSlide = index;
-      }
-
-      function nextSlide() {
-        const next = (currentSlide + 1) % slides.length;
-        showSlide(next);
-      }
-
-      function prevSlide() {
-        const prev = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(prev);
-      }
-
-      // Navigation buttons
-      document.querySelectorAll('.slide-nav-btn.next').forEach(btn => {
-        btn.addEventListener('click', nextSlide);
-      });
-
-      document.querySelectorAll('.slide-nav-btn.prev').forEach(btn => {
-        btn.addEventListener('click', prevSlide);
-      });
-
-      // Indicators
-      indicators.forEach((indicator, i) => {
-        indicator.addEventListener('click', () => showSlide(i));
-      });
-
-      // Auto-play (optional)
-      let autoplay = setInterval(nextSlide, 5000);
-
-      // Pause on hover
-      const slideshowSection = document.querySelector('.releases-slideshow');
-      if (slideshowSection) {
-        slideshowSection.addEventListener('mouseenter', () => clearInterval(autoplay));
-        slideshowSection.addEventListener('mouseleave', () => {
-          clearInterval(autoplay);
-          autoplay = setInterval(nextSlide, 5000);
-        });
-      }
-
-      // Initialize
-      showSlide(0);
-    </script>
-
     <!-- Contacts Section -->
     <section id="contacts" class="scroll-section contacts-section">
       <h1>CONTACTS</h1>
@@ -372,20 +311,20 @@ import news from "../data/news.json";
     // If page is restored from bfcache, hide loader immediately
     window.addEventListener('pageshow', (e) => {
       if (e.persisted) {
-        loader.classList.add('loaded');
-        setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
+        loader!.classList.add('loaded');
+        setTimeout(() => { try { loader!.style.display = 'none'; } catch (e) {} }, 600);
       }
     });
 
     // Determine navigation type (navigate = first time)
     const navEntries = (performance.getEntriesByType && performance.getEntriesByType('navigation')) || [];
-    const navType = navEntries[0] ? navEntries[0].type : (performance.navigation && performance.navigation.type === 0 ? 'navigate' : 'navigate');
+    const navType = navEntries[0] ? (navEntries[0] as PerformanceNavigationTiming).type : (performance.navigation && performance.navigation.type === 0 ? 'navigate' : 'navigate');
 
     if (navType === 'navigate') {
       // First-time navigation: keep loader until the page 'load' completes
       function hideLoader() {
-        loader.classList.add('loaded');
-        setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
+        loader!.classList.add('loaded');
+        setTimeout(() => { try { loader!.style.display = 'none'; } catch (e) {} }, 600);
         window.removeEventListener('load', hideLoader);
       }
       if (document.readyState === 'complete') {
@@ -395,8 +334,8 @@ import news from "../data/news.json";
       }
     } else {
       // Back/forward or reload from cache: hide loader immediately
-      loader.classList.add('loaded');
-      setTimeout(() => { try { loader.style.display = 'none'; } catch (e) {} }, 600);
+      loader!.classList.add('loaded');
+      setTimeout(() => { try { loader!.style.display = 'none'; } catch (e) {} }, 600);
     }
   })();
 </script>
