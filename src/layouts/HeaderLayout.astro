@@ -53,7 +53,6 @@ const pages = [
               />
             </a>
           </button>
-          <div class="header-current-page">{current ? (pages.find(p => p.key === current)?.name || '') : 'HOME'}</div>
           <nav class="dropdown-content">
             {pages.map((page) => (
               <a href={page.path} class={page.key === current ? 'active' : ''}>{page.name}</a>
@@ -74,6 +73,9 @@ const pages = [
           />
         </a>
       </div>
+
+      <div class="header-current-page">{current ? (pages.find(p => p.key === current)?.name || '') : 'HOME'}</div>
+
     </header>
 
     <main>

@@ -25,6 +25,13 @@ body, h1, h2, p, a {
 
   transform: translateY(-100%);
   transition: transform 0.5s ease-in-out;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  padding: 12px 24px;
+  gap: 8px;
 }
 
 .header.visible {
@@ -35,10 +42,8 @@ body, h1, h2, p, a {
    CENTER (LOGO + CURRENT PAGE)
 ========================================================= */
 .header-center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  grid-column: 2;
+  grid-row: 1;
 
   display: flex;
   flex-direction: column;
@@ -46,6 +51,7 @@ body, h1, h2, p, a {
   justify-content: center;
 
   width: max-content;
+  justify-self: center;
   z-index: 2;
 }
 
@@ -70,7 +76,8 @@ body, h1, h2, p, a {
 }
 
 .header-current-page {
-  margin-top: 6px;
+  grid-column: 1 / 4;
+  grid-row: 2;
   min-height: 1em;
   color: var(--accent);
   font-size: 0.875rem;
@@ -78,36 +85,30 @@ body, h1, h2, p, a {
   letter-spacing: 1px;
   text-transform: uppercase;
   text-align: center;
+  padding-bottom: 20px;
 }
 
 /* =========================================================
    SOCIAL ICONS
 ========================================================= */
 
-:root {
-  --header-social-offset: 72px;
-}
-
 .header-left,
 .header-right {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-
   display: flex;
   align-items: center;
   gap: 16px;
-
   z-index: 1;
 }
 
 .header-left {
-  right: calc(50% + var(--header-social-offset));
+  grid-column: 1;
+  grid-row: 1;
   justify-content: flex-end;
 }
 
 .header-right {
-  left: calc(50% + var(--header-social-offset));
+  grid-column: 3;
+  grid-row: 1;
   justify-content: flex-start;
 }
 
@@ -221,11 +222,8 @@ body, h1, h2, p, a {
 @media (max-width: 760px) {
   .header {
     height: 88px;
-    padding: 0;
-  }
-
-  :root {
-    --header-social-offset: 64px;
+    padding: 12px 16px;
+    gap: 6px;
   }
 
   .header-left,
@@ -235,5 +233,10 @@ body, h1, h2, p, a {
 
   .header-logo img {
     height: 56px;
+  }
+
+  .social-icon {
+    width: 28px;
+    height: 28px;
   }
 }
