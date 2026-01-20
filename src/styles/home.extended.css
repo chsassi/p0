@@ -361,19 +361,25 @@
 .artist-slide-layout,
 .slide-layout {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   gap: 80px;
   height: 100%;
   padding: 0 80px;
+  padding-bottom: 100px;
   max-width: 1400px;
   margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .artist-slide-image-container,
 .slide-image-container {
   width: 500px;
-  height: 500px;
-  flex-shrink: 0;
+  height: auto;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+  aspect-ratio: 1;
   position: relative;
   overflow: hidden;
   border-radius: 8px;
@@ -390,8 +396,11 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: flex-end;
+  flex-shrink: 1;
+  min-width: 0;
+  /* overflow: hidden; */
 }
 .slide-content {
   flex: 1;
@@ -402,12 +411,15 @@
 }
 .artist-slide-info {
   max-width: 600px;
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   text-align: right;
   position: relative;
   cursor: pointer;
+  /* overflow: hidden; */
 }
 .slide-info {
   max-width: 600px;
@@ -418,7 +430,7 @@
   cursor: pointer;
 }
 .artist-slide-title {
-  font-size: 3rem;
+  font-size: clamp(1.5rem, 4vw, 3rem);
   font-weight: 700;
   line-height: 0.8;
   color: #fff;
@@ -426,7 +438,11 @@
   text-transform: uppercase;
   letter-spacing: 3px;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-  white-space: nowrap;
+  white-space: pre-wrap;
+  line-height: 1.4;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition:
     transform 0.4s ease,
     margin 0.4s ease;
@@ -485,7 +501,7 @@
   pointer-events: none;
   position: absolute;
   bottom: 0;
-  white-space: nowrap;
+  white-space: pre-wrap;
   min-width: 180px;
   text-align: center;
 }
@@ -651,6 +667,71 @@
       drop-shadow(0 0 40px rgba(87, 214, 255, 0.4));
   }
 }
+@media (max-width: 1024px) {
+  .artist-slide-layout,
+  .slide-layout {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 24px;
+    gap: 40px;
+  }
+  .artist-slide-image-container,
+  .slide-image-container {
+    width: 100%;
+    max-width: min(400px, 50vh);
+    height: auto;
+    max-height: min(400px, 50vh);
+    aspect-ratio: 1;
+    flex-shrink: 0;
+  }
+  .artist-slide-content,
+  .slide-content {
+    width: 100%;
+    align-items: center;
+    gap: 24px;
+    min-height: 0;
+    flex-shrink: 1;
+    /* overflow: hidden; */
+  }
+  .artist-slide-info {
+    align-items: center;
+    text-align: center;
+  }
+  .artist-slide-title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    white-space: normal;
+  }
+  .slide-title {
+    font-size: 2rem;
+  }
+  .slide-artist {
+    font-size: 1rem;
+  }
+  .artist-slide-link,
+  .slide-link {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: static;
+    margin-top: 20px;
+  }
+  .artist-slide-link {
+    right: auto;
+  }
+  .artist-slide-info:hover .artist-slide-title {
+    transform: none;
+    margin-bottom: 32px;
+  }
+  .slide-info:hover .slide-title,
+  .slide-info:hover .slide-artist {
+    transform: none;
+    margin-bottom: 16px;
+  }
+  .slide-info:hover .slide-artist {
+    margin-bottom: 40px;
+  }
+}
 @media (max-width: 768px) {
   .scroll-indicator {
     width: 50px;
@@ -697,52 +778,6 @@
   .artists-slideshow,
   .releases-slideshow {
     padding: 40px 0;
-  }
-  .artist-slide-layout,
-  .slide-layout {
-    flex-direction: column;
-    padding: 0 24px;
-    gap: 40px;
-  }
-  .artist-slide-image-container,
-  .slide-image-container {
-    width: 100%;
-    max-width: 400px;
-    height: 400px;
-  }
-  .artist-slide-content,
-  .slide-content {
-    width: 100%;
-    gap: 24px;
-  }
-  .artist-slide-title {
-    font-size: 2rem;
-  }
-  .slide-title {
-    font-size: 2rem;
-  }
-  .slide-artist {
-    font-size: 1rem;
-  }
-  .artist-slide-link,
-  .slide-link {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    position: static;
-    margin-top: 20px;
-  }
-  .artist-slide-info:hover .artist-slide-title {
-    transform: none;
-    margin-bottom: 32px;
-  }
-  .slide-info:hover .slide-title,
-  .slide-info:hover .slide-artist {
-    transform: none;
-    margin-bottom: 16px;
-  }
-  .slide-info:hover .slide-artist {
-    margin-bottom: 40px;
   }
   .swiper-nav-wrapper {
     bottom: 24px;
