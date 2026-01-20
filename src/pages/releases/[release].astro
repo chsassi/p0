@@ -8,7 +8,7 @@ export async function getStaticPaths() {
 
 const { release } = Astro.props;
 ---
-<PageLayout title={release.title} active="releases" backLink="/releases" backText="Back to Releases" stylesheets={["/styles/releases.css"]}>
+<PageLayout title={release.title} active="releases" backLink="/releases" backText="Back to Releases">
   <section class="release-detail">
     <img src={release.image} alt={release.title} class="release-cover-large" />
     <div class="release-text">

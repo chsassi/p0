@@ -1,0 +1,77 @@
+---
+/**
+ * Slide Component
+ * Individual slide for slideshows
+ */
+interface Props {
+  id?: string;
+  class?: string;
+  isActive?: boolean;
+  backgroundImage?: string;
+}
+
+const {
+  id,
+  class: className,
+  isActive = false,
+  backgroundImage
+} = Astro.props;
+---
+
+<div
+  id={id}
+  class:list={['slideshow-slide', isActive && 'is-active', className]}
+  data-bg={backgroundImage}
+>
+  {backgroundImage && (
+    <div
+      class="slideshow-slide-background"
+      style={`background-image: url(${backgroundImage})`}
+    />
+  )}
+  <div class="slideshow-slide-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .slideshow-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+  }
+
+  .slideshow-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+
+  .slideshow-slide-background {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.3);
+  }
+
+  .slideshow-slide-background::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 10, 10, 0.5) 100%);
+    z-index: 1;
+  }
+
+  .slideshow-slide-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+  }
+</style>

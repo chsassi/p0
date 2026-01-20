@@ -6,10 +6,6 @@ import releases from "../data/releases.json";
 import news from "../data/news.json";
 ---
 <HeaderLayout title="Protocol Zero" active="">
-  <link rel="stylesheet" href="/styles/pages.css" />
-  <link rel="stylesheet" href="/styles/artists.css" />
-  <link rel="stylesheet" href="/styles/releases.css" />
-  <link rel="stylesheet" href="/styles/home.css" />
 
   <div id="page-loader" class="page-loader" aria-hidden="true">
     <img src="/images/logo.svg" alt="Protocol Zero" class="loader-logo" />
@@ -24,7 +20,7 @@ import news from "../data/news.json";
     <section id="home" class="hero-section hero-slideshow">
       <div class="hero-slideshow-container">
         {news.map((item, i) => (
-          <div class="hero-slide" data-slide={i}>
+          <div class:list={['hero-slide', i === 0 && 'is-active']} data-slide={i}>
             {item.video ? (
               <div class="hero-slide-background">
                 <video autoplay muted loop playsinline class="hero-video"><source src={item.video} type="video/mp4" /></video>
@@ -46,7 +42,7 @@ import news from "../data/news.json";
         ))}
       </div>
       <div class="hero-slideshow-indicators">
-        {news.map((_, i) => <button class="hero-indicator" data-slide={i} aria-label={`Go to news ${i + 1}`}></button>)}
+        {news.map((_, i) => <button class:list={['hero-indicator', i === 0 && 'is-active']} data-slide={i} aria-label={`Go to news ${i + 1}`}></button>)}
       </div>
       <button class="hero-nav-btn prev" aria-label="Previous news"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
       <button class="hero-nav-btn next" aria-label="Next news"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
@@ -67,7 +63,7 @@ import news from "../data/news.json";
       <div class="section-vignette"><h1>ARTISTS</h1></div>
       <div class="artists-slideshow-container">
         {artists.map((artist, i) => (
-          <div class="artist-slide" data-slide={i} data-image={artist.image}>
+          <div class:list={['artist-slide', i === 0 && 'is-active']} data-slide={i} data-image={artist.image}>
             <div class="artist-slide-layout">
               <div class="artist-slide-content">
                 <div class="artist-slide-info">
@@ -83,7 +79,7 @@ import news from "../data/news.json";
       <div class="swiper-nav-wrapper">
         <button class="artist-slide-nav-btn prev" aria-label="Previous artist"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
         <div class="artists-slideshow-indicators">
-          {artists.map((_, i) => <button class="artist-indicator" data-slide={i} aria-label={`Go to artist ${i + 1}`}></button>)}
+          {artists.map((_, i) => <button class:list={['artist-indicator', i === 0 && 'is-active']} data-slide={i} aria-label={`Go to artist ${i + 1}`}></button>)}
         </div>
         <button class="artist-slide-nav-btn next" aria-label="Next artist"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
       </div>
@@ -103,7 +99,7 @@ import news from "../data/news.json";
       <div class="section-vignette"><h1>RELEASES</h1></div>
       <div class="slideshow-container">
         {releases.map((rel, i) => (
-          <div class="release-slide" data-slide={i} data-image={rel.image}>
+          <div class:list={['release-slide', i === 0 && 'is-active']} data-slide={i} data-image={rel.image}>
             <div class="slide-layout">
               <div class="slide-image-container"><img src={rel.image} alt={rel.title} class="slide-image" /></div>
               <div class="slide-content">
@@ -120,7 +116,7 @@ import news from "../data/news.json";
       <div class="swiper-nav-wrapper">
         <button class="slide-nav-btn prev" aria-label="Previous slide"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
         <div class="slideshow-indicators">
-          {releases.map((_, i) => <button class="indicator" data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>)}
+          {releases.map((_, i) => <button class:list={['indicator', i === 0 && 'is-active']} data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>)}
         </div>
         <button class="slide-nav-btn next" aria-label="Next slide"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
       </div>

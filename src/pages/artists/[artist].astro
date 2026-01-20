@@ -15,7 +15,7 @@ const socialLinks: { key: LinkKey; icon: string; alt: string }[] = [
   { key: 'soundcloud', icon: '/images/icons/soundcloud.svg', alt: 'SoundCloud' },
 ];
 ---
-<PageLayout title={artist.name} active="artists" backLink="/artists" backText="Back to Artists" stylesheets={["/styles/artists.css"]}>
+<PageLayout title={artist.name} active="artists" backLink="/artists" backText="Back to Artists">
   <section class="artist-detail">
     <img src={imgSrc} alt={artist.name} loading="eager" decoding="async" />
     <div class="artist-info">

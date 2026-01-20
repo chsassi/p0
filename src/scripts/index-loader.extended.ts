@@ -10,7 +10,7 @@
   const loader = document.getElementById('page-loader');
   if (!loader) return;
   const hide = () => {
-    loader.classList.add('loaded');
+    loader.classList.add('is-loaded');
     setTimeout(() => {
       loader.style.display = 'none';
     }, 600);

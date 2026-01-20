@@ -1,0 +1,303 @@
+// ==========================================================================
+// SECTIONS - Page section styles
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Scroll section (full-height sections)
+.scroll-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: map.get($spacing, '3xl') map.get($spacing, 'lg');
+  text-align: center;
+
+  h1 {
+    font-size: map.get($font-sizes, '3xl');
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  @include respond-to('md') {
+    padding: map.get($spacing, '2xl') map.get($spacing, 'md');
+    min-height: auto;
+
+    h1 {
+      margin-bottom: 32px;
+    }
+  }
+}
+
+// Section content container
+.section-content {
+  max-width: 700px;
+  margin: 0 auto;
+
+  p {
+    margin: 0 auto map.get($spacing, 'md');
+    color: var(--muted);
+    line-height: 1.8;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  a[href^="mailto:"] {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+}
+
+// Section header
+.section-header {
+  width: 100%;
+  max-width: 700px;
+  padding: 0;
+
+  h1 {
+    margin: 0 0 map.get($spacing, 'lg');
+    font-size: map.get($font-sizes, '4xl');
+    text-align: left;
+  }
+}
+
+// About section
+.about-section {
+  background: var(--bg);
+  min-height: auto;
+  padding: map.get($spacing, 'xl') map.get($spacing, 'lg');
+  margin-top: 100px;
+  margin-bottom: 100px;
+  flex-direction: column;
+  align-items: center;
+
+  .section-header,
+  .section-content {
+    width: 100%;
+    max-width: 700px;
+    padding: 0;
+  }
+
+  .section-header h1 {
+    text-align: left;
+  }
+
+  .section-content p {
+    text-align: left;
+  }
+}
+
+// Contacts section
+.contacts-section {
+  background: var(--bg);
+  min-height: auto;
+  padding: map.get($spacing, 'xl') map.get($spacing, 'lg');
+  margin-top: 100px;
+  margin-bottom: 100px;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 0 map.get($spacing, 'lg');
+    font-size: map.get($font-sizes, '4xl');
+    text-align: left;
+  }
+
+  .section-content {
+    width: 100%;
+    max-width: 700px;
+    padding: 0;
+
+    p {
+      text-align: left;
+
+      &:last-child {
+        text-align: center;
+      }
+    }
+  }
+}
+
+// Text page (about, contacts static pages)
+.text-page {
+  text-align: center;
+  color: var(--text);
+  padding: 100px 20px map.get($spacing, '3xl');
+  letter-spacing: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 180px);
+
+  h1 {
+    font-size: map.get($font-sizes, '3xl');
+    margin-bottom: 32px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  p {
+    max-width: 640px;
+    margin: 0 auto map.get($spacing, 'md');
+    color: var(--muted);
+    line-height: 1.8;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  a[href^="mailto:"] {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+}
+
+// Center page (shop, coming soon)
+.center-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 120px 20px map.get($spacing, '3xl');
+  letter-spacing: 2px;
+  min-height: calc(100vh - 260px);
+}
+
+.coming-soon {
+  font-size: map.get($font-sizes, '3xl');
+  color: var(--text);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+// Scroll indicator
+.scroll-indicator {
+  position: fixed;
+  bottom: map.get($spacing, 'xl');
+  right: map.get($spacing, 'xl');
+  width: 60px;
+  height: 60px;
+  background: transparent;
+  border: transparent;
+  color: #fff;
+  cursor: default;
+  @include flex-center;
+  transition: all $transition-base;
+  backdrop-filter: blur(10px);
+  z-index: map.get($z-index, 'sticky');
+  border-radius: 50%;
+
+  &.is-scrolled,
+  &.scrolled {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+  }
+
+  .arrow-down {
+    display: block;
+    transition: opacity $transition-base, transform $transition-fast;
+  }
+
+  .arrow-up {
+    display: none;
+    transition: opacity $transition-base, transform $transition-fast;
+  }
+
+  &.is-scrolled .arrow-down,
+  &.scrolled .arrow-down {
+    display: none;
+  }
+
+  &.is-scrolled .arrow-up,
+  &.scrolled .arrow-up {
+    display: block;
+  }
+
+  &:hover .arrow-down,
+  &:hover .arrow-up {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  @include respond-to('md') {
+    width: 50px;
+    height: 50px;
+    bottom: map.get($spacing, 'lg');
+    right: map.get($spacing, 'lg');
+  }
+}
+
+// Page loader
+.page-loader {
+  @include fixed-fill;
+  background: #000;
+  @include flex-center;
+  z-index: map.get($z-index, 'loader');
+  transition: opacity 0.6s ease;
+  pointer-events: auto;
+
+  &.is-loaded,
+  &.loaded {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .loader-logo {
+    width: 220px;
+    height: auto;
+    display: block;
+    background: transparent;
+    filter: drop-shadow(0 0 8px rgba(87, 214, 255, 0.9))
+            drop-shadow(0 0 22px rgba(87, 214, 255, 0.35));
+    animation: p0-glow 2.6s ease-in-out infinite;
+
+    @include respond-to('md') {
+      width: 140px;
+    }
+  }
+}
+
+@keyframes p0-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(87, 214, 255, 0.9))
+            drop-shadow(0 0 12px rgba(87, 214, 255, 0.25));
+  }
+  50% {
+    filter: drop-shadow(0 0 28px rgba(87, 214, 255, 0.95))
+            drop-shadow(0 0 40px rgba(87, 214, 255, 0.4));
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

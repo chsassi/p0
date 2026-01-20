@@ -3,8 +3,10 @@ import path from 'path';
 import postcss from 'postcss';
 import cssnano from 'cssnano';
 import prettier from 'prettier';
+import * as sass from 'sass';
 
-const SOURCE_DIR = 'src/styles';
+const SCSS_SOURCE_DIR = 'src/scss/main';
+const CSS_SOURCE_DIR = 'src/styles';
 const OUTPUT_DIR = 'public/styles';
 
 /**
@@ -23,10 +25,44 @@ async function minifyCSS(css) {
 }
 
 /**
+ * Compile SCSS to CSS
+ */
+function compileSCSS(inputPath) {
+  const result = sass.compile(inputPath, {
+    loadPaths: ['src/scss'],
+    style: 'expanded',
+    sourceMap: false
+  });
+  return result.css;
+}
+
+/**
+ * Process a single SCSS file
+ */
+async function processSCSSFile(filename) {
+  const inputPath = path.join(SCSS_SOURCE_DIR, filename);
+  const outputFilename = filename.replace('.scss', '.css');
+  const outputPath = path.join(OUTPUT_DIR, outputFilename);
+
+  try {
+    // Compile SCSS to CSS
+    const compiled = compileSCSS(inputPath);
+    // Minify the compiled CSS
+    const minified = await minifyCSS(compiled);
+
+    await fs.writeFile(outputPath, minified);
+    console.log(`[SCSS] ${filename} -> ${outputFilename}`);
+  } catch (error) {
+    console.error(`[SCSS ERROR] ${filename}:`, error.message);
+    throw error;
+  }
+}
+
+/**
  * Process a single CSS file (extended -> compact)
  */
-async function processFile(filename) {
-  const inputPath = path.join(SOURCE_DIR, filename);
+async function processCSSFile(filename) {
+  const inputPath = path.join(CSS_SOURCE_DIR, filename);
   const outputFilename = filename.replace('.extended.css', '.css');
   const outputPath = path.join(OUTPUT_DIR, outputFilename);
 
@@ -38,28 +74,48 @@ async function processFile(filename) {
 }
 
 /**
- * Process all CSS files
+ * Build all styles (SCSS and CSS)
  */
 async function buildAll() {
+  // Ensure output directory exists
+  await fs.mkdir(OUTPUT_DIR, { recursive: true });
+
+  let totalFiles = 0;
+
+  // Process SCSS files
   try {
-    const files = await fs.readdir(SOURCE_DIR);
-    const cssFiles = files.filter(f => f.endsWith('.extended.css'));
+    const scssFiles = await fs.readdir(SCSS_SOURCE_DIR);
+    const mainScssFiles = scssFiles.filter(f => f.endsWith('.scss') && !f.startsWith('_'));
 
-    if (cssFiles.length === 0) {
-      console.log('[CSS] No extended CSS files found. Run with --init to create them.');
-      return;
+    for (const file of mainScssFiles) {
+      await processSCSSFile(file);
+      totalFiles++;
     }
-
-    for (const file of cssFiles) {
-      await processFile(file);
-    }
-    console.log(`[CSS] Built ${cssFiles.length} file(s)`);
   } catch (err) {
-    if (err.code === 'ENOENT') {
-      console.log(`[CSS] Source directory ${SOURCE_DIR} not found. Run with --init to create it.`);
-    } else {
+    if (err.code !== 'ENOENT') {
       throw err;
     }
+  }
+
+  // Process extended CSS files (for backward compatibility during migration)
+  try {
+    const cssFiles = await fs.readdir(CSS_SOURCE_DIR);
+    const extendedCssFiles = cssFiles.filter(f => f.endsWith('.extended.css'));
+
+    for (const file of extendedCssFiles) {
+      await processCSSFile(file);
+      totalFiles++;
+    }
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      throw err;
+    }
+  }
+
+  if (totalFiles === 0) {
+    console.log('[STYLES] No source files found.');
+  } else {
+    console.log(`[STYLES] Built ${totalFiles} file(s)`);
   }
 }
 
@@ -72,7 +128,7 @@ async function createExtended(minifiedPath) {
 
   const basename = path.basename(minifiedPath, '.css');
   const filename = `${basename}.extended.css`;
-  const outputPath = path.join(SOURCE_DIR, filename);
+  const outputPath = path.join(CSS_SOURCE_DIR, filename);
 
   await fs.writeFile(outputPath, beautified);
   console.log(`[INIT] Created ${filename}`);
@@ -82,7 +138,7 @@ async function createExtended(minifiedPath) {
  * Initialize extended files from existing compact CSS
  */
 async function initExtended() {
-  await fs.mkdir(SOURCE_DIR, { recursive: true });
+  await fs.mkdir(CSS_SOURCE_DIR, { recursive: true });
 
   const files = await fs.readdir(OUTPUT_DIR);
   const cssFiles = files.filter(f => f.endsWith('.css'));
@@ -90,7 +146,7 @@ async function initExtended() {
   for (const file of cssFiles) {
     await createExtended(path.join(OUTPUT_DIR, file));
   }
-  console.log(`[INIT] Created ${cssFiles.length} extended CSS file(s) in ${SOURCE_DIR}`);
+  console.log(`[INIT] Created ${cssFiles.length} extended CSS file(s) in ${CSS_SOURCE_DIR}`);
 }
 
 // CLI handling
@@ -99,9 +155,14 @@ const args = process.argv.slice(2);
 if (args.includes('--init')) {
   await initExtended();
 } else if (args.length > 0 && !args[0].startsWith('--')) {
-  // Process single file
-  await processFile(args[0]);
+  const filename = args[0];
+  // Check if it's SCSS or CSS
+  if (filename.endsWith('.scss')) {
+    await processSCSSFile(filename);
+  } else {
+    await processCSSFile(filename);
+  }
 } else {
-  // Process all files
+  // Build all files
   await buildAll();
 }

@@ -1,0 +1,325 @@
+// ==========================================================================
+// SLIDESHOW - Generic slideshow component styles
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Base slideshow container
+.slideshow {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.slideshow-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  z-index: 5;
+}
+
+// Individual slide
+.slideshow-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-slower, visibility $transition-slower;
+
+  &.is-active,
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+}
+
+// Slide background
+.slideshow-bg {
+  @include absolute-fill;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+// Background blur effect
+.slideshow-bg-blur {
+  @include absolute-fill;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(30px) brightness(0.4);
+  transform: scale(1.1);
+  z-index: 0;
+  transition: background-image $transition-slower;
+}
+
+// Slide content wrapper
+.slideshow-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+}
+
+// Navigation wrapper
+.slideshow-nav-wrapper {
+  position: absolute;
+  bottom: map.get($spacing, 'xl');
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: map.get($z-index, 'dropdown');
+
+  @include respond-to('md') {
+    bottom: map.get($spacing, 'lg');
+    gap: 12px;
+  }
+}
+
+// Indicators
+.slideshow-indicators {
+  display: flex;
+  gap: 12px;
+}
+
+.slideshow-indicator {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all $transition-base;
+  padding: 0;
+
+  &.is-active,
+  &.active {
+    background: var(--accent);
+    box-shadow: $shadow-glow-sm;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  @include respond-to('md') {
+    width: 40px;
+  }
+}
+
+// Navigation buttons
+.slideshow-nav-btn {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacing, 'sm');
+  transition: transform $transition-fast, opacity $transition-fast;
+  z-index: map.get($z-index, 'dropdown');
+
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  @include respond-to('md') {
+    padding: 6px;
+  }
+}
+
+// Slide layout (image + content)
+.slide-layout {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: map.get($spacing, '3xl');
+  height: 90%;
+  padding: 0 map.get($spacing, '3xl');
+  padding-bottom: 100px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  @include respond-to('lg') {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 map.get($spacing, 'lg');
+    padding-top: 200px;
+    gap: map.get($spacing, 'xl');
+  }
+}
+
+// Slide image
+.slide-image-container {
+  width: 500px;
+  height: auto;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: map.get($radii, 'lg');
+  box-shadow: $shadow-lg;
+
+  @include respond-to('lg') {
+    width: 100%;
+    max-width: min(400px, 50vh);
+    height: auto;
+    max-height: min(400px, 50vh);
+    flex-shrink: 0;
+  }
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+// Slide info
+.slide-info {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  cursor: pointer;
+
+  @include respond-to('lg') {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.slide-title {
+  font-size: map.get($font-sizes, '5xl');
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0 0 map.get($spacing, 'md');
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  transition: transform $transition-slow, margin $transition-slow;
+
+  .slide-info:hover & {
+    transform: translateY(-20px);
+    margin-bottom: 36px;
+  }
+
+  @include respond-to('lg') {
+    font-size: map.get($font-sizes, '3xl');
+
+    .slide-info:hover & {
+      transform: none;
+      margin-bottom: map.get($spacing, 'md');
+    }
+  }
+}
+
+.slide-subtitle {
+  font-size: map.get($font-sizes, '2xl');
+  font-weight: 400;
+  color: var(--muted);
+  margin: 0 0 map.get($spacing, 'xl');
+  letter-spacing: 2px;
+  transition: transform $transition-slow, margin $transition-slow;
+
+  .slide-info:hover & {
+    transform: translateY(-20px);
+    margin-bottom: map.get($spacing, '2xl');
+  }
+
+  @include respond-to('lg') {
+    font-size: map.get($font-sizes, 'base');
+
+    .slide-info:hover & {
+      transform: none;
+      margin-bottom: map.get($spacing, 'xl');
+    }
+  }
+}
+
+// Slide link (appears on hover)
+.slide-link {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: map.get($font-sizes, 'sm');
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all $transition-slow;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  white-space: nowrap;
+  min-width: 180px;
+  text-align: center;
+
+  .slide-info:hover & {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  &:hover {
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: $shadow-glow;
+  }
+
+  @include respond-to('lg') {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: static;
+    margin-top: 20px;
+  }
+}
+
+// Vignette overlay
+.slideshow-vignette,
+.section-vignette {
+  @include absolute-fill;
+  background: linear-gradient(to bottom, var(--bg-content) 20%, transparent 80%);
+  z-index: 2;
+  pointer-events: none;
+
+  h1 {
+    position: relative;
+    margin: 120px 0 0;
+    font-size: map.get($font-sizes, '4xl');
+    text-align: center;
+    pointer-events: auto;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    clip-path: polygon(0 40%, 60% 100%, 60% calc(100% - 1px), 0 calc(40% - 1px));
+    z-index: 2;
+  }
+}

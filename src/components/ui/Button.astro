@@ -1,0 +1,106 @@
+---
+/**
+ * Button Component
+ * Replaces: .news-link, .slide-link, .artist-slide-link, .back-btn
+ */
+interface Props {
+  href?: string;
+  variant?: 'outline' | 'solid' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  target?: string;
+  rel?: string;
+}
+
+const {
+  href,
+  variant = 'outline',
+  size = 'md',
+  class: className,
+  target,
+  rel
+} = Astro.props;
+
+const isLink = !!href;
+const Tag = isLink ? 'a' : 'button';
+---
+
+<Tag
+  href={isLink ? href : undefined}
+  class:list={['btn', `btn-${variant}`, size !== 'md' && `btn-${size}`, className]}
+  target={target}
+  rel={rel}
+>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    min-width: 180px;
+  }
+
+  .btn:hover {
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: 0 0 20px rgba(87, 214, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* Variants */
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-solid {
+    background: var(--accent);
+    border: 2px solid var(--accent);
+    color: var(--bg);
+  }
+
+  .btn-solid:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: 2px solid transparent;
+    color: var(--text);
+    min-width: auto;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* Sizes */
+  .btn-sm {
+    padding: 10px 20px;
+    font-size: 0.75rem;
+    min-width: auto;
+  }
+
+  .btn-lg {
+    padding: 18px 40px;
+    font-size: 1rem;
+  }
+</style>

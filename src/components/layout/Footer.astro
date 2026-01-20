@@ -1,0 +1,42 @@
+---
+/**
+ * Footer Component
+ * Site footer with scramble text effect
+ */
+interface Props {
+  text?: string;
+}
+
+const { text = '© Protocol Zero - Est. 2025' } = Astro.props;
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p class="footer-text" data-text={text}></p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: #000;
+    color: var(--text);
+    padding: 16px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-text {
+    margin: 0;
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+  }
+</style>
