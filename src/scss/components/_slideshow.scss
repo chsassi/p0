@@ -12,7 +12,8 @@
   min-height: 100vh;
 }
 
-.slideshow-container {
+.slideshow-container,
+.releases-slideshow-container {
   position: relative;
   width: 100%;
   height: 100vh;
@@ -83,7 +84,8 @@
 }
 
 // Indicators
-.slideshow-indicators {
+.slideshow-indicators,
+.releases-slideshow-indicators {
   display: flex;
   gap: 12px;
 }
@@ -133,7 +135,8 @@
 }
 
 // Slide layout (image + content)
-.slide-layout {
+.slide-layout,
+.release-slide-layout {
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -157,7 +160,8 @@
 }
 
 // Slide image
-.slide-image-container {
+.slide-image-container,
+.release-slide-image-container {
   width: 500px;
   height: auto;
   flex-shrink: 1;
@@ -178,7 +182,8 @@
   }
 }
 
-.slide-image {
+.slide-image,
+.release-slide-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -186,7 +191,8 @@
 }
 
 // Slide info
-.slide-info {
+.slide-info,
+.release-slide-info {
   max-width: 600px;
   display: flex;
   flex-direction: column;
@@ -200,7 +206,8 @@
   }
 }
 
-.slide-title {
+.slide-title,
+.release-slide-title {
   font-size: map.get($font-sizes, '5xl');
   font-weight: 700;
   line-height: 1.1;
@@ -211,7 +218,8 @@
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
   transition: transform $transition-slow, margin $transition-slow;
 
-  .slide-info:hover & {
+  .slide-info:hover &,
+  .release-slide-info:hover & {
     transform: translateY(-20px);
     margin-bottom: 36px;
   }
@@ -219,14 +227,16 @@
   @include respond-to('lg') {
     font-size: map.get($font-sizes, '3xl');
 
-    .slide-info:hover & {
+    .slide-info:hover &,
+    .release-slide-info:hover & {
       transform: none;
       margin-bottom: map.get($spacing, 'md');
     }
   }
 }
 
-.slide-subtitle {
+.slide-subtitle,
+.release-slide-subtitle {
   font-size: map.get($font-sizes, '2xl');
   font-weight: 400;
   color: var(--muted);
@@ -234,7 +244,8 @@
   letter-spacing: 2px;
   transition: transform $transition-slow, margin $transition-slow;
 
-  .slide-info:hover & {
+  .slide-info:hover &,
+  .release-slide-info:hover & {
     transform: translateY(-20px);
     margin-bottom: map.get($spacing, '2xl');
   }
@@ -242,7 +253,8 @@
   @include respond-to('lg') {
     font-size: map.get($font-sizes, 'base');
 
-    .slide-info:hover & {
+    .slide-info:hover &,
+    .release-slide-info:hover & {
       transform: none;
       margin-bottom: map.get($spacing, 'xl');
     }
@@ -250,7 +262,8 @@
 }
 
 // Slide link (appears on hover)
-.slide-link {
+.slide-link,
+.release-slide-link {
   display: inline-block;
   padding: 14px 32px;
   background: transparent;
@@ -273,7 +286,8 @@
   min-width: 180px;
   text-align: center;
 
-  .slide-info:hover & {
+  .slide-info:hover &,
+  .release-slide-info:hover & {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;

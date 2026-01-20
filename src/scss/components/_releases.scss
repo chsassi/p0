@@ -92,7 +92,8 @@
   }
 }
 
-.slide-nav-btn {
+.slide-nav-btn,
+.release-slide-nav-btn {
   @include button-reset;
   display: inline-flex;
   align-items: center;
@@ -222,7 +223,8 @@
   display: flex;
   gap: 12px;
 
-  .indicator {
+  .indicator,
+  .release-indicator {
     width: 60px;
     height: 4px;
     background: rgba(255, 255, 255, 0.3);
