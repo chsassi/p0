@@ -7,7 +7,7 @@
     "description": "Introducing our latest addition to the Protocol Zero family",
     "image": "/images/artists/tsv.jpg",
     "link": "/#artists",
-    "linkText": "VIEW ARTISTS"
+    "linkText": "BROWSE ARTISTS"
   },
   {
     "id": 2,
@@ -27,6 +27,6 @@
     "description": "Introducing our latest addition to the Protocol Zero family",
     "image": "/images/artists/led-blur.jpg",
     "link": "/#artists",
-    "linkText": "VIEW ARTISTS"
+    "linkText": "BROWSE ARTISTS"
   }
 ]

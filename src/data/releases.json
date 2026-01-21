@@ -8,13 +8,13 @@
     "image": "/images/releases/reset.png",
     "description": "Coming Soon",
     "links": {
-      "spotify": "",
-      "soundcloud": "",
+      "spotify": "https://open.spotify.com/playlist/79xxn9IepLlyeuaVjHfEjo",
+      "soundcloud": "https://on.soundcloud.com/53YZc7Rc0MfHHWvcDl",
       "youtube": "",
       "beatport": ""
     },
-    "spotifyEmbed": "",
-    "soundcloudEmbed": "",
+    "spotifyEmbed": "https://open.spotify.com/playlist/79xxn9IepLlyeuaVjHfEjo",
+    "soundcloudEmbed": "https://on.soundcloud.com/53YZc7Rc0MfHHWvcDl",
     "youtubeEmbed": ""
   }
 ]
