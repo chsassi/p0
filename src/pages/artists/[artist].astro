@@ -16,6 +16,7 @@ const socialLinks: { key: LinkKey; icon: string; alt: string }[] = [
 ];
 ---
 <PageLayout title={artist.name} active="artists" backLink="/artists" backText="Back to Artists">
+  <div class="artist-detail-bg-blur" style={`background-image: url(${imgSrc})`}></div>
   <section class="artist-detail">
     <img src={imgSrc} alt={artist.name} loading="eager" decoding="async" />
     <div class="artist-info">

@@ -38,5 +38,15 @@ const { text = '© Protocol Zero - Est. 2025' } = Astro.props;
     font-size: 0.95rem;
     letter-spacing: 1.5px;
     color: var(--muted);
+    min-width: max-content;
+    white-space: nowrap;
+  }
+
+  .footer-text::before {
+    content: attr(data-text);
+    visibility: hidden;
+    display: block;
+    height: 0;
+    overflow: hidden;
   }
 </style>

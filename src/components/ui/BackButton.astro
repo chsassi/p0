@@ -16,8 +16,8 @@ const {
 } = Astro.props;
 ---
 
-<a href={href} class:list={['back-btn', className]}>
-  &lt; {text}
+<a href={href} class:list={['back-btn', className]} aria-label={text}>
+  <img src="/images/icons/arrow_left.svg" alt="" class="back-btn-icon" />
 </a>
 
 <style>
@@ -25,24 +25,40 @@ const {
     position: absolute;
     left: 40px;
     top: 120px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    transition: color 0.25s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    transition: all 0.3s ease;
     z-index: 100;
   }
 
   .back-btn:hover {
-    color: var(--accent);
-    transform: translateX(-3px);
+    transform: translateX(-5px);
+  }
+
+  .back-btn-icon {
+    width: 40px;
+    height: 40px;
+    filter: invert(1) brightness(1);
+    transition: filter 0.3s ease, transform 0.3s ease;
+  }
+
+  .back-btn:hover .back-btn-icon {
+    filter: invert(1) brightness(1) drop-shadow(0 0 10px rgba(87, 214, 255, 0.8));
   }
 
   @media (max-width: 768px) {
     .back-btn {
-      position: static;
-      display: inline-block;
-      margin: 12px 0 0 16px;
+      position: fixed;
+      left: 16px;
+      top: auto;
+      bottom: 24px;
+    }
+
+    .back-btn-icon {
+      width: 32px;
+      height: 32px;
     }
   }
 </style>

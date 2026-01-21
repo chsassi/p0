@@ -5,6 +5,15 @@
 @use 'sass:map';
 @use '../abstracts' as *;
 
+// Page container (for subpages with fixed header)
+.page-container {
+  padding-top: 96px; // Header height
+
+  @include respond-to('md') {
+    padding-top: 88px; // Mobile header height
+  }
+}
+
 // Scroll section (full-height sections)
 .scroll-section {
   min-height: 100vh;

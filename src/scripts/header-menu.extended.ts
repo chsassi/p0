@@ -10,9 +10,20 @@ const header = document.querySelector('.header');
 const menuBtn = document.querySelector('.menu-button');
 const dropdown = document.querySelector('.menu-dropdown');
 
+// Show header immediately on subpages (no hero section)
+const isHomePage = document.querySelector('.hero-slideshow') !== null;
+
+if (!isHomePage && header) {
+  header.classList.add('is-visible');
+}
+
 window.addEventListener(
   'scroll',
-  () => header?.classList.toggle('is-visible', window.scrollY > 100),
+  () => {
+    if (isHomePage) {
+      header?.classList.toggle('is-visible', window.scrollY > 100);
+    }
+  },
   { passive: true }
 );
 
