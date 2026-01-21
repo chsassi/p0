@@ -20,25 +20,6 @@ const pages = [
 ---
 
 <header class="header">
-  <div class="header-left">
-    <a
-      href="https://instagram.com/protocolzero.music"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="social-icon"
-      aria-label="Instagram"
-    >
-      <img
-        src="/images/icons/instagram.svg"
-        alt="Instagram"
-        width="32"
-        height="32"
-        loading="eager"
-        decoding="async"
-      />
-    </a>
-  </div>
-
   <div class="header-center">
     <div class="menu-dropdown">
       <button class="menu-button" aria-label="Menu" aria-expanded="false">
@@ -63,25 +44,6 @@ const pages = [
     </div>
   </div>
 
-  <div class="header-right">
-    <a
-      href="https://soundcloud.com/protocolzeromusic"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="social-icon"
-      aria-label="SoundCloud"
-    >
-      <img
-        src="/images/icons/soundcloud.svg"
-        alt="SoundCloud"
-        width="32"
-        height="32"
-        loading="eager"
-        decoding="async"
-      />
-    </a>
-  </div>
-
   <div class="header-current-page">
     {current ? (pages.find(p => p.key === current)?.name || '') : 'HOME'}
   </div>
@@ -101,10 +63,10 @@ const pages = [
     border-bottom: 1px solid var(--border);
     transform: translateY(-100%);
     transition: transform 0.5s ease-in-out;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: 1fr auto;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 12px 24px;
     gap: 8px;
   }
@@ -113,35 +75,11 @@ const pages = [
     transform: translateY(0);
   }
 
-  .header-left,
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    z-index: 1;
-  }
-
-  .header-left {
-    grid-column: 1;
-    grid-row: 1;
-    justify-content: flex-end;
-  }
-
-  .header-right {
-    grid-column: 3;
-    grid-row: 1;
-    justify-content: flex-start;
-  }
-
   .header-center {
-    grid-column: 2;
-    grid-row: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: max-content;
-    justify-self: center;
     z-index: 2;
   }
 
@@ -164,8 +102,6 @@ const pages = [
   }
 
   .header-current-page {
-    grid-column: 1/4;
-    grid-row: 2;
     min-height: 1em;
     color: var(--accent);
     font-size: 0.875rem;
@@ -174,29 +110,6 @@ const pages = [
     text-transform: uppercase;
     text-align: center;
     padding-bottom: 20px;
-  }
-
-  .social-icon {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    opacity: 0.75;
-    transition: all 0.3s ease;
-  }
-
-  .social-icon:hover {
-    opacity: 1;
-    filter: drop-shadow(0 0 12px rgba(87, 214, 255, 0.4));
-  }
-
-  .social-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
   }
 
   .menu-dropdown {
@@ -273,18 +186,8 @@ const pages = [
       gap: 6px;
     }
 
-    .header-left,
-    .header-right {
-      gap: 12px;
-    }
-
     .header-logo img {
       height: 56px;
-    }
-
-    .social-icon {
-      width: 28px;
-      height: 28px;
     }
   }
 </style>

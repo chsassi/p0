@@ -17,9 +17,10 @@ interface Props {
   variant: "image-left" | "image-right";
   items: SlideItem[];
   sectionTitle: string;
+  contentPosition?: "above" | "below";
 }
 
-const { id, type, variant, items, sectionTitle } = Astro.props;
+const { id, type, variant, items, sectionTitle, contentPosition } = Astro.props;
 const linkText = type === "artist" ? "VIEW ARTIST" : "VIEW RELEASE";
 const linkBase = type === "artist" ? "/artists/" : "/releases/";
 ---
@@ -32,7 +33,7 @@ const linkBase = type === "artist" ? "/artists/" : "/releases/";
   <div class="content-slideshow-container">
     {items.map((item, i) => (
       <div class:list={['content-slide', i === 0 && 'is-active']} data-slide={i} data-image={item.image}>
-        <div class={`content-slide-layout content-slide-layout--${variant}`}>
+        <div class={`content-slide-layout content-slide-layout--${variant}${contentPosition ? ` content-slide-layout--content-${contentPosition}` : ''}`}>
           {variant === "image-left" ? (
             <>
               <div class="content-slide-image-container">
