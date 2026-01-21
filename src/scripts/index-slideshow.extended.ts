@@ -6,6 +6,9 @@
  * Edit this file and run the build to update the compact version.
  */
 
+const SWIPE_THRESHOLD = 50;       // Minimum px for valid swipe
+const SWIPE_ANGLE_THRESHOLD = 30; // Max degrees from horizontal
+
 function createSlideshow(
   container: string,
   slide: string,
@@ -24,6 +27,16 @@ function createSlideshow(
   const blur = bgBlur ? document.querySelector(bgBlur) : null;
   if (!slides.length) return;
 
+  // Swipe state
+  const swipe = {
+    isDown: false,
+    startX: 0,
+    startY: 0,
+    currentX: 0,
+    pointerId: null as number | null,
+    isTransitioning: false
+  };
+
   const update = (i: number) => {
     slides.forEach((s, j) => s.classList.toggle('is-active', j === i));
     indicators.forEach((ind, j) => ind.classList.toggle('is-active', j === i));
@@ -33,8 +46,86 @@ function createSlideshow(
     }
     idx = i;
   };
-  const go = (dir: number) =>
+
+  const go = (dir: number) => {
+    if (swipe.isTransitioning) return;
+    swipe.isTransitioning = true;
     update((idx + dir + slides.length) % slides.length);
+    setTimeout(() => { swipe.isTransitioning = false; }, 600);
+  };
+
+  // Auto-play timer functions
+  let timer = setInterval(() => go(1), interval);
+  const pauseAutoPlay = () => clearInterval(timer);
+  const resumeAutoPlay = () => {
+    clearInterval(timer);
+    timer = setInterval(() => go(1), interval);
+  };
+
+  // Swipe helper
+  const isHorizontalSwipe = (deltaX: number, deltaY: number): boolean => {
+    const angle = Math.atan2(Math.abs(deltaY), Math.abs(deltaX)) * (180 / Math.PI);
+    return angle <= SWIPE_ANGLE_THRESHOLD;
+  };
+
+  // Pointer event handlers
+  const handlePointerDown = (e: PointerEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('button, a, .hero-nav-btn, .content-slide-nav-btn')) return;
+
+    swipe.isDown = true;
+    swipe.startX = e.clientX;
+    swipe.startY = e.clientY;
+    swipe.currentX = e.clientX;
+    swipe.pointerId = e.pointerId;
+
+    (el as HTMLElement).setPointerCapture(e.pointerId);
+    (el as HTMLElement).style.cursor = 'grabbing';
+    (el as HTMLElement).style.opacity = '0.95';
+    pauseAutoPlay();
+  };
+
+  const handlePointerMove = (e: PointerEvent) => {
+    if (!swipe.isDown || e.pointerId !== swipe.pointerId) return;
+
+    swipe.currentX = e.clientX;
+    const deltaX = swipe.currentX - swipe.startX;
+    const deltaY = e.clientY - swipe.startY;
+
+    if (isHorizontalSwipe(deltaX, deltaY) && Math.abs(deltaX) > 10) {
+      e.preventDefault();
+    }
+  };
+
+  const handlePointerUp = (e: PointerEvent) => {
+    if (!swipe.isDown || e.pointerId !== swipe.pointerId) return;
+
+    const deltaX = swipe.currentX - swipe.startX;
+    const deltaY = e.clientY - swipe.startY;
+
+    if (isHorizontalSwipe(deltaX, deltaY) && Math.abs(deltaX) >= SWIPE_THRESHOLD) {
+      if (deltaX < 0) {
+        go(1);  // Swipe left → next
+      } else {
+        go(-1); // Swipe right → prev
+      }
+    }
+
+    swipe.isDown = false;
+    swipe.pointerId = null;
+    (el as HTMLElement).style.cursor = '';
+    (el as HTMLElement).style.opacity = '';
+    resumeAutoPlay();
+  };
+
+  const handlePointerCancel = (e: PointerEvent) => {
+    if (e.pointerId !== swipe.pointerId) return;
+    swipe.isDown = false;
+    swipe.pointerId = null;
+    (el as HTMLElement).style.cursor = '';
+    (el as HTMLElement).style.opacity = '';
+    resumeAutoPlay();
+  };
 
   nextBtn?.addEventListener('click', () => go(1));
   prevBtn?.addEventListener('click', () => go(-1));
@@ -42,12 +133,25 @@ function createSlideshow(
     ind.addEventListener('click', () => update(i))
   );
 
-  let timer = setInterval(() => go(1), interval);
-  el?.addEventListener('mouseenter', () => clearInterval(timer));
-  el?.addEventListener('mouseleave', () => {
-    clearInterval(timer);
-    timer = setInterval(() => go(1), interval);
-  });
+  el?.addEventListener('mouseenter', () => pauseAutoPlay());
+  el?.addEventListener('mouseleave', () => resumeAutoPlay());
+
+  // Attach swipe event listeners
+  if (el) {
+    el.addEventListener('pointerdown', handlePointerDown);
+    el.addEventListener('pointermove', handlePointerMove);
+    el.addEventListener('pointerup', handlePointerUp);
+    el.addEventListener('pointercancel', handlePointerCancel);
+
+    // Prevent image drag
+    el.querySelectorAll('img').forEach(img => {
+      img.addEventListener('dragstart', e => e.preventDefault());
+    });
+
+    // Allow vertical scroll, block horizontal gestures
+    (el as HTMLElement).style.touchAction = 'pan-y pinch-zoom';
+  }
+
   update(0);
 }
 
