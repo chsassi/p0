@@ -336,17 +336,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: map.get($spacing, 'xl');
   margin-top: 40px;
   margin-bottom: 60px;
   text-align: center;
   z-index: 1;
   padding: 0 map.get($spacing, 'lg');
 
-  // Main artist image with futuristic frame
-  > img {
-    width: 260px;
-    height: 260px;
+  @include respond-to('md') {
+    margin-top: 20px;
+    padding: 0 map.get($spacing, 'md');
+  }
+}
+
+// Image wrapper inside the card
+.artist-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: map.get($spacing, 'xl');
+
+  img {
+    width: 220px;
+    height: 220px;
     object-fit: cover;
     border-radius: 0;
     clip-path: polygon(
@@ -355,23 +365,18 @@
     );
     border: none;
     box-shadow:
-      0 0 40px rgba(87, 214, 255, 0.3),
-      0 0 80px rgba(87, 214, 255, 0.1),
-      inset 0 0 60px rgba(0, 0, 0, 0.5);
+      0 0 30px rgba(87, 214, 255, 0.4),
+      0 0 60px rgba(87, 214, 255, 0.15);
     background: #000;
-    filter: brightness(0.9) contrast(1.1);
-    position: relative;
-    z-index: 2;
+    filter: brightness(0.95) contrast(1.05);
   }
 
   @include respond-to('md') {
-    gap: map.get($spacing, 'lg');
-    margin-top: 20px;
-    padding: 0 map.get($spacing, 'md');
+    margin-bottom: map.get($spacing, 'lg');
 
-    > img {
-      width: 200px;
-      height: 200px;
+    img {
+      width: 180px;
+      height: 180px;
     }
   }
 }
@@ -457,7 +462,7 @@
 
 .artist-description p {
   margin: 0 0 map.get($spacing, 'md');
-  line-height: 1.6;
+  line-height: 1.5;
   white-space: pre-line;
   color: var(--muted);
 

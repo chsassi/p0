@@ -3,8 +3,18 @@
     "slug": "reset",
     "title": "RE:SET",
     "artist": "Various Artists",
+    "fullArtists": "The Martens, Chr-s, LED., The Sun Vanished",
     "date": "January 2026",
     "image": "/images/releases/reset.png",
-    "description": "Coming Soon"
-}
+    "description": "Coming Soon",
+    "links": {
+      "spotify": "",
+      "soundcloud": "",
+      "youtube": "",
+      "beatport": ""
+    },
+    "spotifyEmbed": "",
+    "soundcloudEmbed": "",
+    "youtubeEmbed": ""
+  }
 ]
