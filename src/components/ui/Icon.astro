@@ -1,0 +1,45 @@
+---
+/**
+ * Icon Component
+ * Centralizes all SVG icons with consistent sizing
+ */
+interface Props {
+  name: 'arrow-left' | 'arrow-right' | 'arrow-up' | 'arrow-down' | 'instagram' | 'soundcloud' | 'spotify' | 'beatport' | 'youtube' | 'bandcamp';
+  size?: number | string;
+  class?: string;
+}
+
+const { name, size = 24, class: className } = Astro.props;
+
+const icons: Record<string, string> = {
+  'arrow-left': `<path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  'arrow-right': `<path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  'arrow-up': `<path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  'arrow-down': `<path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  'instagram': `<rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>`,
+  'soundcloud': `<path d="M1 14s1.5-4 5.5-4 5.5 4 5.5 4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M14 17h7a3 3 0 0 0 0-6h-1a5 5 0 0 0-9.9 1" stroke="currentColor" stroke-width="2" fill="none"/>`,
+  'spotify': `<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 15c3-1 6-1 8 1M7 12c4-1 7-1 10 1M6 9c5-1 9-1 12 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>`,
+  'beatport': `<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 8h8v4h-4v4h-4z" stroke="currentColor" stroke-width="2" fill="none"/>`,
+  'youtube': `<rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M10 8l6 4-6 4z" fill="currentColor"/>`,
+  'bandcamp': `<path d="M3 18h12l6-12H9z" stroke="currentColor" stroke-width="2" fill="none"/>`
+};
+
+const iconPath = icons[name] || '';
+const sizeValue = typeof size === 'number' ? `${size}px` : size;
+---
+
+<svg
+  class:list={['icon', className]}
+  width={sizeValue}
+  height={sizeValue}
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+  set:html={iconPath}
+/>
+
+<style>
+  .icon {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+</style>

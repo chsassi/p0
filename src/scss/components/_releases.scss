@@ -1,0 +1,250 @@
+// ==========================================================================
+// RELEASES - Release page and slideshow specific styles
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Releases page
+.releases-page {
+  text-align: center;
+  padding: map.get($spacing, 'xl') map.get($spacing, 'lg') map.get($spacing, '2xl');
+
+  h1 {
+    font-size: map.get($font-sizes, '3xl');
+    letter-spacing: 2px;
+    margin-bottom: 48px;
+    text-transform: uppercase;
+    color: var(--text);
+    max-width: map.get($breakpoints, 'xl');
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @include respond-to('md') {
+    padding: map.get($spacing, 'lg') 12px map.get($spacing, 'xl');
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 32px;
+    }
+  }
+}
+
+// Release list
+.release-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+
+  @include respond-to('md') {
+    width: 100%;
+    margin: 0;
+    padding: 0 map.get($spacing, 'sm');
+    overflow-x: hidden;
+  }
+}
+
+// Releases slideshow (homepage)
+.releases-slideshow {
+  padding: map.get($spacing, '3xl') 0;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+
+  @include respond-to('md') {
+    padding: map.get($spacing, 'xl') 0;
+  }
+}
+
+// Background blur
+.release-bg-blur {
+  @include absolute-fill;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(30px) brightness(0.4);
+  transform: scale(1.1);
+  z-index: 0;
+  transition: background-image $transition-slower;
+}
+
+// Release slide
+.release-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-slower, visibility $transition-slower;
+
+  &.is-active,
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+}
+
+.slide-nav-btn,
+.release-slide-nav-btn {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacing, 'sm');
+  transition: transform $transition-fast, opacity $transition-fast;
+  z-index: map.get($z-index, 'dropdown');
+
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  @include respond-to('md') {
+    padding: 6px;
+  }
+}
+
+// Releases section (homepage)
+.releases-section {
+  background: var(--bg);
+  padding: map.get($spacing, '3xl') map.get($spacing, 'lg');
+
+  .release-list {
+    width: 100%;
+    max-width: map.get($breakpoints, 'xl');
+    margin: 0 auto;
+  }
+}
+
+// Release detail page
+.release-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: map.get($spacing, 'xl') map.get($spacing, 'lg') map.get($spacing, '2xl');
+  text-align: center;
+
+  @include respond-to('md') {
+    padding: map.get($spacing, 'lg') map.get($spacing, 'md') map.get($spacing, 'xl');
+    gap: map.get($spacing, 'lg');
+  }
+}
+
+.release-cover-large {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: map.get($radii, 'xl');
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 24px rgba(87, 214, 255, 0.3);
+
+  @include respond-to('md') {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+.release-text {
+  max-width: 700px;
+
+  h1 {
+    font-size: map.get($font-sizes, '3xl');
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+
+    @include respond-to('md') {
+      font-size: 1.6rem;
+    }
+  }
+
+  .release-artist {
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-bottom: map.get($spacing, 'sm');
+    letter-spacing: 1.5px;
+
+    @include respond-to('md') {
+      font-size: map.get($font-sizes, 'base');
+    }
+  }
+
+  .release-date {
+    font-size: map.get($font-sizes, 'base');
+    color: var(--accent);
+    margin-bottom: map.get($spacing, 'lg');
+    letter-spacing: 1.5px;
+    display: block;
+    text-align: center;
+
+    @include respond-to('md') {
+      font-size: map.get($font-sizes, 'sm');
+    }
+  }
+
+  .release-description {
+    color: var(--muted);
+    line-height: 1.8;
+    letter-spacing: 1.5px;
+  }
+}
+
+// Navigation wrapper for slideshows
+.swiper-nav-wrapper {
+  position: absolute;
+  bottom: map.get($spacing, 'xl');
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: map.get($z-index, 'dropdown');
+
+  @include respond-to('md') {
+    bottom: map.get($spacing, 'lg');
+    gap: 12px;
+  }
+}
+
+// Slideshow indicators
+.slideshow-indicators {
+  position: static;
+  transform: none;
+  display: flex;
+  gap: 12px;
+
+  .indicator,
+  .release-indicator {
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all $transition-base;
+    padding: 0;
+
+    &.is-active,
+    &.active {
+      background: var(--accent);
+      box-shadow: $shadow-glow-sm;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @include respond-to('md') {
+      width: 40px;
+    }
+  }
+}

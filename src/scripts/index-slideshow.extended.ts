@@ -25,8 +25,8 @@ function createSlideshow(
   if (!slides.length) return;
 
   const update = (i: number) => {
-    slides.forEach((s, j) => s.classList.toggle('active', j === i));
-    indicators.forEach((ind, j) => ind.classList.toggle('active', j === i));
+    slides.forEach((s, j) => s.classList.toggle('is-active', j === i));
+    indicators.forEach((ind, j) => ind.classList.toggle('is-active', j === i));
     if (blur) {
       const bg = slides[i].getAttribute('data-image');
       if (bg) (blur as HTMLElement).style.backgroundImage = `url(${bg})`;
@@ -91,7 +91,7 @@ function onScroll() {
   const scrollY = window.scrollY,
     winH = window.innerHeight,
     isScrolled = scrollY > winH / 2;
-  scrollIndicator?.classList.toggle('scrolled', isScrolled);
+  scrollIndicator?.classList.toggle('is-scrolled', isScrolled);
   scrollIndicator?.setAttribute(
     'aria-label',
     isScrolled ? 'Scroll to top' : 'Scroll down'

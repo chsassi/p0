@@ -1,0 +1,13 @@
+// ==========================================================================
+// GLOBAL.SCSS - Main entry file
+// Compiles to public/styles/global.css
+// ==========================================================================
+
+// Base styles (reset, typography)
+@use '../base';
+
+// Utility classes
+@use '../utilities';
+
+// Component styles
+@use '../components';

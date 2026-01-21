@@ -2,6 +2,7 @@ import chokidar from 'chokidar';
 import { spawn } from 'child_process';
 import path from 'path';
 
+const SCSS_SOURCE = 'src/scss';
 const CSS_SOURCE = 'src/styles';
 const SCRIPT_SOURCE = 'src/scripts';
 
@@ -28,11 +29,36 @@ function debounce(fn, delay) {
 }
 
 console.log('[WATCH] Starting file watcher...');
+console.log(`  SCSS: ${SCSS_SOURCE}/**/*.scss`);
 console.log(`  CSS: ${CSS_SOURCE}/*.extended.css`);
 console.log(`  Scripts: ${SCRIPT_SOURCE}/*.extended.ts`);
 console.log('\nPress Ctrl+C to stop.\n');
 
-// Watch CSS files
+// Watch SCSS files
+const scssWatcher = chokidar.watch(`${SCSS_SOURCE}/**/*.scss`, {
+  persistent: true,
+  ignoreInitial: true,
+  awaitWriteFinish: {
+    stabilityThreshold: 100,
+    pollInterval: 50
+  }
+});
+
+const handleSCSSChange = debounce(async (filepath) => {
+  const filename = path.basename(filepath);
+  console.log(`\n[WATCH] SCSS changed: ${filename}`);
+  try {
+    // Always rebuild all SCSS since partials affect the main file
+    await runBuild('scripts/build-styles.js');
+  } catch (error) {
+    console.error('[ERROR]', error.message);
+  }
+}, 150);
+
+scssWatcher.on('change', handleSCSSChange);
+scssWatcher.on('add', handleSCSSChange);
+
+// Watch CSS files (for backward compatibility)
 const cssWatcher = chokidar.watch(`${CSS_SOURCE}/*.extended.css`, {
   persistent: true,
   ignoreInitial: true,
@@ -81,6 +107,7 @@ scriptWatcher.on('add', handleScriptChange);
 // Handle graceful shutdown
 process.on('SIGINT', () => {
   console.log('\n[WATCH] Stopping...');
+  scssWatcher.close();
   cssWatcher.close();
   scriptWatcher.close();
   process.exit(0);

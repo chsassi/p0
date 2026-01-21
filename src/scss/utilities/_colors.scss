@@ -1,0 +1,27 @@
+// ==========================================================================
+// COLORS - Color utility classes
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Text colors
+@each $name, $value in $colors {
+  .text-#{$name} {
+    color: var(--#{$name});
+  }
+}
+
+// Background colors
+@each $name, $value in $colors {
+  .bg-#{$name} {
+    background-color: var(--#{$name});
+  }
+}
+
+// Border colors
+@each $name, $value in $colors {
+  .border-#{$name} {
+    border-color: var(--#{$name});
+  }
+}

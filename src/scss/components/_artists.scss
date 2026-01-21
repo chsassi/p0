@@ -1,0 +1,463 @@
+// ==========================================================================
+// ARTISTS - Artist page and slideshow specific styles
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Artists page
+.artists-page {
+  margin-top: map.get($spacing, 'xl');
+  text-align: center;
+
+  h1 {
+    font-size: map.get($font-sizes, '3xl');
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+  }
+}
+
+// Artists grid
+.artists-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: map.get($spacing, 'xl');
+  justify-items: center;
+  align-items: start;
+  padding: map.get($spacing, 'xl') map.get($spacing, '2xl');
+  max-width: map.get($breakpoints, 'xl');
+  margin: 0 auto;
+
+  @include respond-to('lg') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  @include respond-to('md') {
+    grid-template-columns: 1fr;
+    padding: map.get($spacing, 'lg') map.get($spacing, 'md');
+    gap: map.get($spacing, 'lg');
+  }
+}
+
+// Artists slideshow (homepage)
+.artists-slideshow {
+  padding: map.get($spacing, '3xl') 0;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+
+  @include respond-to('md') {
+    padding: map.get($spacing, 'xl') 0;
+  }
+}
+
+.artists-slideshow-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  z-index: 5;
+}
+
+// Background blur
+.artist-bg-blur {
+  @include absolute-fill;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(30px) brightness(0.4);
+  transform: scale(1.1);
+  z-index: 0;
+  transition: background-image $transition-slower;
+}
+
+// Artist slide
+.artist-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-slower, visibility $transition-slower;
+
+  &.is-active,
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+}
+
+.artist-slide-layout {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: map.get($spacing, '3xl');
+  height: 90%;
+  padding: 0 map.get($spacing, '3xl');
+  padding-bottom: 100px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  @include respond-to('lg') {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 map.get($spacing, 'lg');
+    padding-top: 200px;
+    gap: map.get($spacing, 'xl');
+  }
+}
+
+.artist-slide-image-container {
+  width: 500px;
+  height: auto;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: map.get($radii, 'lg');
+  box-shadow: $shadow-lg;
+
+  @include respond-to('lg') {
+    width: 100%;
+    max-width: min(400px, 50vh);
+    height: auto;
+    max-height: min(400px, 50vh);
+    flex-shrink: 0;
+  }
+}
+
+.artist-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.artist-slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-shrink: 1;
+  min-width: 0;
+
+  @include respond-to('lg') {
+    width: 100%;
+    align-items: center;
+    gap: map.get($spacing, 'lg');
+    min-height: 0;
+    flex-shrink: 1;
+  }
+}
+
+.artist-slide-info {
+  max-width: 600px;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  position: relative;
+  cursor: pointer;
+
+  @include respond-to('lg') {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.artist-slide-title {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.4;
+  color: #fff;
+  margin: 0 0 32px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  white-space: pre-wrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: transform $transition-slow, margin $transition-slow;
+
+  .artist-slide-info:hover & {
+    transform: translateY(-20px);
+    margin-bottom: 52px;
+  }
+
+  @include respond-to('lg') {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    white-space: normal;
+
+    .artist-slide-info:hover & {
+      transform: none;
+      margin-bottom: 32px;
+    }
+  }
+}
+
+.artist-slide-link {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: map.get($font-sizes, 'sm');
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all $transition-slow;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  white-space: pre-wrap;
+  min-width: 180px;
+  text-align: center;
+
+  .artist-slide-info:hover & {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  &:hover {
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: $shadow-glow;
+  }
+
+  @include respond-to('lg') {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: static;
+    margin-top: 20px;
+    right: auto;
+  }
+}
+
+.artist-slide-navigation {
+  display: none;
+}
+
+// Artists indicators
+.artists-slideshow-indicators {
+  position: static;
+  transform: none;
+  display: flex;
+  gap: 12px;
+
+  .artist-indicator {
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all $transition-base;
+    padding: 0;
+
+    &.is-active,
+    &.active {
+      background: var(--accent);
+      box-shadow: $shadow-glow-sm;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @include respond-to('md') {
+      width: 40px;
+    }
+  }
+}
+
+.artist-slide-nav-btn {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacing, 'sm');
+  transition: transform $transition-fast, opacity $transition-fast;
+  z-index: map.get($z-index, 'dropdown');
+
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  @include respond-to('md') {
+    padding: 6px;
+  }
+}
+
+// Artist detail page
+.artist-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: map.get($spacing, 'lg');
+  margin-top: map.get($spacing, 'xl');
+  text-align: center;
+
+  img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 18px rgba(87, 214, 255, 0.25);
+    background: #000;
+    filter: brightness(0.8) contrast(1.1);
+  }
+
+  @include respond-to('md') {
+    gap: 18px;
+    margin-top: 18px;
+
+    img {
+      width: 220px;
+      height: 220px;
+    }
+  }
+}
+
+.artist-info {
+  max-width: 700px;
+
+  h1 {
+    font-size: map.get($font-sizes, '3xl');
+    margin-bottom: map.get($spacing, 'sm');
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  @include respond-to('md') {
+    max-width: 92vw;
+
+    h1 {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.artist-description p {
+  margin: 0 0 map.get($spacing, 'md');
+  line-height: 1.6;
+  white-space: pre-line;
+  color: var(--muted);
+
+  @include respond-to('md') {
+    font-size: 0.95rem;
+  }
+}
+
+.artist-icons {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 22px;
+
+  img {
+    width: 40px;
+    height: 40px;
+    opacity: 0.95;
+    border: none !important;
+    border-radius: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: scale(1);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  @media (hover: hover) {
+    img:hover {
+      transform: scale(1.12);
+      opacity: 1;
+    }
+  }
+
+  @include respond-to('md') {
+    gap: 18px;
+    margin-top: map.get($spacing, 'md');
+
+    img {
+      width: 36px;
+      height: 36px;
+    }
+  }
+}
+
+.artist-player {
+  margin-top: map.get($spacing, 'lg');
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 700px;
+
+  @include respond-to('md') {
+    margin-top: map.get($spacing, 'md');
+
+    iframe {
+      height: 160px;
+    }
+  }
+}
+
+.back-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: map.get($spacing, 'md');
+  margin-top: 12px;
+}
+
+.artist-flags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: map.get($spacing, 'xs');
+  margin: map.get($spacing, 'sm') 0 map.get($spacing, 'md');
+  font-size: map.get($font-sizes, 'sm');
+  letter-spacing: 1.5px;
+  color: var(--text);
+}
+
+.flag-group {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.flag-inline,
+.artist-flags .flag-inline {
+  all: unset;
+  width: 36px;
+  height: 24px;
+  border-radius: 2px;
+  object-fit: contain;
+  display: inline-block;
+
+  @include respond-to('md') {
+    width: 28px;
+    height: 18px;
+  }
+}

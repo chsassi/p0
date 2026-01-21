@@ -1,0 +1,132 @@
+// ==========================================================================
+// BUTTONS - Button component styles
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Base button styles
+.btn {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: map.get($font-sizes, 'sm');
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  transition: all $transition-base;
+  white-space: nowrap;
+  min-width: 180px;
+
+  &:hover {
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: $shadow-glow;
+    transform: translateY(-2px);
+  }
+}
+
+// Button variants
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+
+  &:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+}
+
+.btn-solid {
+  background: var(--accent);
+  border: 2px solid var(--accent);
+  color: var(--bg);
+
+  &:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 2px solid transparent;
+  color: var(--text);
+
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+// Button sizes
+.btn-sm {
+  padding: 10px 20px;
+  font-size: map.get($font-sizes, 'xs');
+  min-width: auto;
+}
+
+.btn-lg {
+  padding: 18px 40px;
+  font-size: map.get($font-sizes, 'base');
+}
+
+// Back button (used on detail pages)
+.back-btn {
+  position: absolute;
+  left: map.get($spacing, 'xl');
+  top: 120px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  transition: color $transition-base, transform 0.2s ease;
+  z-index: map.get($z-index, 'sticky');
+
+  &:hover {
+    color: var(--accent);
+    transform: translateX(-3px);
+  }
+
+  @include respond-to('md') {
+    position: static;
+    display: inline-block;
+    margin: 12px 0 0 map.get($spacing, 'md');
+  }
+}
+
+// Icon buttons (used in slideshows)
+.nav-btn {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacing, 'sm');
+  transition: transform $transition-fast, opacity $transition-fast;
+  z-index: map.get($z-index, 'dropdown');
+
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+}
+
+// Navigation icon
+.nav-icon {
+  width: 40px;
+  height: 40px;
+  display: block;
+  background: transparent;
+  filter: invert(1) grayscale(1) brightness(1);
+
+  @include respond-to('md') {
+    width: 22px;
+    height: 22px;
+  }
+}

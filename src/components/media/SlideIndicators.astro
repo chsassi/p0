@@ -1,0 +1,70 @@
+---
+/**
+ * SlideIndicators Component
+ * Dot/bar indicators for slideshows
+ */
+interface Props {
+  count: number;
+  activeIndex?: number;
+  class?: string;
+  indicatorClass?: string;
+}
+
+const {
+  count,
+  activeIndex = 0,
+  class: className,
+  indicatorClass = 'indicator'
+} = Astro.props;
+---
+
+<div class:list={['slideshow-indicators', className]}>
+  {Array.from({ length: count }).map((_, i) => (
+    <button
+      type="button"
+      class:list={[indicatorClass, i === activeIndex && 'is-active']}
+      data-index={i}
+      aria-label={`Go to slide ${i + 1}`}
+    />
+  ))}
+</div>
+
+<style>
+  .slideshow-indicators {
+    display: flex;
+    gap: 12px;
+  }
+
+  .indicator,
+  :global(.hero-indicator),
+  :global(.artist-indicator) {
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .indicator.is-active,
+  :global(.hero-indicator.is-active),
+  :global(.artist-indicator.is-active) {
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(87, 214, 255, 0.5);
+  }
+
+  .indicator:hover,
+  :global(.hero-indicator:hover),
+  :global(.artist-indicator:hover) {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  @media (max-width: 768px) {
+    .indicator,
+    :global(.hero-indicator),
+    :global(.artist-indicator) {
+      width: 40px;
+    }
+  }
+</style>

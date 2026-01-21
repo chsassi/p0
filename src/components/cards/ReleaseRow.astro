@@ -1,0 +1,115 @@
+---
+/**
+ * ReleaseRow Component
+ * Row for displaying release in list
+ */
+interface Props {
+  index: number;
+  title: string;
+  artist: string;
+  slug: string;
+  cover: string;
+  date?: string;
+  class?: string;
+}
+
+const { index, title, artist, slug, cover, date, class: className } = Astro.props;
+---
+
+<a href={`/releases/${slug}`} class:list={['release-row', className]}>
+  <span class="release-index">{String(index).padStart(2, '0')}</span>
+  <img src={cover} alt={title} class="release-thumb" loading="lazy" decoding="async" />
+  <div class="release-info">
+    <span class="release-title">{title}</span>
+    <span class="release-artist">{artist}</span>
+  </div>
+  {date && <span class="release-date">{date}</span>}
+</a>
+
+<style>
+  .release-row {
+    display: grid;
+    grid-template-columns: 60px 100px 1fr 150px;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    text-decoration: none;
+    transition: background 0.25s ease;
+    text-align: left;
+  }
+
+  .release-row:hover {
+    background: rgba(87, 214, 255, 0.05);
+  }
+
+  .release-index {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .release-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  .release-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding-left: 16px;
+  }
+
+  .release-title {
+    font-weight: 600;
+    color: #fff;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+  }
+
+  .release-artist {
+    color: var(--muted);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  .release-date {
+    color: var(--accent);
+    text-align: right;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+  }
+
+  @media (max-width: 768px) {
+    .release-row {
+      grid-template-columns: 40px 60px 1fr;
+      padding: 14px 10px;
+    }
+
+    .release-date {
+      display: none;
+    }
+
+    .release-thumb {
+      width: 60px;
+      height: 60px;
+    }
+
+    .release-title {
+      font-size: 0.95rem;
+    }
+
+    .release-artist {
+      font-size: 0.85rem;
+    }
+
+    .release-info {
+      padding-left: 10px;
+    }
+  }
+</style>

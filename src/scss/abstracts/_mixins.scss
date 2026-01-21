@@ -1,0 +1,142 @@
+// ==========================================================================
+// MIXINS - Reusable style patterns
+// ==========================================================================
+
+@use 'sass:map';
+@use 'variables' as *;
+
+// Responsive breakpoint mixin
+@mixin respond-to($bp) {
+  @if map.has-key($breakpoints, $bp) {
+    @media (max-width: map.get($breakpoints, $bp)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$bp}";
+  }
+}
+
+// Min-width breakpoint
+@mixin respond-from($bp) {
+  @if map.has-key($breakpoints, $bp) {
+    @media (min-width: map.get($breakpoints, $bp)) {
+      @content;
+    }
+  }
+}
+
+// Glass morphism effect
+@mixin glass-effect($opacity: 0.4) {
+  background: rgba(0, 0, 0, $opacity);
+  backdrop-filter: $glass-blur;
+}
+
+// Hover lift effect
+@mixin hover-lift($amount: -5px) {
+  transition: transform $transition-base;
+  &:hover {
+    transform: translateY($amount);
+  }
+}
+
+// Flex center
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flex between
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Absolute fill
+@mixin absolute-fill {
+  position: absolute;
+  inset: 0;
+}
+
+// Fixed fill
+@mixin fixed-fill {
+  position: fixed;
+  inset: 0;
+}
+
+// Text truncate
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Visually hidden (for accessibility)
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Button reset
+@mixin button-reset {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+// Link reset
+@mixin link-reset {
+  color: inherit;
+  text-decoration: none;
+}
+
+// Accent glow text
+@mixin accent-glow {
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(87, 214, 255, 0.5);
+}
+
+// Card base
+@mixin card-base {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: map.get($radii, 'xl');
+  overflow: hidden;
+  transition: all $transition-base;
+}
+
+// Card hover
+@mixin card-hover {
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--accent);
+    box-shadow: $shadow-glow-lg;
+  }
+}
+
+// Section padding
+@mixin section-padding {
+  padding: map.get($spacing, '3xl') map.get($spacing, 'lg');
+
+  @include respond-to('md') {
+    padding: map.get($spacing, 'xl') map.get($spacing, 'md');
+  }
+}
+
+// Container
+@mixin container($max-width: map.get($breakpoints, 'xl')) {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+}

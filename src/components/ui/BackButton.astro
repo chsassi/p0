@@ -1,0 +1,48 @@
+---
+/**
+ * BackButton Component
+ * Navigation back button for detail pages
+ */
+interface Props {
+  href?: string;
+  text?: string;
+  class?: string;
+}
+
+const {
+  href = '/',
+  text = 'Back to Home',
+  class: className
+} = Astro.props;
+---
+
+<a href={href} class:list={['back-btn', className]}>
+  &lt; {text}
+</a>
+
+<style>
+  .back-btn {
+    position: absolute;
+    left: 40px;
+    top: 120px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    transition: color 0.25s ease, transform 0.2s ease;
+    z-index: 100;
+  }
+
+  .back-btn:hover {
+    color: var(--accent);
+    transform: translateX(-3px);
+  }
+
+  @media (max-width: 768px) {
+    .back-btn {
+      position: static;
+      display: inline-block;
+      margin: 12px 0 0 16px;
+    }
+  }
+</style>

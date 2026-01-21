@@ -1,0 +1,53 @@
+---
+/**
+ * ArtistCard Component
+ * Card for displaying artist in grid
+ */
+interface Props {
+  name: string;
+  slug: string;
+  image: string;
+  class?: string;
+}
+
+const { name, slug, image, class: className } = Astro.props;
+---
+
+<a href={`/artists/${slug}`} class:list={['artist-card', className]}>
+  <img src={image} alt={name} loading="lazy" decoding="async" />
+  <h2>{name}</h2>
+</a>
+
+<style>
+  .artist-card {
+    width: 100%;
+    max-width: 360px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.25s ease;
+  }
+
+  .artist-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(87, 214, 255, 0.4);
+  }
+
+  .artist-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+  }
+
+  .artist-card h2 {
+    margin: 16px;
+    text-align: center;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+</style>

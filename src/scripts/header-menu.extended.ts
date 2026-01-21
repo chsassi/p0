@@ -12,26 +12,26 @@ const dropdown = document.querySelector('.menu-dropdown');
 
 window.addEventListener(
   'scroll',
-  () => header?.classList.toggle('visible', window.scrollY > 100),
+  () => header?.classList.toggle('is-visible', window.scrollY > 100),
   { passive: true }
 );
 
 if (menuBtn && dropdown) {
   menuBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    const open = dropdown.classList.toggle('open');
+    const open = dropdown.classList.toggle('is-open');
     menuBtn.setAttribute('aria-expanded', String(open));
   });
   dropdown.addEventListener('mouseenter', () => {
-    dropdown.classList.add('open');
+    dropdown.classList.add('is-open');
     menuBtn.setAttribute('aria-expanded', 'true');
   });
   dropdown.addEventListener('mouseleave', () => {
-    dropdown.classList.remove('open');
+    dropdown.classList.remove('is-open');
     menuBtn.setAttribute('aria-expanded', 'false');
   });
   document.addEventListener('click', () => {
-    dropdown.classList.remove('open');
+    dropdown.classList.remove('is-open');
     menuBtn.setAttribute('aria-expanded', 'false');
   });
 }

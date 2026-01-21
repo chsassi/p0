@@ -1,0 +1,82 @@
+// ==========================================================================
+// LAYOUT - Layout and positioning utilities
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Display
+.block { display: block; }
+.inline-block { display: inline-block; }
+.inline { display: inline; }
+.hidden { display: none; }
+.grid { display: grid; }
+
+// Position
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.sticky { position: sticky; }
+
+// Inset
+.inset-0 { inset: 0; }
+.top-0 { top: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.left-0 { left: 0; }
+
+// Width
+.w-full { width: 100%; }
+.w-auto { width: auto; }
+.w-screen { width: 100vw; }
+.max-w-full { max-width: 100%; }
+
+// Height
+.h-full { height: 100%; }
+.h-auto { height: auto; }
+.h-screen { height: 100vh; }
+.min-h-screen { min-height: 100vh; }
+
+// Overflow
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+.overflow-scroll { overflow: scroll; }
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+
+// Z-index
+@each $name, $value in $z-index {
+  .z-#{$name} { z-index: $value; }
+}
+
+// Object fit
+.object-cover { object-fit: cover; }
+.object-contain { object-fit: contain; }
+.object-fill { object-fit: fill; }
+.object-center { object-position: center; }
+
+// Visibility
+.visible { visibility: visible; }
+.invisible { visibility: hidden; }
+
+// Pointer events
+.pointer-events-none { pointer-events: none; }
+.pointer-events-auto { pointer-events: auto; }
+
+// Cursor
+.cursor-pointer { cursor: pointer; }
+.cursor-default { cursor: default; }
+
+// Container utility
+.container {
+  width: 100%;
+  max-width: map.get($breakpoints, 'xl');
+  margin: 0 auto;
+  padding-left: map.get($spacing, 'lg');
+  padding-right: map.get($spacing, 'lg');
+
+  @include respond-to('md') {
+    padding-left: map.get($spacing, 'md');
+    padding-right: map.get($spacing, 'md');
+  }
+}

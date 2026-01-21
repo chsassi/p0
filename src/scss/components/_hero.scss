@@ -1,0 +1,245 @@
+// ==========================================================================
+// HERO - Hero slideshow specific styles
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+.hero-slideshow {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slideshow-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.hero-slide {
+  @include absolute-fill;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+
+  &.is-active,
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+}
+
+.hero-slide-background {
+  @include absolute-fill;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.3);
+
+  &::before {
+    content: '';
+    @include absolute-fill;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 10, 10, 0.5) 100%);
+    z-index: 1;
+  }
+}
+
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+.hero-slide-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: map.get($spacing, '2xl') map.get($spacing, '3xl');
+  max-width: 1600px;
+  margin: 0 auto;
+
+  @include respond-to('md') {
+    padding: map.get($spacing, 'xl') map.get($spacing, 'lg');
+  }
+}
+
+.hero-logo-container {
+  @include flex-center;
+  margin-bottom: map.get($spacing, '2xl');
+
+  @include respond-to('md') {
+    margin-bottom: map.get($spacing, 'xl');
+  }
+}
+
+.hero-logo {
+  width: 15%;
+  max-width: 350px;
+  height: auto;
+  filter: none;
+
+  @include respond-to('md') {
+    max-width: 200px;
+  }
+}
+
+.hero-news-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: map.get($spacing, 'lg');
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.news-type-label {
+  display: inline-block;
+  font-size: map.get($font-sizes, 'sm');
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(87, 214, 255, 0.5);
+}
+
+.news-heading {
+  font-size: map.get($font-sizes, '5xl');
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+
+  @include respond-to('md') {
+    font-size: map.get($font-sizes, '3xl');
+  }
+}
+
+.news-description {
+  font-size: map.get($font-sizes, 'lg');
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+
+  @include respond-to('md') {
+    font-size: map.get($font-sizes, 'base');
+  }
+}
+
+.news-link {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: map.get($font-sizes, 'sm');
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all $transition-base;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: $shadow-glow;
+    transform: translateY(-2px);
+  }
+}
+
+.hero-menu {
+  display: none;
+}
+
+// Hero indicators
+.hero-slideshow-indicators {
+  position: absolute;
+  bottom: map.get($spacing, 'xl');
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: map.get($z-index, 'dropdown');
+
+  @include respond-to('md') {
+    bottom: map.get($spacing, 'lg');
+  }
+
+  .hero-indicator {
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all $transition-base;
+    padding: 0;
+
+    &.is-active,
+    &.active {
+      background: var(--accent);
+      box-shadow: $shadow-glow-sm;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @include respond-to('md') {
+      width: 40px;
+    }
+  }
+}
+
+// Hero navigation buttons
+.hero-nav-btn {
+  position: absolute;
+  top: 50%;
+  z-index: map.get($z-index, 'dropdown');
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacing, 'sm');
+  transition: transform $transition-fast, opacity $transition-fast;
+
+  &.prev {
+    left: map.get($spacing, 'xl');
+
+    @include respond-to('md') {
+      left: map.get($spacing, 'md');
+    }
+  }
+
+  &.next {
+    right: map.get($spacing, 'xl');
+
+    @include respond-to('md') {
+      right: map.get($spacing, 'md');
+    }
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  @include respond-to('md') {
+    padding: 6px;
+  }
+}

@@ -1,0 +1,99 @@
+// ==========================================================================
+// TYPOGRAPHY - Font styles and text utilities
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Font import
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+// Heading styles
+h1 {
+  font-size: map.get($font-sizes, '3xl');
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+h2 {
+  font-size: map.get($font-sizes, '2xl');
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+// Text color utilities
+.text-accent {
+  color: var(--accent);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-white {
+  color: #fff;
+}
+
+// Text transform
+.text-upper {
+  text-transform: uppercase;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+// Letter spacing
+.tracking-wide {
+  letter-spacing: 2px;
+}
+
+.tracking-wider {
+  letter-spacing: 3px;
+}
+
+// Font sizes
+@each $name, $size in $font-sizes {
+  .text-#{$name} {
+    font-size: $size;
+  }
+}
+
+// Font weights
+.font-normal {
+  font-weight: 400;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+// Line heights
+.leading-none {
+  line-height: 1;
+}
+
+.leading-tight {
+  line-height: 1.1;
+}
+
+.leading-normal {
+  line-height: 1.6;
+}
+
+.leading-relaxed {
+  line-height: 1.8;
+}
