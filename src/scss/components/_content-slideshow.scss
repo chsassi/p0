@@ -7,14 +7,14 @@
 
 // Section wrapper
 .content-slideshow {
-  padding: map.get($spacing, '3xl') 0;
+  // padding: map.get($spacing, '3xl') 0;
   min-height: 100vh;
   position: relative;
   overflow: hidden;
   background: var(--bg);
 
   @include respond-to('md') {
-    padding: map.get($spacing, 'xl') 0;
+    // padding: map.get($spacing, 'xl') 0;
   }
 }
 
