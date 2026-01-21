@@ -159,6 +159,19 @@
       left: auto;
     }
   }
+
+  // Content position modifiers for image-right variant
+  &.content-slide-layout--content-above {
+    .content-slide-content {
+      justify-content: flex-end;
+    }
+  }
+
+  &.content-slide-layout--content-below {
+    .content-slide-content {
+      justify-content: flex-start;
+    }
+  }
 }
 
 // ==========================================================================

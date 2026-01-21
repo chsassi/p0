@@ -1,5 +1,6 @@
 ---
 import Header from "../components/layout/Header.astro";
+import FloatingSocialBar from "../components/ui/FloatingSocialBar.astro";
 
 const { title = "Protocol Zero", active = "" } = Astro.props;
 ---
@@ -16,6 +17,7 @@ const { title = "Protocol Zero", active = "" } = Astro.props;
   <body>
     <Header active={active} />
     <main><slot /></main>
+    <FloatingSocialBar />
     <script src="/scripts/header-menu.min.js" is:inline></script>
   </body>
 </html>
