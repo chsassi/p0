@@ -12,7 +12,9 @@
       "mcp__playwright__browser_take_screenshot",
       "mcp__playwright__browser_resize",
       "Bash(node scripts/build-styles.js:*)",
-      "Bash(npm run build:styles:*)"
+      "Bash(npm run build:styles:*)",
+      "mcp__playwright__browser_run_code",
+      "Bash(git add:*)"
     ]
   }
 }
