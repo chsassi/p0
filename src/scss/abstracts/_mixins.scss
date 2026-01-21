@@ -25,6 +25,13 @@
   }
 }
 
+// Height-based breakpoint (for short viewports)
+@mixin respond-to-height($height) {
+  @media (max-height: $height) {
+    @content;
+  }
+}
+
 // Glass morphism effect
 @mixin glass-effect($opacity: 0.4) {
   background: rgba(0, 0, 0, $opacity);
