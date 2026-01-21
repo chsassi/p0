@@ -57,14 +57,15 @@
 
 // Section header
 .section-header {
+  margin-top: 80px;
   width: 100%;
-  max-width: 700px;
+  max-width: none;
   padding: 0;
 
   h1 {
     margin: 0 0 map.get($spacing, 'lg');
     font-size: map.get($font-sizes, '4xl');
-    text-align: left;
+    text-align: center;
   }
 }
 
@@ -77,6 +78,14 @@
   margin-bottom: 100px;
   flex-direction: column;
   align-items: center;
+  
+  h1 {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 0 map.get($spacing, 'lg');
+    font-size: map.get($font-sizes, '4xl');
+    text-align: center;
+  }
 
   .section-header,
   .section-content {
@@ -86,7 +95,7 @@
   }
 
   .section-header h1 {
-    text-align: left;
+    text-align: center;
   }
 
   .section-content p {
@@ -109,7 +118,7 @@
     max-width: 700px;
     margin: 0 0 map.get($spacing, 'lg');
     font-size: map.get($font-sizes, '4xl');
-    text-align: left;
+    text-align: center;
   }
 
   .section-content {

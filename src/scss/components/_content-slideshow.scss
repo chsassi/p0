@@ -1,0 +1,386 @@
+// ==========================================================================
+// CONTENT SLIDESHOW - Reusable slideshow with image/content layouts
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// Section wrapper
+.content-slideshow {
+  padding: map.get($spacing, '3xl') 0;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+
+  @include respond-to('md') {
+    padding: map.get($spacing, 'xl') 0;
+  }
+}
+
+// Container
+.content-slideshow-container {
+  display: grid;
+  grid-template-areas: "slide";
+  width: 100%;
+  min-height: calc(100vh - 160px);
+  z-index: 5;
+}
+
+// Individual slide
+.content-slide {
+  grid-area: slide;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-slower, visibility $transition-slower;
+
+  &.is-active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+}
+
+// Background blur
+.content-slide-bg-blur {
+  @include absolute-fill;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(30px) brightness(0.4);
+  transform: scale(1.1);
+  z-index: 0;
+  transition: background-image $transition-slower;
+}
+
+// ==========================================================================
+// LAYOUT VARIANTS
+// ==========================================================================
+
+// Base layout
+.content-slide-layout {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 60px;
+  min-height: calc(100vh - 260px);
+  padding: 0 map.get($spacing, '3xl');
+  padding-top: 200px;
+  padding-bottom: 100px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  @include respond-to('lg') {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 map.get($spacing, 'lg');
+    padding-top: 120px;
+    padding-bottom: 60px;
+    gap: 32px;
+  }
+
+  @include respond-to('md') {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    gap: 24px;
+  }
+}
+
+// IMAGE LEFT variant (image first, content right, text LEFT-aligned)
+.content-slide-layout--image-left {
+  .content-slide-content {
+    align-items: flex-start;
+  }
+
+  .content-slide-info {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .content-slide-link {
+    left: 0;
+    right: auto;
+  }
+
+  @include respond-to('lg') {
+    .content-slide-content {
+      align-items: center;
+    }
+
+    .content-slide-info {
+      align-items: center;
+      text-align: center;
+    }
+
+    .content-slide-link {
+      left: auto;
+      right: auto;
+    }
+  }
+}
+
+// IMAGE RIGHT variant (content first, image right, text RIGHT-aligned)
+.content-slide-layout--image-right {
+  .content-slide-content {
+    align-items: flex-end;
+  }
+
+  .content-slide-info {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .content-slide-link {
+    right: 0;
+    left: auto;
+  }
+
+  @include respond-to('lg') {
+    .content-slide-content {
+      align-items: center;
+    }
+
+    .content-slide-info {
+      align-items: center;
+      text-align: center;
+    }
+
+    .content-slide-link {
+      right: auto;
+      left: auto;
+    }
+  }
+}
+
+// ==========================================================================
+// SHARED ELEMENT STYLES
+// ==========================================================================
+
+// Image container
+.content-slide-image-container {
+  width: 400px;
+  height: 400px;
+  flex-shrink: 0;
+  min-width: 0;
+  max-width: 100%;
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: map.get($radii, 'lg');
+  box-shadow: $shadow-lg;
+
+  @include respond-to('lg') {
+    width: 300px;
+    height: 300px;
+  }
+
+  @include respond-to('md') {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+.content-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+// Content container
+.content-slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-shrink: 1;
+  min-width: 0;
+
+  @include respond-to('lg') {
+    width: 100%;
+    gap: map.get($spacing, 'lg');
+    min-height: 0;
+    flex-shrink: 1;
+  }
+}
+
+// Info wrapper
+.content-slide-info {
+  max-width: 600px;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+
+  @include respond-to('lg') {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+// Title
+.content-slide-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #fff;
+  margin: 0 0 32px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  white-space: pre-wrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: transform $transition-slow, margin $transition-slow;
+
+  .content-slide-info:hover & {
+    transform: translateY(-20px);
+    margin-bottom: 52px;
+  }
+
+  @include respond-to('lg') {
+    font-size: 1.8rem;
+    white-space: normal;
+
+    .content-slide-info:hover & {
+      transform: none;
+      margin-bottom: 32px;
+    }
+  }
+
+  @include respond-to('md') {
+    font-size: 1.5rem;
+  }
+}
+
+// Subtitle (artist name for releases)
+.content-slide-subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin: 0 0 32px;
+  letter-spacing: 2px;
+  transition: transform $transition-slow, margin $transition-slow;
+
+  .content-slide-info:hover & {
+    transform: translateY(-20px);
+    margin-bottom: 52px;
+  }
+
+  @include respond-to('lg') {
+    font-size: 1rem;
+
+    .content-slide-info:hover & {
+      transform: none;
+      margin-bottom: 32px;
+    }
+  }
+
+  @include respond-to('md') {
+    font-size: 0.9rem;
+  }
+}
+
+// Link button (appears on hover)
+.content-slide-link {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: map.get($font-sizes, 'sm');
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all $transition-slow;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  white-space: nowrap;
+  min-width: 180px;
+  text-align: center;
+
+  .content-slide-info:hover & {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  &:hover {
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: $shadow-glow;
+  }
+
+  @include respond-to('lg') {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: static;
+    margin-top: 20px;
+  }
+}
+
+// ==========================================================================
+// NAVIGATION
+// ==========================================================================
+
+// Indicators
+.content-slideshow-indicators {
+  display: flex;
+  gap: 12px;
+
+  .content-indicator {
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all $transition-base;
+    padding: 0;
+
+    &.is-active,
+    &.active {
+      background: var(--accent);
+      box-shadow: $shadow-glow-sm;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @include respond-to('md') {
+      width: 40px;
+    }
+  }
+}
+
+// Navigation buttons
+.content-slide-nav-btn {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacing, 'sm');
+  transition: transform $transition-fast, opacity $transition-fast;
+  z-index: map.get($z-index, 'dropdown');
+
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  @include respond-to('md') {
+    padding: 6px;
+  }
+}

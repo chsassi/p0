@@ -1,0 +1,75 @@
+---
+/**
+ * ContentSlideshow Component
+ * Reusable slideshow for artists and releases with configurable layout variants
+ */
+
+interface SlideItem {
+  image: string;
+  title: string;
+  subtitle?: string;
+  slug: string;
+}
+
+interface Props {
+  id: string;
+  type: "artist" | "release";
+  variant: "image-left" | "image-right";
+  items: SlideItem[];
+  sectionTitle: string;
+}
+
+const { id, type, variant, items, sectionTitle } = Astro.props;
+const linkText = type === "artist" ? "VIEW ARTIST" : "VIEW RELEASE";
+const linkBase = type === "artist" ? "/artists/" : "/releases/";
+---
+
+<section id={id} class={`scroll-section ${type}s-section content-slideshow`}>
+  <div class="content-slide-bg-blur" style={`background-image: url(${items[0].image})`}></div>
+  <div class="section-vignette"></div>
+  <div class="section-header"><h1>{sectionTitle}</h1></div>
+
+  <div class="content-slideshow-container">
+    {items.map((item, i) => (
+      <div class:list={['content-slide', i === 0 && 'is-active']} data-slide={i} data-image={item.image}>
+        <div class={`content-slide-layout content-slide-layout--${variant}`}>
+          {variant === "image-left" ? (
+            <>
+              <div class="content-slide-image-container">
+                <img src={item.image} alt={item.title} class="content-slide-image" />
+              </div>
+              <div class="content-slide-content">
+                <div class="content-slide-info">
+                  <h2 class="content-slide-title">{item.title}</h2>
+                  {item.subtitle && <h3 class="content-slide-subtitle">{item.subtitle}</h3>}
+                  <a href={`${linkBase}${item.slug}`} class="content-slide-link">{linkText}</a>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div class="content-slide-content">
+                <div class="content-slide-info">
+                  <h2 class="content-slide-title">{item.title}</h2>
+                  {item.subtitle && <h3 class="content-slide-subtitle">{item.subtitle}</h3>}
+                  <a href={`${linkBase}${item.slug}`} class="content-slide-link">{linkText}</a>
+                </div>
+              </div>
+              <div class="content-slide-image-container">
+                <img src={item.image} alt={item.title} class="content-slide-image" />
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="swiper-nav-wrapper">
+    <button class="content-slide-nav-btn prev" aria-label="Previous"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
+    <div class="content-slideshow-indicators">
+      {items.map((_, i) => <button class:list={['content-indicator', i === 0 && 'is-active']} data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>)}
+    </div>
+    <button class="content-slide-nav-btn next" aria-label="Next"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
+  </div>
+</section>

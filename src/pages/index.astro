@@ -1,6 +1,7 @@
 ---
 import HeaderLayout from "../layouts/HeaderLayout.astro";
 import FooterLayout from "../layouts/FooterLayout.astro";
+import ContentSlideshow from "../components/ContentSlideshow.astro";
 import artists from "../data/artists.json";
 import releases from "../data/releases.json";
 import news from "../data/news.json";
@@ -49,7 +50,7 @@ import news from "../data/news.json";
     </section>
 
     <section id="about" class="scroll-section about-section">
-      <div class="section-header"><h1>ABOUT</h1></div>
+      <h1>ABOUT</h1>
       <div class="section-content">
         <p>Protocol Zero (P0) is an independent European drum & bass label founded between Slovakia and Italy by The Martens and Chr-s.</p>
         <p>Born from a shared vision of sound as both art and technology, the label focuses on the darker and more technical edges of drum & bass — from deep neurofunk to atmospheric techstep.</p>
@@ -58,32 +59,13 @@ import news from "../data/news.json";
       </div>
     </section>
 
-    <section id="artists" class="scroll-section artists-section artists-slideshow">
-      <div class="artist-bg-blur" style={`background-image: url(${artists[0].image})`}></div>
-      <div class="section-vignette"><h1>ARTISTS</h1></div>
-      <div class="artists-slideshow-container">
-        {artists.map((artist, i) => (
-          <div class:list={['artist-slide', i === 0 && 'is-active']} data-slide={i} data-image={artist.image}>
-            <div class="artist-slide-layout">
-              <div class="artist-slide-content">
-                <div class="artist-slide-info">
-                  <h2 class="artist-slide-title">{artist.name}</h2>
-                  <a href={`/artists/${artist.slug}`} class="artist-slide-link">VIEW ARTIST</a>
-                </div>
-              </div>
-              <div class="artist-slide-image-container"><img src={artist.image} alt={artist.name} class="artist-slide-image" /></div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div class="swiper-nav-wrapper">
-        <button class="artist-slide-nav-btn prev" aria-label="Previous artist"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
-        <div class="artists-slideshow-indicators">
-          {artists.map((_, i) => <button class:list={['artist-indicator', i === 0 && 'is-active']} data-slide={i} aria-label={`Go to artist ${i + 1}`}></button>)}
-        </div>
-        <button class="artist-slide-nav-btn next" aria-label="Next artist"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
-      </div>
-    </section>
+    <ContentSlideshow
+      id="artists"
+      type="artist"
+      variant="image-right"
+      items={artists.map(a => ({ image: a.image, title: a.name, slug: a.slug }))}
+      sectionTitle="ARTISTS"
+    />
     
     <section id="contacts" class="scroll-section contacts-section">
       <h1>CONTACTS</h1>
@@ -94,33 +76,13 @@ import news from "../data/news.json";
       </div>
     </section>
 
-    <section id="releases" class="scroll-section releases-section releases-slideshow">
-      <div class="release-bg-blur" style={`background-image: url(${releases[0].image})`}></div>
-      <div class="section-vignette"><h1>RELEASES</h1></div>
-      <div class="slideshow-container">
-        {releases.map((rel, i) => (
-          <div class:list={['release-slide', i === 0 && 'is-active']} data-slide={i} data-image={rel.image}>
-            <div class="slide-layout">
-              <div class="slide-image-container"><img src={rel.image} alt={rel.title} class="slide-image" /></div>
-              <div class="slide-content">
-                <div class="slide-info">
-                  <h2 class="slide-title">{rel.title}</h2>
-                  <h3 class="slide-artist">{rel.artist}</h3>
-                  <a href={`/releases/${rel.slug}`} class="slide-link">VIEW RELEASE</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div class="swiper-nav-wrapper">
-        <button class="slide-nav-btn prev" aria-label="Previous slide"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
-        <div class="slideshow-indicators">
-          {releases.map((_, i) => <button class:list={['indicator', i === 0 && 'is-active']} data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>)}
-        </div>
-        <button class="slide-nav-btn next" aria-label="Next slide"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
-      </div>
-    </section>
+    <ContentSlideshow
+      id="releases"
+      type="release"
+      variant="image-left"
+      items={releases.map(r => ({ image: r.image, title: r.title, subtitle: r.artist, slug: r.slug }))}
+      sectionTitle="RELEASES"
+    />
   </div>
 
   <script src="/scripts/index-slideshow.min.js" is:inline></script>

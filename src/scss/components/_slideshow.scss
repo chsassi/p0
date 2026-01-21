@@ -330,14 +330,6 @@
   z-index: 2;
   pointer-events: none;
 
-  h1 {
-    position: relative;
-    margin: 120px 0 0;
-    font-size: map.get($font-sizes, '4xl');
-    text-align: center;
-    pointer-events: auto;
-  }
-
   &::after {
     content: '';
     position: absolute;
@@ -349,5 +341,120 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     clip-path: polygon(0 40%, 60% 100%, 60% calc(100% - 1px), 0 calc(40% - 1px));
     z-index: 2;
+  }
+}
+
+// Section header (separate from vignette for z-index control)
+.section-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: none; // Override the 700px from _sections.scss
+  z-index: 6;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  padding: 0 map.get($spacing, 'lg');
+
+  h1 {
+    width: 100%;
+    max-width: 700px;
+    margin: 120px 0 0;
+    font-size: map.get($font-sizes, '4xl');
+    text-align: center;
+    pointer-events: auto;
+  }
+}
+
+// ==========================================================================
+// RELEASES SLIDESHOW - Matches artist slideshow layout (text left, image right)
+// ==========================================================================
+
+.releases-slideshow-container {
+  min-height: calc(100vh - 160px);
+}
+
+.release-slide {
+  grid-area: slide;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-slower, visibility $transition-slower;
+
+  &.is-active,
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+}
+
+.release-slide-layout {
+  min-height: calc(100vh - 260px);
+}
+
+.release-slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-shrink: 1;
+  min-width: 0;
+
+  @include respond-to('lg') {
+    width: 100%;
+    align-items: center;
+    gap: map.get($spacing, 'lg');
+    min-height: 0;
+    flex-shrink: 1;
+  }
+}
+
+.release-slide-info {
+  align-items: flex-end;
+  text-align: right;
+  width: 100%;
+
+  @include respond-to('lg') {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.release-slide-artist {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin: 0 0 32px;
+  letter-spacing: 2px;
+  transition: transform $transition-slow, margin $transition-slow;
+
+  .release-slide-info:hover & {
+    transform: translateY(-20px);
+    margin-bottom: 52px;
+  }
+
+  @include respond-to('lg') {
+    font-size: 1rem;
+
+    .release-slide-info:hover & {
+      transform: none;
+      margin-bottom: 32px;
+    }
+  }
+
+  @include respond-to('md') {
+    font-size: 0.9rem;
+  }
+}
+
+.release-slide-link {
+  right: 0;
+  left: auto;
+
+  @include respond-to('lg') {
+    right: auto;
   }
 }

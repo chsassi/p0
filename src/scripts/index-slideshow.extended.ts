@@ -60,22 +60,22 @@ createSlideshow(
   6000
 );
 createSlideshow(
-  '.artists-slideshow',
-  '.artist-slide',
-  '.artists-slideshow-indicators .artist-indicator',
-  '.artist-slide-nav-btn.next',
-  '.artist-slide-nav-btn.prev',
+  '#artists.content-slideshow',
+  '.content-slide',
+  '.content-slideshow-indicators .content-indicator',
+  '.content-slide-nav-btn.next',
+  '.content-slide-nav-btn.prev',
   5000,
-  '.artist-bg-blur'
+  '.content-slide-bg-blur'
 );
 createSlideshow(
-  '.releases-slideshow',
-  '.release-slide',
-  '.slideshow-indicators .indicator',
-  '.slide-nav-btn.next',
-  '.slide-nav-btn.prev',
+  '#releases.content-slideshow',
+  '.content-slide',
+  '.content-slideshow-indicators .content-indicator',
+  '.content-slide-nav-btn.next',
+  '.content-slide-nav-btn.prev',
   5000,
-  '.release-bg-blur'
+  '.content-slide-bg-blur'
 );
 
 const scrollIndicator = document.querySelector('.scroll-indicator');
