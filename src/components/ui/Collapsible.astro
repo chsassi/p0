@@ -1,0 +1,94 @@
+---
+/**
+ * Collapsible Component
+ * A reusable accordion-style component with smooth animations
+ */
+interface Props {
+  id: string;
+  defaultOpen?: boolean;
+  class?: string;
+}
+
+const { id, defaultOpen = false, class: className } = Astro.props;
+---
+
+<div class:list={["collapsible", defaultOpen && "is-open", className]} data-collapsible>
+  <button
+    class="collapsible-trigger"
+    aria-expanded={defaultOpen ? "true" : "false"}
+    aria-controls={`collapsible-content-${id}`}
+    data-collapsible-trigger
+  >
+    <slot name="trigger" />
+    <span class="collapsible-icon" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+  <div
+    id={`collapsible-content-${id}`}
+    class="collapsible-content"
+    data-collapsible-content
+  >
+    <div class="collapsible-inner">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  .collapsible {
+    width: 100%;
+  }
+
+  .collapsible-trigger {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    transition: background-color 0.25s ease;
+  }
+
+  .collapsible-trigger:hover {
+    background: rgba(87, 214, 255, 0.05);
+  }
+
+  .collapsible-trigger:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  .collapsible-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--accent);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .collapsible.is-open .collapsible-icon {
+    transform: rotate(180deg);
+  }
+
+  .collapsible-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease;
+  }
+
+  .collapsible.is-open .collapsible-content {
+    grid-template-rows: 1fr;
+  }
+
+  .collapsible-inner {
+    overflow: hidden;
+  }
+</style>

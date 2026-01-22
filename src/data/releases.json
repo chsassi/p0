@@ -1,5 +1,25 @@
 [
   {
+    "catalogNumber": "PZ001",
+    "slug": "reset",
+    "title": "RE:SET",
+    "artist": "Various Artists",
+    "fullArtists": "The Martens, Chr-s, LED., The Sun Vanished",
+    "date": "January 2026",
+    "image": "/images/releases/reset.png",
+    "description": "Coming Soon",
+    "links": {
+      "spotify": "https://open.spotify.com/playlist/79xxn9IepLlyeuaVjHfEjo",
+      "soundcloud": "https://on.soundcloud.com/53YZc7Rc0MfHHWvcDl",
+      "youtube": "",
+      "beatport": ""
+    },
+    "spotifyEmbed": "spotify:playlist:79xxn9IepLlyeuaVjHfEjo",
+    "soundcloudEmbed": "https://soundcloud.com/themartens/sets/ambush-ep-drumatch-records?si=8ccf788f02c348e5b33dc83b725586de&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+    "youtubeEmbed": ""
+  },
+    {
+    "catalogNumber": "PZ001",
     "slug": "reset",
     "title": "RE:SET",
     "artist": "Various Artists",

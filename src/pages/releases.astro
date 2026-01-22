@@ -1,22 +1,185 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import Collapsible from "../components/ui/Collapsible.astro";
 import releases from "../data/releases.json";
+
+function getSpotifyEmbedSrc(value: string | undefined) {
+  if (!value || typeof value !== "string") return null;
+
+  if (value.includes("open.spotify.com/embed/")) return value;
+
+  if (value.startsWith("spotify:")) {
+    const parts = value.split(":");
+    const type = parts[1];
+    const id = parts[2];
+    if (type && id) {
+      return `https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=0`;
+    }
+    return null;
+  }
+
+  if (value.startsWith("http")) {
+    const u = new URL(value);
+    const parts = u.pathname.split("/").filter(Boolean);
+    let type = parts[0];
+    let id = parts[1];
+
+    if (type === "embed") {
+      type = parts[1];
+      id = parts[2];
+    }
+
+    if (type && id) {
+      return `https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=0`;
+    }
+    return null;
+  }
+
+  return `https://open.spotify.com/embed/album/${value}?utm_source=generator&theme=0`;
+}
+
+function normalizeSoundcloudUrl(sc: string | undefined) {
+  if (!sc || typeof sc !== "string") return null;
+
+  const looksEncoded = sc.includes("%3A") || sc.includes("%2F");
+  return looksEncoded ? decodeURIComponent(sc) : sc;
+}
+
+type LinkKey = "spotify" | "soundcloud" | "youtube" | "beatport";
+const platformLinks: { key: LinkKey; icon: string; alt: string }[] = [
+  { key: "spotify", icon: "/images/icons/spotify.svg", alt: "Spotify" },
+  { key: "soundcloud", icon: "/images/icons/soundcloud.svg", alt: "SoundCloud" },
+  { key: "youtube", icon: "/images/icons/youtube.svg", alt: "YouTube" },
+  { key: "beatport", icon: "/images/icons/beatport.svg", alt: "Beatport" },
+];
 ---
+
 <PageLayout title="Releases" active="releases">
   <section class="releases-page">
     <h1>RELEASES</h1>
-    <div class="release-list">
-      {releases.map((rel, i) => (
-        <a class="release-row" href={`/releases/${rel.slug}`}>
-          <div class="release-index">{i + 1}</div>
-          <img class="release-thumb" src={rel.image} alt={`${rel.title} cover`} loading="lazy" decoding="async" />
-          <div class="release-info">
-            <div class="release-title">{rel.title}</div>
-            <div class="release-artist">{rel.artist}</div>
-          </div>
-          <div class="release-date">{rel.date}</div>
-        </a>
-      ))}
+    <div class="release-list" data-collapsible-group>
+      {releases.map((rel) => {
+        const imgSrc = rel.image?.startsWith("/") ? rel.image : "/" + (rel.image || "");
+        const spotifySrc = getSpotifyEmbedSrc(rel.spotifyEmbed || rel.links?.spotify || "");
+        const scRaw = normalizeSoundcloudUrl(rel.soundcloudEmbed);
+        const soundcloudSrc = scRaw
+          ? `https://w.soundcloud.com/player/?url=${encodeURIComponent(scRaw)}&color=%23101416&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`
+          : null;
+
+        return (
+          <Collapsible id={rel.slug} class="release-collapsible">
+            <Fragment slot="trigger">
+              <div class="release-index">{rel.catalogNumber}</div>
+              <img class="release-thumb" src={imgSrc} alt={`${rel.title} cover`} loading="lazy" decoding="async" />
+              <div class="release-row-info">
+                <div class="release-row-title">{rel.title}</div>
+                <div class="release-row-artist">{rel.artist}</div>
+              </div>
+              <div class="release-row-date">{rel.date}</div>
+            </Fragment>
+
+            <div class="release-expanded-content">
+              <div class="release-expanded-grid">
+                <div class="release-expanded-left">
+                  <h2 class="release-expanded-title">{rel.title}</h2>
+                  <div class="release-expanded-artists">
+                    {(rel.fullArtists || rel.artist).split(',').map((artist: string) => (
+                      <span class="release-expanded-artist">{artist.trim()}</span>
+                    ))}
+                  </div>
+                  {rel.links && Object.values(rel.links).some((v) => v) && (
+                    <div class="release-expanded-icons">
+                      {platformLinks.map(({ key, icon, alt }) =>
+                        rel.links[key] ? (
+                          <a href={rel.links[key]} target="_blank" rel="noopener noreferrer">
+                            <img src={icon} alt={alt} />
+                          </a>
+                        ) : null
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <div class="release-expanded-right">
+                  {spotifySrc && (
+                    <div class="release-expanded-player release-expanded-player--spotify">
+                      <iframe
+                        src={spotifySrc}
+                        width="100%"
+                        height="152"
+                        frameborder="0"
+                        allowfullscreen
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy">
+                      </iframe>
+                    </div>
+                  )}
+
+                  {soundcloudSrc && (
+                    <div class="release-expanded-player release-expanded-player--soundcloud">
+                      <iframe
+                        width="100%"
+                        height="300"
+                        scrolling="no"
+                        frameborder="no"
+                        allow="autoplay"
+                        src={soundcloudSrc}>
+                      </iframe>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Collapsible>
+        );
+      })}
     </div>
   </section>
 </PageLayout>
+
+<script>
+  const collapsibles = document.querySelectorAll('[data-collapsible]');
+
+  function closeOthers(current: Element) {
+    const group = current.closest('[data-collapsible-group]');
+    if (group) {
+      const siblings = group.querySelectorAll('[data-collapsible]');
+      siblings.forEach((sibling) => {
+        if (sibling !== current && sibling.classList.contains('is-open')) {
+          sibling.classList.remove('is-open');
+          const trigger = sibling.querySelector('[data-collapsible-trigger]');
+          trigger?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  }
+
+  function toggle(collapsible: Element) {
+    const trigger = collapsible.querySelector('[data-collapsible-trigger]');
+    const isOpen = collapsible.classList.contains('is-open');
+
+    if (!isOpen) {
+      closeOthers(collapsible);
+    }
+
+    collapsible.classList.toggle('is-open');
+    trigger?.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  }
+
+  collapsibles.forEach((collapsible) => {
+    const trigger = collapsible.querySelector('[data-collapsible-trigger]');
+
+    trigger?.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggle(collapsible);
+    });
+
+    trigger?.addEventListener('keydown', (e) => {
+      const event = e as KeyboardEvent;
+      if (event.key === 'Enter' || event.key === ' ') {
+        e.preventDefault();
+        toggle(collapsible);
+      }
+    });
+  });
+</script>
