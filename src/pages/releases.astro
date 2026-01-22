@@ -79,6 +79,13 @@ const platformLinks: { key: LinkKey; icon: string; alt: string }[] = [
             </Fragment>
 
             <div class="release-expanded-content">
+              {rel.video && (
+                <div class="release-expanded-bg">
+                  <video autoplay muted loop playsinline class="release-expanded-video">
+                    <source src={rel.video} type="video/mp4" />
+                  </video>
+                </div>
+              )}
               <div class="release-expanded-grid">
                 <div class="release-expanded-left">
                   <h2 class="release-expanded-title">{rel.title}</h2>

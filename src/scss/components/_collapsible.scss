@@ -131,6 +131,8 @@
 
 // Expanded content area
 .release-expanded-content {
+  position: relative;
+  overflow: hidden;
   padding: map.get($spacing, 'xl') map.get($spacing, 'lg');
   padding-top: map.get($spacing, 'lg');
   padding-left: 130px; // Align with trigger: 30px padding + 100px index column
@@ -142,16 +144,44 @@
 
   @include respond-to('md') {
     padding: map.get($spacing, 'lg') map.get($spacing, 'md');
-  //  padding-left: 10px; // Match trigger padding + smaller index column (16px + 50px)
   }
 
   @include respond-to('sm') {
-  //  padding-left: 0px; // Same as right padding on mobile
   }
+}
+
+// Video background for expanded content
+.release-expanded-bg {
+  position: absolute;
+  inset: 0;
+  filter: brightness(0.3);
+  z-index: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 10, 10, 0.5) 100%);
+    z-index: 1;
+  }
+}
+
+.release-expanded-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
 }
 
 // Two-column grid layout for expanded content
 .release-expanded-grid {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 30% 1fr;
   gap: map.get($spacing, 'xl');
