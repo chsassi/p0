@@ -70,7 +70,6 @@
   align-items: flex-end;
   justify-content: center;
   gap: 60px;
-  min-height: calc(100vh - 260px);
   padding: 190px map.get($spacing, '3xl') 0;
   max-width: 1400px;
   margin: 0 auto;
