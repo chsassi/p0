@@ -3,46 +3,109 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import releases from "../../data/releases.json";
 
 export async function getStaticPaths() {
-  return releases.map(release => ({ params: { release: release.slug }, props: { release } }));
+  return releases.map((release) => ({
+    params: { release: release.slug },
+    props: { release },
+  }));
 }
 
 const { release } = Astro.props;
-const imgSrc = release.image?.startsWith('/') ? release.image : '/' + (release.image || '');
 
-type LinkKey = 'spotify' | 'soundcloud' | 'youtube' | 'beatport';
+const imgSrc = release.image?.startsWith("/") ? release.image : "/" + (release.image || "");
+
+
+function getSpotifyEmbedSrc(value) {
+  if (!value || typeof value !== "string") return null;
+
+  if (value.includes("open.spotify.com/embed/")) return value;
+
+  if (value.startsWith("spotify:")) {
+    const parts = value.split(":");
+    const type = parts[1];
+    const id = parts[2];
+    if (type && id) {
+      return `https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=0`;
+    }
+    return null;
+  }
+
+  if (value.startsWith("http")) {
+    const u = new URL(value);
+    const parts = u.pathname.split("/").filter(Boolean);
+    let type = parts[0];
+    let id = parts[1];
+
+    if (type === "embed") {
+      type = parts[1];
+      id = parts[2];
+    }
+
+    if (type && id) {
+      return `https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=0`;
+    }
+    return null;
+  }
+
+  return `https://open.spotify.com/embed/album/${value}?utm_source=generator&theme=0`;
+}
+
+function normalizeSoundcloudUrl(sc) {
+  if (!sc || typeof sc !== "string") return null;
+
+  const looksEncoded = sc.includes("%3A") || sc.includes("%2F");
+  return looksEncoded ? decodeURIComponent(sc) : sc;
+}
+
+const spotifySrc = getSpotifyEmbedSrc(release.spotifyEmbed || release.links?.spotify || "");
+const scRaw = normalizeSoundcloudUrl(release.soundcloudEmbed);
+const soundcloudSrc = scRaw
+  ? `https://w.soundcloud.com/player/?url=${encodeURIComponent(scRaw)}&color=%23101416&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true`
+  : null;
+
+type LinkKey = "spotify" | "soundcloud" | "youtube" | "beatport";
 const platformLinks: { key: LinkKey; icon: string; alt: string }[] = [
-  { key: 'spotify', icon: '/images/icons/spotify.svg', alt: 'Spotify' },
-  { key: 'soundcloud', icon: '/images/icons/soundcloud.svg', alt: 'SoundCloud' },
-  { key: 'youtube', icon: '/images/icons/youtube.svg', alt: 'YouTube' },
-  { key: 'beatport', icon: '/images/icons/beatport.svg', alt: 'Beatport' },
+  { key: "spotify", icon: "/images/icons/spotify.svg", alt: "Spotify" },
+  { key: "soundcloud", icon: "/images/icons/soundcloud.svg", alt: "SoundCloud" },
+  { key: "youtube", icon: "/images/icons/youtube.svg", alt: "YouTube" },
+  { key: "beatport", icon: "/images/icons/beatport.svg", alt: "Beatport" },
 ];
 ---
+
 <PageLayout title={release.title} active="releases" backLink="/releases" backText="Back to Releases">
   <div class="release-detail-bg-blur" style={`background-image: url(${imgSrc})`}></div>
+
   <section class="release-detail">
     <div class="release-info">
       <div class="release-image-wrapper">
         <img src={imgSrc} alt={release.title} loading="eager" decoding="async" />
       </div>
+
       <h1>{release.title}</h1>
       <p class="release-artists">{release.fullArtists || release.artist}</p>
       <p class="release-date">{release.date}</p>
+
       <div class="release-description">
-        {(release.description || "").split("\n\n").map(p => <p>{p}</p>)}
+        {(release.description || "").split("\n\n").map((p) => <p>{p}</p>)}
       </div>
-      {release.links && Object.values(release.links).some(v => v) && (
+
+      {release.links && Object.values(release.links).some((v) => v) && (
         <div class="release-icons">
-          {platformLinks.map(({ key, icon, alt }) => release.links[key] && (
-            <a href={release.links[key]} target="_blank" rel="noopener noreferrer"><img src={icon} alt={alt} /></a>
-          ))}
+          {platformLinks.map(({ key, icon, alt }) =>
+            release.links[key] ? (
+              <a href={release.links[key]} target="_blank" rel="noopener noreferrer">
+                <img src={icon} alt={alt} />
+              </a>
+            ) : null
+          )}
         </div>
       )}
-      {release.spotifyEmbed && (
+
+      {spotifySrc && (
         <div class="release-player release-player-spotify">
           <iframe
-            src={`https://open.spotify.com/embed/album/${release.spotifyEmbed}?utm_source=generator&theme=0`}
+            src={spotifySrc}
             width="100%"
-            height="352"
+            height="450"
             frameborder="0"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy">
@@ -50,18 +113,18 @@ const platformLinks: { key: LinkKey; icon: string; alt: string }[] = [
         </div>
       )}
 
-    {release.soundcloudEmbed && (
-            <div class="release-player release-player-soundcloud">
-              <iframe
-                width="100%"
-                height="300"
-                scrolling="no"
-                frameborder="no"
-                allow="autoplay"
-                src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(release.soundcloudEmbed)}&color=%2357d6ff&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`}>
-              </iframe>
-            </div>
-    )}
+      {soundcloudSrc && (
+        <div class="release-player release-player-soundcloud">
+          <iframe
+            width="100%"
+            height="450"
+            scrolling="no"
+            frameborder="no"
+            allow="autoplay"
+            src={soundcloudSrc}>
+          </iframe>
+        </div>
+      )}
     </div>
   </section>
 </PageLayout>

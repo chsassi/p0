@@ -403,14 +403,6 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(87, 214, 255, 0.4) 0%,
-      rgba(87, 214, 255, 0.1) 25%,
-      transparent 50%,
-      rgba(87, 214, 255, 0.1) 75%,
-      rgba(87, 214, 255, 0.4) 100%
-    );
     clip-path: polygon(
       0% 15px, 15px 0%, calc(100% - 15px) 0%, 100% 15px,
       100% calc(100% - 15px), calc(100% - 15px) 100%,
@@ -446,7 +438,7 @@
     letter-spacing: 3px;
     text-transform: uppercase;
     color: #fff;
-    text-shadow: 0 0 20px rgba(87, 214, 255, 0.5);
+    text-shadow: 0 0 5px rgba(87, 214, 255, 0.5);
   }
 
   @include respond-to('md') {
@@ -561,6 +553,65 @@
     }
   }
 }
+
+// SoundCloud frame with artist cover background
+.artist-player.soundcloud-frame {
+  --sc-bg: none;
+
+  position: relative;
+  isolation: isolate;
+  padding: 14px; // spazio dove si vede lo sfondo dietro
+  overflow: hidden;
+
+  // cover blur dietro
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background-image: var(--sc-bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(26px) brightness(0.35) saturate(1.2);
+    transform: scale(1.12);
+    z-index: 0;
+  }
+
+  // overlay per leggibilità
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 50% 30%,
+      rgba(87, 214, 255, 0.10) 0%,
+      rgba(0, 0, 0, 0.55) 60%,
+      rgba(0, 0, 0, 0.75) 100%
+    );
+    z-index: 1;
+  }
+
+  .soundcloud-embed {
+    position: relative;
+    z-index: 2;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(87, 214, 255, 0.18);
+    background: #000;
+    box-shadow: 0 0 24px rgba(87, 214, 255, 0.18);
+  }
+
+  iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+
+  @include respond-to('md') {
+    padding: 12px;
+  }
+}
+
 
 .back-container {
   width: 100%;
