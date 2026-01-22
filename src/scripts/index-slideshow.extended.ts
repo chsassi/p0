@@ -24,7 +24,7 @@ function createSlideshow(
   const indicators = Array.from(el?.querySelectorAll(indicator) || []);
   const nextBtn = el?.querySelector(next),
     prevBtn = el?.querySelector(prev);
-  const blur = bgBlur ? document.querySelector(bgBlur) : null;
+  const blur = bgBlur ? el?.querySelector(bgBlur) : null;
   if (!slides.length) return;
 
   // Swipe state
