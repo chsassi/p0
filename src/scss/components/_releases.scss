@@ -432,17 +432,16 @@
 
 // Navigation wrapper for slideshows
 .swiper-nav-wrapper {
-  position: absolute;
-  bottom: map.get($spacing, 'xl');
-  left: 50%;
-  transform: translateX(-50%);
+  position: static;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 20px;
+  margin-top: map.get($spacing, 'md');
+  pointer-events: auto;
   z-index: map.get($z-index, 'dropdown');
 
   @include respond-to('md') {
-    bottom: map.get($spacing, 'lg');
     gap: 12px;
   }
 }

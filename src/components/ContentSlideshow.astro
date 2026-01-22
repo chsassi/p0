@@ -28,7 +28,18 @@ const linkBase = type === "artist" ? "/artists/" : "/releases/";
 <section id={id} class={`scroll-section ${type}s-section content-slideshow`}>
   <div class="content-slide-bg-blur" style={`background-image: url(${items[0].image})`}></div>
   <div class="section-vignette"></div>
-  <div class="section-header"><h1>{sectionTitle}</h1></div>
+
+  <!-- Header wrapper containing both title and navigation -->
+  <div class="section-header-wrapper">
+    <div class="section-header"><h1>{sectionTitle}</h1></div>
+    <div class="swiper-nav-wrapper">
+      <button class="content-slide-nav-btn prev" aria-label="Previous"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
+      <div class="content-slideshow-indicators">
+        {items.map((_, i) => <button class:list={['content-indicator', i === 0 && 'is-active']} data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>)}
+      </div>
+      <button class="content-slide-nav-btn next" aria-label="Next"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
+    </div>
+  </div>
 
   <div class="content-slideshow-container">
     {items.map((item, i) => (
@@ -68,13 +79,5 @@ const linkBase = type === "artist" ? "/artists/" : "/releases/";
         </div>
       </div>
     ))}
-  </div>
-
-  <div class="swiper-nav-wrapper">
-    <button class="content-slide-nav-btn prev" aria-label="Previous"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
-    <div class="content-slideshow-indicators">
-      {items.map((_, i) => <button class:list={['content-indicator', i === 0 && 'is-active']} data-slide={i} aria-label={`Go to slide ${i + 1}`}></button>)}
-    </div>
-    <button class="content-slide-nav-btn next" aria-label="Next"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
   </div>
 </section>

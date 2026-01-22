@@ -71,9 +71,7 @@
   justify-content: center;
   gap: 60px;
   min-height: calc(100vh - 260px);
-  padding: 0 map.get($spacing, '3xl');
-  padding-top: 160px;
-  padding-bottom: 100px;
+  padding: 190px map.get($spacing, '3xl') 0;
   max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -82,15 +80,13 @@
     flex-direction: column-reverse;
     align-items: center;
     justify-content: flex-end;
-    padding: 0 map.get($spacing, 'lg');
-    padding-top: 120px;
-    padding-bottom: 60px;
+    padding: 200px map.get($spacing, 'lg') 0;
     gap: 32px;
   }
 
   @include respond-to('md') {
-    padding-top: 100px;
-    padding-bottom: 50px;
+    padding-top: 200px;
+    padding-bottom: 0;
     gap: 24px;
   }
 }

@@ -344,14 +344,24 @@
   }
 }
 
-// Section header (separate from vignette for z-index control)
-.section-header {
+// Section header wrapper (contains header and navigation)
+.section-header-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  max-width: none; // Override the 700px from _sections.scss
   z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+// Section header (separate from vignette for z-index control)
+.section-header {
+  position: static;
+  width: 100%;
+  max-width: none; // Override the 700px from _sections.scss
   pointer-events: none;
   display: flex;
   justify-content: center;
