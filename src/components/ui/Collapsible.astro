@@ -12,7 +12,7 @@ interface Props {
 const { id, defaultOpen = false, class: className } = Astro.props;
 ---
 
-<div class:list={["collapsible", defaultOpen && "is-open", className]} data-collapsible>
+<div id={id} class:list={["collapsible", defaultOpen && "is-open", className]} data-collapsible>
   <button
     class="collapsible-trigger"
     aria-expanded={defaultOpen ? "true" : "false"}

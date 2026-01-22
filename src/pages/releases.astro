@@ -182,4 +182,18 @@ const platformLinks: { key: LinkKey; icon: string; alt: string }[] = [
       }
     });
   });
+
+  function openFromHash() {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const target = document.querySelector(`[data-collapsible]#${hash}`) as Element | null;
+      if (target && !target.classList.contains('is-open')) {
+        toggle(target);
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
+
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
 </script>

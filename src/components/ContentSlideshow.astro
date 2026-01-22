@@ -22,7 +22,7 @@ interface Props {
 
 const { id, type, variant, items, sectionTitle, contentPosition } = Astro.props;
 const linkText = type === "artist" ? "VIEW ARTIST" : "VIEW RELEASE";
-const linkBase = type === "artist" ? "/artists/" : "/releases/";
+const linkBase = type === "artist" ? "/artists/" : "/releases#";
 ---
 
 <section id={id} class={`scroll-section ${type}s-section content-slideshow`}>
