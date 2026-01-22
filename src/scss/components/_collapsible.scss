@@ -161,6 +161,7 @@
   text-align: left;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   @include respond-to('md') {
     text-align: center;
@@ -179,6 +180,7 @@
   margin-bottom: map.get($spacing, 'md');
   letter-spacing: 3px;
   text-transform: uppercase;
+  text-align: center;
   color: #fff;
   text-shadow: 0 0 20px rgba(87, 214, 255, 0.5);
 
@@ -190,9 +192,11 @@
 
 .release-expanded-artists {
   display: flex;
+  text-align: center;
   flex-direction: column;
   gap: 4px;
-  margin-bottom: map.get($spacing, 'sm');
+//  margin-bottom: map.get($spacing, 'sm');
+  margin-bottom: 18px;
 }
 
 .release-expanded-artist {
@@ -222,7 +226,8 @@
 
 .release-expanded-icons {
   display: flex;
-  gap: 16px;
+  gap: 15px;
+  align-self: center;
 
   a {
     display: flex;
