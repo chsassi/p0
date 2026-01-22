@@ -20,34 +20,52 @@ const pages = [
 ---
 
 <header class="header">
-  <div class="header-center">
-    <div class="menu-dropdown">
-      <button class="menu-button" aria-label="Menu" aria-expanded="false">
-        <a href="/" class="header-logo">
-          <img
-            src="/images/logo.svg"
-            alt="Protocol Zero logo"
-            width="80"
-            height="80"
-            loading="eager"
-            decoding="async"
-          />
-        </a>
-      </button>
-      <nav class="dropdown-content">
-        {pages.map(p => (
-          <a href={p.path} class:list={[p.key === current && 'is-active']}>
-            {p.name}
-          </a>
-        ))}
-      </nav>
-    </div>
-  </div>
+  <!-- Left area (empty for symmetry) -->
+  <div class="header-left"></div>
 
+  <!-- Center: Logo only, no dropdown -->
+  <a href="/" class="header-logo">
+    <img
+      src="/images/logo.svg"
+      alt="Protocol Zero logo"
+      width="80"
+      height="80"
+      loading="eager"
+      decoding="async"
+    />
+  </a>
+
+  <!-- Right: Hamburger button -->
+  <button class="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+    <span class="hamburger-lines">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+  </button>
+
+  <!-- Current page indicator -->
   <div class="header-current-page">
     {current ? (pages.find(p => p.key === current)?.name || '') : 'HOME'}
   </div>
 </header>
+
+<!-- Fullscreen menu overlay (outside header) -->
+<div class="fullscreen-menu">
+  <button class="fullscreen-menu-close" aria-label="Close menu">
+    <span class="close-icon"></span>
+  </button>
+  <div class="fullscreen-menu-logo">
+    <img src="/images/logo.svg" alt="Protocol Zero Logo" />
+  </div>
+  <nav class="fullscreen-menu-nav">
+    {pages.map(p => (
+      <a href={p.path} class:list={[p.key === current && 'is-active']}>
+        {p.name}
+      </a>
+    ))}
+  </nav>
+</div>
 
 <style>
   .header {
@@ -63,10 +81,10 @@ const pages = [
     border-bottom: 1px solid var(--border);
     transform: translateY(-100%);
     transition: transform 0.5s ease-in-out;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 1fr auto;
     align-items: center;
-    justify-content: center;
     padding: 12px 24px;
     gap: 8px;
   }
@@ -75,16 +93,16 @@ const pages = [
     transform: translateY(0);
   }
 
-  .header-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
+  .header-left {
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .header-logo {
+    grid-column: 2;
+    grid-row: 1;
     display: block;
+    justify-self: center;
   }
 
   .header-logo img {
@@ -93,15 +111,49 @@ const pages = [
     display: block;
     filter: drop-shadow(0 0 8px rgba(87, 214, 255, 0.3));
     transition: filter 0.3s ease;
-    pointer-events: none;
   }
 
-  .menu-button:hover .header-logo img {
+  .header-logo:hover img {
     filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8))
             drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
   }
 
+  .hamburger-btn {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1002;
+  }
+
+  .hamburger-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 28px;
+  }
+
+  .hamburger-lines span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--text, #fff);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger-btn:hover .hamburger-lines span {
+    background: var(--accent);
+  }
+
   .header-current-page {
+    grid-column: 1 / -1;
+    grid-row: 2;
     min-height: 1em;
     color: var(--accent);
     font-size: 0.875rem;
@@ -112,71 +164,124 @@ const pages = [
     padding-bottom: 20px;
   }
 
-  .menu-dropdown {
-    position: relative;
-  }
-
-  .menu-button {
+  /* Fullscreen menu overlay */
+  .fullscreen-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(12px);
+    z-index: 1001;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    background: transparent;
-    border: none;
-    color: #fff;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .dropdown-content {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px);
-    background: rgba(10, 10, 10, 0.98);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    min-width: 200px;
+    justify-content: flex-start;
+    padding-top: 100px;
+    overflow-y: auto;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 1001;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
-  .menu-dropdown.is-open .dropdown-content {
+  .fullscreen-menu.is-open {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
   }
 
-  .dropdown-content a {
-    display: block;
-    padding: 14px 20px;
-    color: #fff;
+  .fullscreen-menu-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .close-icon {
+    position: relative;
+    width: 28px;
+    height: 28px;
+  }
+
+  .close-icon::before,
+  .close-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--text, #fff);
+    transition: background 0.3s ease;
+  }
+
+  .close-icon::before {
+    transform: rotate(45deg);
+  }
+
+  .close-icon::after {
+    transform: rotate(-45deg);
+  }
+
+  .fullscreen-menu-close:hover .close-icon::before,
+  .fullscreen-menu-close:hover .close-icon::after {
+    background: var(--accent);
+  }
+
+  .fullscreen-menu-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 48px;
+    cursor: pointer;
+  }
+
+  .fullscreen-menu-logo img {
+    width: 15vw;
+    max-width: 350px;
+    min-width: 120px;
+    height: auto;
+    filter: drop-shadow(0 0 8px rgba(87, 214, 255, 0.3));
+    transition: filter 0.3s ease, transform 0.3s ease;
+  }
+
+  .fullscreen-menu-logo:hover img {
+    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8))
+            drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
+    transform: scale(1.02);
+  }
+
+  .fullscreen-menu-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+
+  .fullscreen-menu-nav a {
+    color: var(--text, #fff);
     text-decoration: none;
+    font-size: 1.25rem;
     font-weight: 500;
-    font-size: 0.875rem;
-    letter-spacing: 1px;
-    border-bottom: 1px solid var(--border);
-    text-align: center;
-    transition: all 0.25s ease;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    transition: color 0.25s ease;
   }
 
-  .dropdown-content a:last-child {
-    border-bottom: none;
-  }
-
-  .dropdown-content a:hover {
-    background: rgba(87, 214, 255, 0.1);
+  .fullscreen-menu-nav a:hover {
     color: var(--accent);
   }
 
-  .dropdown-content a.is-active {
+  .fullscreen-menu-nav a.is-active {
     color: var(--accent);
-    background: rgba(87, 214, 255, 0.05);
   }
 
   @media (max-width: 760px) {
@@ -188,6 +293,10 @@ const pages = [
 
     .header-logo img {
       height: 56px;
+    }
+
+    .fullscreen-menu-logo img {
+      max-width: 200px;
     }
   }
 </style>

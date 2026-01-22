@@ -1,5 +1,5 @@
 /**
- * Header scroll visibility and dropdown menu
+ * Header scroll visibility and hamburger menu
  * Source: src/layouts/HeaderLayout.astro
  *
  * This is the EXTENDED (readable) version.
@@ -7,8 +7,10 @@
  */
 
 const header = document.querySelector('.header');
-const menuBtn = document.querySelector('.menu-button');
-const dropdown = document.querySelector('.menu-dropdown');
+const hamburgerBtn = document.querySelector('.hamburger-btn');
+const closeBtn = document.querySelector('.fullscreen-menu-close');
+const fullscreenMenu = document.querySelector('.fullscreen-menu');
+const navLinks = fullscreenMenu?.querySelectorAll('a');
 
 // Show header immediately on subpages (no hero section)
 const isHomePage = document.querySelector('.hero-slideshow') !== null;
@@ -27,22 +29,35 @@ window.addEventListener(
   { passive: true }
 );
 
-if (menuBtn && dropdown) {
-  menuBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const open = dropdown.classList.toggle('is-open');
-    menuBtn.setAttribute('aria-expanded', String(open));
-  });
-  dropdown.addEventListener('mouseenter', () => {
-    dropdown.classList.add('is-open');
-    menuBtn.setAttribute('aria-expanded', 'true');
-  });
-  dropdown.addEventListener('mouseleave', () => {
-    dropdown.classList.remove('is-open');
-    menuBtn.setAttribute('aria-expanded', 'false');
-  });
-  document.addEventListener('click', () => {
-    dropdown.classList.remove('is-open');
-    menuBtn.setAttribute('aria-expanded', 'false');
-  });
+// Fullscreen menu functions
+let scrollPosition = 0;
+
+function openMenu() {
+  scrollPosition = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  document.body.style.width = '100%';
+  fullscreenMenu?.classList.add('is-open');
+  hamburgerBtn?.setAttribute('aria-expanded', 'true');
 }
+
+function closeMenu() {
+  fullscreenMenu?.classList.remove('is-open');
+  hamburgerBtn?.setAttribute('aria-expanded', 'false');
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollPosition);
+}
+
+// Event listeners
+hamburgerBtn?.addEventListener('click', openMenu);
+closeBtn?.addEventListener('click', closeMenu);
+navLinks?.forEach(link => link.addEventListener('click', closeMenu));
+
+// Close menu on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && fullscreenMenu?.classList.contains('is-open')) {
+    closeMenu();
+  }
+});

@@ -73,7 +73,10 @@
 }
 
 .header-logo {
+  grid-column: 2;
+  grid-row: 1;
   display: block;
+  justify-self: center;
 
   img {
     height: 64px;
@@ -81,14 +84,13 @@
     display: block;
     filter: drop-shadow(0 0 8px rgba(87, 214, 255, 0.3));
     transition: filter $transition-base;
-    pointer-events: none;
 
     @include respond-to('md') {
       height: 56px;
     }
   }
 
-  .menu-button:hover & img {
+  &:hover img {
     filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8))
             drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
   }
@@ -134,69 +136,153 @@
   }
 }
 
-// Menu dropdown
-.menu-dropdown {
-  position: relative;
+// Hamburger button (right side of header)
+.hamburger-btn {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  @include flex-center;
+  @include button-reset;
+  padding: 8px;
+  z-index: map.get($z-index, 'modal') + 1;
 }
 
-.menu-button {
+.hamburger-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 28px;
+
+  span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--text);
+    transition: transform $transition-base, opacity $transition-base;
+  }
+}
+
+.hamburger-btn:hover .hamburger-lines span {
+  background: var(--accent);
+}
+
+// Fullscreen menu overlay
+.fullscreen-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.98);
+  backdrop-filter: $glass-blur;
+  z-index: map.get($z-index, 'modal');
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: map.get($spacing, 'sm');
-  @include button-reset;
-  color: #fff;
-  transition: all $transition-base;
-}
-
-.dropdown-content {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-10px);
-  background: rgba(10, 10, 10, 0.98);
-  backdrop-filter: $glass-blur;
-  border: 1px solid var(--border);
-  border-radius: map.get($radii, 'sm');
-  min-width: 200px;
+  justify-content: flex-start;
+  padding-top: 100px;
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
-  transition: all $transition-base;
-  z-index: map.get($z-index, 'modal');
-  box-shadow: $shadow-md;
+  pointer-events: none;
+  transition: opacity $transition-base, visibility $transition-base;
 
-  .menu-dropdown.is-open &,
-  .menu-dropdown.open & {
+  &.is-open {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+// Close button (top-right of fullscreen menu)
+.fullscreen-menu-close {
+  position: absolute;
+  top: map.get($spacing, 'lg');
+  right: map.get($spacing, 'lg');
+  @include button-reset;
+  width: 40px;
+  height: 40px;
+  @include flex-center;
+}
+
+.close-icon {
+  position: relative;
+  width: 28px;
+  height: 28px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--text);
+    transition: background $transition-base;
   }
 
-  a {
-    display: block;
-    padding: 14px 20px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: map.get($font-sizes, 'sm');
-    letter-spacing: 1px;
-    border-bottom: 1px solid var(--border);
-    text-align: center;
-    transition: all $transition-base;
+  &::before {
+    transform: rotate(45deg);
+  }
 
-    &:last-child {
-      border-bottom: none;
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+.fullscreen-menu-close:hover .close-icon::before,
+.fullscreen-menu-close:hover .close-icon::after {
+  background: var(--accent);
+}
+
+// Menu logo (mirrors .hero-logo-container)
+.fullscreen-menu-logo {
+  @include flex-center;
+  margin-bottom: map.get($spacing, '2xl');
+  cursor: pointer;
+
+  img {
+    width: 15vw;
+    max-width: 350px;
+    min-width: 120px;
+    height: auto;
+    filter: drop-shadow(0 0 8px rgba(87, 214, 255, 0.3));
+    transition: filter $transition-base, transform $transition-base;
+
+    @include respond-to('md') {
+      max-width: 200px;
     }
+  }
+
+  &:hover img {
+    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8))
+            drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
+    transform: scale(1.02);
+  }
+}
+
+// Nav items - vertical list, centered
+.fullscreen-menu-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: map.get($spacing, 'md');
+  margin-bottom: map.get($spacing, '3xl');
+
+  a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: map.get($font-sizes, 'lg');
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    transition: color $transition-base;
 
     &:hover {
-      background: rgba(87, 214, 255, 0.1);
       color: var(--accent);
     }
 
-    &.is-active,
-    &.active {
+    &.is-active {
       color: var(--accent);
-      background: rgba(87, 214, 255, 0.05);
     }
   }
 }
