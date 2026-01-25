@@ -2,13 +2,33 @@
 import Header from "../components/layout/Header.astro";
 import FloatingSocialBar from "../components/ui/FloatingSocialBar.astro";
 
-const { title = "Protocol Zero", active = "" } = Astro.props;
+const {
+  title = "Protocol Zero",
+  description = "Independent European drum & bass label focused on neurofunk and dark bass music.",
+  canonical = "https://protocolzero.online/",
+  active = "",
+  ogImage = "https://protocolzero.online/images/icons/og_default.jpg",
+  noindex = false,
+} = Astro.props;
 ---
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+
     <link rel="icon" href="/images/icons/favicon.png" />
     <link rel="preload" as="image" href="/images/logo.svg" />
     <link rel="stylesheet" href="/styles/global.css" />

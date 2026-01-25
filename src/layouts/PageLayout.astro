@@ -6,6 +6,9 @@ import BackButton from "../components/ui/BackButton.astro";
 interface Props {
   title: string;
   active: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
   backLink?: string;
   backText?: string;
   stylesheets?: string[];
@@ -14,16 +17,30 @@ interface Props {
 const {
   title,
   active,
+  description = "Independent European drum & bass label focused on neurofunk and dark bass music.",
+  canonical,
+  ogImage = "https://protocolzero.online/images/icons/og_default.jpg",
   backLink = "/",
   backText = "Back to Home",
   stylesheets = []
 } = Astro.props;
+
+const computedCanonical =
+  canonical ?? (active ? `https://protocolzero.online/${active}` : "https://protocolzero.online/");
 ---
-<HeaderLayout title={`Protocol Zero — ${title}`} active={active}>
-  {stylesheets.map(href => <link slot="head" rel="stylesheet" href={href} />)}
-  <div class="page-container">
-    <BackButton href={backLink} text={backText} />
-    <slot />
-  </div>
-</HeaderLayout>
+  
+  <HeaderLayout
+    title={`Protocol Zero — ${title}`}
+    description={description}
+    canonical={computedCanonical}
+    ogImage={ogImage}
+    active={active}>
+
+    {stylesheets.map(href => <link slot="head" rel="stylesheet" href={href} />)}
+    
+    <div class="page-container">
+      <BackButton href={backLink} text={backText} />
+      <slot />
+    </div>
+  </HeaderLayout>
 <FooterLayout />

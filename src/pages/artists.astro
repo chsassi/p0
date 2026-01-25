@@ -2,13 +2,19 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import artists from "../data/artists.json";
 ---
-<PageLayout title="Artists" active="artists">
+
+<PageLayout
+  title="Artists"
+  active="artists"
+  description="Protocol Zero artists: European drum & bass producers focused on neurofunk and dark, technical sound."
+  canonical="https://protocolzero.online/artists"
+>
   <section class="artists-page">
     <h1>ARTISTS</h1>
     <div class="artists-grid">
       {artists.map(artist => (
         <a href={`/artists/${artist.slug}`} class="artist-card">
-          <img src={artist.image} alt={artist.name} loading="lazy" decoding="async" width="360" height="260" />
+          <img src={artist.image} alt={artist.name} loading="lazy" />
           <h2>{artist.name}</h2>
         </a>
       ))}

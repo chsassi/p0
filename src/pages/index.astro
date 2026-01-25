@@ -6,7 +6,14 @@ import artists from "../data/artists.json";
 import releases from "../data/releases.json";
 import news from "../data/news.json";
 ---
-<HeaderLayout title="Protocol Zero" active="">
+
+<HeaderLayout
+  title="Protocol Zero - European Drum & Bass Label"
+  description="Independent European drum & bass label focused on neurofunk and dark bass music."
+  canonical="https://protocolzero.online/"
+  active=""
+>
+  <h1 class="sr-only">Protocol Zero — European Drum &amp; Bass and Neurofunk Label</h1>
 
   <div id="page-loader" class="page-loader" aria-hidden="true">
     <img src="/images/logo.svg" alt="Protocol Zero" class="loader-logo" />
@@ -24,13 +31,17 @@ import news from "../data/news.json";
           <div class:list={['hero-slide', i === 0 && 'is-active']} data-slide={i}>
             {item.video ? (
               <div class="hero-slide-background">
-                <video autoplay muted loop playsinline class="hero-video"><source src={item.video} type="video/mp4" /></video>
+                <video autoplay muted loop playsinline class="hero-video">
+                  <source src={item.video} type="video/mp4" />
+                </video>
               </div>
             ) : (
               <div class="hero-slide-background" style={`background-image: url(${item.image})`}></div>
             )}
             <div class="hero-slide-content">
-              <div class="hero-logo-container"><img src="/images/logo.svg" alt="Protocol Zero Logo" class="hero-logo" /></div>
+              <div class="hero-logo-container">
+                <img src="/images/logo.svg" alt="Protocol Zero Logo" class="hero-logo" />
+              </div>
               <div class="hero-news-content">
                 <span class="news-type-label">{item.title}</span>
                 <h1 class="news-heading">{item.heading}</h1>
@@ -42,11 +53,23 @@ import news from "../data/news.json";
           </div>
         ))}
       </div>
+
       <div class="hero-slideshow-indicators">
-        {news.map((_, i) => <button class:list={['hero-indicator', i === 0 && 'is-active']} data-slide={i} aria-label={`Go to news ${i + 1}`}></button>)}
+        {news.map((_, i) => (
+          <button
+            class:list={['hero-indicator', i === 0 && 'is-active']}
+            data-slide={i}
+            aria-label={`Go to news ${i + 1}`}
+          ></button>
+        ))}
       </div>
-      <button class="hero-nav-btn prev" aria-label="Previous news"><img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" /></button>
-      <button class="hero-nav-btn next" aria-label="Next news"><img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" /></button>
+
+      <button class="hero-nav-btn prev" aria-label="Previous news">
+        <img src="/images/icons/arrow_left.svg" alt="Previous" class="nav-icon" />
+      </button>
+      <button class="hero-nav-btn next" aria-label="Next news">
+        <img src="/images/icons/arrow_right.svg" alt="Next" class="nav-icon" />
+      </button>
     </section>
 
     <section id="about" class="scroll-section about-section">
@@ -66,7 +89,7 @@ import news from "../data/news.json";
       items={artists.map(a => ({ image: a.image, title: a.name, slug: a.slug }))}
       sectionTitle="ARTISTS"
     />
-    
+
     <section id="contacts" class="scroll-section contacts-section">
       <h1>CONTACTS</h1>
       <div class="section-content">
@@ -87,6 +110,6 @@ import news from "../data/news.json";
 
   <script src="/scripts/index-slideshow.min.js" is:inline></script>
 </HeaderLayout>
-<FooterLayout />
 
+<FooterLayout />
 <script src="/scripts/index-loader.min.js" is:inline></script>

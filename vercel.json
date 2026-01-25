@@ -10,6 +10,16 @@
       ],
       "destination": "https://protocolzero.online/$1",
       "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/#about",
+      "permanent": true
+    },
+    {
+      "source": "/contacts",
+      "destination": "/#contacts",
+      "permanent": true
     }
   ]
 }
