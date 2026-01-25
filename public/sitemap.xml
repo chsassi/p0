@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://protocolzero.online/</loc>
-  </url>
+
+  <url><loc>https://protocolzero.online/</loc></url>
+  <url><loc>https://protocolzero.online/about</loc></url>
+  <url><loc>https://protocolzero.online/artists</loc></url>
+  <url><loc>https://protocolzero.online/contacts</loc></url>
+  <url><loc>https://protocolzero.online/releases</loc></url>
+  <url><loc>https://protocolzero.online/shop</loc></url>
+
+  <url><loc>https://protocolzero.online/artists/the-martens</loc></url>
+  <url><loc>https://protocolzero.online/artists/chris</loc></url>
+  <url><loc>https://protocolzero.online/artists/led</loc></url>
+  <url><loc>https://protocolzero.online/artists/tsv</loc></url>
+
 </urlset>
