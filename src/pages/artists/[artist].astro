@@ -15,7 +15,7 @@ const brief = (artist.brief || "").toString().replace(/\|/g, "").trim();
 const description =
   brief.length >= 20
     ? brief
-    : `Artist profile: ${artist.name} — Protocol Zero drum & bass label (neurofunk / dark bass).`;
+    : `Artist profile: ${artist.name} — Protocol Zero drum & bass and neurofunk label`;
 
 type LinkKey = 'instagram' | 'spotify' | 'soundcloud';
 const socialLinks: { key: LinkKey; icon: string; alt: string }[] = [
